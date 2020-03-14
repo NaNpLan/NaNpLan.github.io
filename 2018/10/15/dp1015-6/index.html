@@ -15,14 +15,14 @@
 
 
 
-<meta name="description" content="&lt;Excerpt in index | 首页摘要&gt;  Decode Ways 字符串S是否可以按照wordDict数组中的字符串划分。一道不错的题，递推关系明显。  LeetCode(139) Word Break">
+<meta name="description" content="LeetCode(139) Word BreakLeetCode(718) Maximum Length of Repeated SubarrayLeetCode(898) Bitwise ORs of SubarraysLeetCode(221) Maximal SquareLeetCode(464) Can I Win">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dynamic Programming 6">
 <meta property="og:url" content="http://yoursite.com/2018/10/15/dp1015-6/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="&lt;Excerpt in index | 首页摘要&gt;  Decode Ways 字符串S是否可以按照wordDict数组中的字符串划分。一道不错的题，递推关系明显。  LeetCode(139) Word Break">
+<meta property="og:description" content="LeetCode(139) Word BreakLeetCode(718) Maximum Length of Repeated SubarrayLeetCode(898) Bitwise ORs of SubarraysLeetCode(221) Maximal SquareLeetCode(464) Can I Win">
 <meta property="article:published_time" content="2018-10-15T08:09:35.000Z">
-<meta property="article:modified_time" content="2018-10-17T05:43:32.070Z">
+<meta property="article:modified_time" content="2020-03-14T08:47:13.962Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Dynamic Programming">
 <meta name="twitter:card" content="summary">
@@ -306,13 +306,15 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>&lt;Excerpt in index | 首页摘要&gt;</p>
-<ul>
-<li><strong>Decode Ways</strong> 字符串S是否可以按照wordDict数组中的字符串划分。一道不错的题，递推关系明显。</li>
-</ul>
-<p><a href="https://leetcode.com/problems/word-break/submissions/" target="_blank" rel="noopener">LeetCode(139) Word Break</a></p>
+        <p><a href="https://leetcode.com/problems/word-break/submissions/" target="_blank" rel="noopener">LeetCode(139) Word Break</a><br><a href="https://leetcode.com/problems/maximum-length-of-repeated-subarray/" target="_blank" rel="noopener">LeetCode(718) Maximum Length of Repeated Subarray</a><br><a href="https://leetcode.com/problems/bitwise-ors-of-subarrays/" target="_blank" rel="noopener">LeetCode(898) Bitwise ORs of Subarrays</a><br><a href="https://leetcode.com/problems/maximal-square/" target="_blank" rel="noopener">LeetCode(221) Maximal Square</a><br><a href="https://leetcode.com/problems/can-i-win/" target="_blank" rel="noopener">LeetCode(464) Can I Win</a></p>
 <a id="more"></a>
-<p>&lt;The rest of contents | 余下全文&gt;</p>
+<ul>
+<li><strong>Word Break</strong> 字符串S是否可以按照wordDict数组中的字符串划分。一道不错的题，递推关系明显。</li>
+<li><strong>Maximum Length of Repeated Subarray</strong> 简单题，问两个数组中，连续且相同的子串最长是多少。这里用了两种方法，空间复杂度分别为O(n^2)、O(n)。</li>
+<li><strong>Bitwise ORs of Subarrays</strong> 选取数组中连续的子序列，按位或有多少种结果。</li>
+<li><strong>Maximal Square</strong> 最大的正方形面积。</li>
+<li><strong>Can I Win</strong> 从1-max中任选一个数字，第一个人先选，第二个人后选，每个数字只能选一次，总和超过desiredTotal就赢，问第一个人能否赢得比赛</li>
+</ul>
 <h2 id="LeetCode-139-Word-Break"><a href="#LeetCode-139-Word-Break" class="headerlink" title="LeetCode(139) Word Break"></a>LeetCode(139) Word Break</h2><p><strong><font color="#0049a9" size="5">题目</font></strong><br>字符串S是否可以按照wordDict数组中的字符串划分。<br><strong>Example 1:</strong><br><strong>Input:</strong> s = “leetcode”, wordDict = [“leet”, “code”]<br><strong>Output:</strong> true<br><strong>Explanation:</strong> Return true because “leetcode” can be segmented as “leet code”.</p>
 <p><strong>Example 2:</strong><br><strong>Input:</strong> s = “catsandog”, wordDict = [“cats”, “dog”, “sand”, “and”, “cat”]<br><strong>Output:</strong> false</p>
 <p><strong><font color="#0049a9" size="5">思路</font></strong><br>用dp[i] = 0 or 1表示字符串s[0…i-1]是否可以被划分。</p>
