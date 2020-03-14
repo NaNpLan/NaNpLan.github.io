@@ -15,11 +15,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog of ZhuoyaYang">
-<meta property="og:url" content="http://yoursite.com/categories/CNN/index.html">
+<meta name="description" content="前向传播计算softmax的损失、反向传播更新参数。作业要求。发现网上的答案都很简单，关于W的梯度没有详细推导。所以把我推的顺手搬上来">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Assignment-1 Softmax的实现">
+<meta property="og:url" content="http://yoursite.com/2019/03/22/Softmax/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
+<meta property="og:description" content="前向传播计算softmax的损失、反向传播更新参数。作业要求。发现网上的答案都很简单，关于W的梯度没有详细推导。所以把我推的顺手搬上来">
+<meta property="article:published_time" content="2019-03-22T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-03-14T11:47:11.295Z">
 <meta property="article:author" content="Yang Zhuoya">
+<meta property="article:tag" content="softmax">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -54,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Category: CNN | Blog of ZhuoyaYang</title>
+<title>Assignment-1 Softmax的实现 | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -64,10 +69,10 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
         isTag: false,
-        isCategory: true,
+        isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
         search: true
@@ -257,60 +262,186 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-Softmax" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2019/04/01/CNN/" class="archive-article-date">
-      <time datetime="2019-04-01T08:57:07.000Z" itemprop="datePublished">04-01</time>
+    <div class="article-meta">
+      <a href="/2019/03/22/Softmax/" class="article-date">
+      <time datetime="2019-03-22T08:57:07.000Z" itemprop="datePublished">2019-03-22</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/01/CNN/">CNN相关</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Assignment-1 Softmax的实现
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CNN/">CNN</a>
+    <a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
     </div>
 
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/para/" rel="tag">para</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>前向传播计算softmax的损失、反向传播更新参数。<a href="http://cs231n.github.io/assignments2018/assignment1/" target="_blank" rel="noopener">作业要求</a>。<br>发现网上的答案都很简单，关于W的梯度没有详细推导。所以把我推的顺手搬上来</p>
+<a id="more"></a>
+<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><h2 id="input"><a href="#input" class="headerlink" title="input"></a>input</h2><ul>
+<li>W: A numpy array of shape (D, C) containing weights.</li>
+<li>X: A numpy array of shape (N, D) containing a minibatch of data.</li>
+<li>y: A numpy array of shape (N,) containing training labels; y[i] = c means that X[i] has label c, where 0 &lt;= c &lt; C.</li>
+<li>reg: (float) regularization strength</li>
+</ul>
+<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><ul>
+<li>loss, dW</li>
+</ul>
+<h1 id="前向传播计算loss-dW"><a href="#前向传播计算loss-dW" class="headerlink" title="前向传播计算loss,dW"></a>前向传播计算loss,dW</h1><ul>
+<li>softmax层的输入为<strong>X</strong>，维度为<strong>（N，D）</strong>。表示输入<strong>batchsize=N</strong>个样本，每个样本有D维特征。<ul>
+<li>$X_{i}$表示一个样本的D维特征</li>
+</ul>
+</li>
+<li>weights为<strong>W</strong>，维度为<strong>（D，C）</strong><ul>
+<li>$W_{j}$表示某个样本的D维特征，分别对类别$j$的贡献程度</li>
+</ul>
+</li>
+</ul>
+<h2 id="with-loops"><a href="#with-loops" class="headerlink" title="with-loops"></a>with-loops</h2><p>要求使用循环，逐个样本计算损失$L_{i}$，逐个样本逐个类别计算梯度$\partial W_{j}$。</p>
+<h3 id="Loss的计算"><a href="#Loss的计算" class="headerlink" title="Loss的计算"></a>Loss的计算</h3><p>$X_{i} W$，得到$X_{i}$大小为（1,C）的得分向量，记为$S$。$X_{i} W_{j}$，得到$X_{i}$对于类别$j$的得分，记为$S_{j}$<br>样本$i$的loss为:$L_{i} = -log(\frac{e^{S_{y_{i}}}}{\sum_{j=1}^C e^{S_{j}}}) = -S_{y_{i}}+log(\sum_{j=1}^C e^{S_{j}}) = -X_{i}W_{y_{i}}+log(\sum_{j=1}^C e^{X_{i}W_{j}}) $<br>加上l2正则化约束后：$Loss = Loss + \frac{reg}{2}{||W||_{2}}^2$</p>
+<h3 id="frac-partial-L-i-partial-W-j-的计算"><a href="#frac-partial-L-i-partial-W-j-的计算" class="headerlink" title="$\frac{\partial L_{i}}{\partial W_{j}}$的计算"></a>$\frac{\partial L_{i}}{\partial W_{j}}$的计算</h3><p>当$j = y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = -X_{i} + \frac{X_{i}e^{X_{i}W_{j}}}{\sum_{k=1}^C e^{X_{i}W_{k}}}$<br>当$j \ne y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = \frac{X_{i}e^{X_{i}W_{j}}}{\sum_{k=1}^C e^{X_{i}W_{k}}}$<br>我们知道第$i$个样本softmax之后$j$类的概率：$Softmax_{i,j} = \frac{e^{X_{i}W_{j}}}{\sum_{k=1}^C e^{X_{i}W_{k}}}$<br>所以$\frac{\partial L_{i}}{\partial W_{j}}$可以简化为：<br>    当$j = y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = X_{i}Softmax_{j} - X_{i} = X_{i}(Softmax_{j}-1)$<br>    当$j \ne y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = X_{i}Softmax_{j}$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; X.shape[0]</span><br><span class="line">C &#x3D; W.shape[1]</span><br><span class="line">for i in range(N):</span><br><span class="line">score &#x3D; X[i].dot(W)     # (1,D) dot (D,C) &#x3D; (1,C) 即公式中的S向量</span><br><span class="line"># score -&#x3D; np.max(score)</span><br><span class="line">exp_y &#x3D; np.exp(score[y[i]])</span><br><span class="line">exp_C &#x3D; np.sum(np.exp(score))</span><br><span class="line">softmax_y &#x3D; exp_y&#x2F;exp_C      # 类别y的概率 exp_y&#x3D;0 exp_C&#x3D;1 log(0) nan</span><br><span class="line"># loss +&#x3D; -np.log(softmax_y)     # 最大化真实标签y的概率-&gt;最大化概率对数-&gt;最小化负的概率对数</span><br><span class="line">loss_i &#x3D; -score[y[i]]+np.log(exp_C)</span><br><span class="line">loss +&#x3D; loss_i</span><br><span class="line">for j in range(C):</span><br><span class="line">  if j &#x3D;&#x3D; y[i]:</span><br><span class="line">    dW[:,j] +&#x3D; X[i]*(softmax_y-1)</span><br><span class="line">  else:</span><br><span class="line">    exp_j &#x3D; np.exp(score[j])</span><br><span class="line">    softmax_j &#x3D; exp_j &#x2F; exp_C      # 类别j的概率 (1,1)</span><br><span class="line">    dW[:,j] +&#x3D; X[i]*softmax_j      # (1,D)*(1,1)</span><br><span class="line">loss &#x2F;&#x3D; N</span><br><span class="line">loss +&#x3D; 0.5*reg*np.sum(W*W)</span><br><span class="line">dW &#x3D; dW&#x2F;N + reg*W</span><br></pre></td></tr></table></figure>
+<h2 id="vectorized-version"><a href="#vectorized-version" class="headerlink" title="vectorized version"></a>vectorized version</h2><p>同理<strong>with loops</strong>，只是找到规律后，可以不用循环得到结果。$Loss$很简单，不说了。<br>    当$j = y_{i}$ , $\frac{\partial Loss}{\partial W} =  X’\left[Softmax-1\right]$<br>    当$j \ne y_{i}$ , $\frac{\partial Loss}{\partial W} =  X’Softmax$</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">N &#x3D; X.shape[0]</span><br><span class="line">score &#x3D; X.dot(W)     # (N,C)维得分矩阵</span><br><span class="line">score_y &#x3D; score[range(N),y].reshape(-1,1)     # (N,1)维</span><br><span class="line">exp_C &#x3D; np.sum(np.exp(score),axis&#x3D;1).reshape(-1,1)    # (N,1)维</span><br><span class="line">loss &#x3D; np.sum(-score_y + np.log(exp_C))</span><br><span class="line">loss &#x3D; loss&#x2F;N+0.5*reg*np.sum(W*W)</span><br><span class="line"></span><br><span class="line">softmax_NC &#x3D; np.exp(score) &#x2F; exp_C    # (N,C)维</span><br><span class="line">softmax_NC[range(N),y] -&#x3D; 1</span><br><span class="line">dW &#x3D; (X.T).dot(softmax_NC)            # (D,N)*(N,C)</span><br><span class="line">dW &#x3D; dW&#x2F;N+reg*W</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    
   </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2019/03/30/TCP/">
+                    TCP相关
+                </a>
+            </div>
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2018/10/15/dp1015-6/">
+                    Dynamic Programming 6
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参数"><span class="toc-number">1.</span> <span class="toc-text">参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#input"><span class="toc-number">1.1.</span> <span class="toc-text">input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Output"><span class="toc-number">1.2.</span> <span class="toc-text">Output</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前向传播计算loss-dW"><span class="toc-number">2.</span> <span class="toc-text">前向传播计算loss,dW</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#with-loops"><span class="toc-number">2.1.</span> <span class="toc-text">with-loops</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss的计算"><span class="toc-number">2.1.1.</span> <span class="toc-text">Loss的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frac-partial-L-i-partial-W-j-的计算"><span class="toc-number">2.1.2.</span> <span class="toc-text">$\frac{\partial L_{i}}{\partial W_{j}}$的计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vectorized-version"><span class="toc-number">2.2.</span> <span class="toc-text">vectorized version</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"Assignment-1 Softmax的实现　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
 
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/2019/03/30/TCP/" title="上一篇: TCP相关">
+                <i class="fa fa-angle-left"></i>
+            </a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2018/10/15/dp1015-6/" title="下一篇: Dynamic Programming 6">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Algorithm/">保研机试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
