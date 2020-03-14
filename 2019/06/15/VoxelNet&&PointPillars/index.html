@@ -15,12 +15,21 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog of ZhuoyaYang">
-<meta property="og:url" content="http://yoursite.com/tags/FLOPs/index.html">
+<meta name="description" content="3D Object Dection for Point Clounds的两篇论文。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VoxelNet &amp;&amp; PointPillars">
+<meta property="og:url" content="http://yoursite.com/2019/06/15/VoxelNet&&PointPillars/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
+<meta property="og:description" content="3D Object Dection for Point Clounds的两篇论文。">
+<meta property="og:image" content="http://yoursite.com/2019/06/15/VoxelNet&&PointPillars/1.png">
+<meta property="article:published_time" content="2019-06-15T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-03-14T11:07:02.676Z">
 <meta property="article:author" content="Yang Zhuoya">
+<meta property="article:tag" content="3D Object Detection">
+<meta property="article:tag" content="PointPillars">
+<meta property="article:tag" content="VoxelNet">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/06/15/VoxelNet&&PointPillars/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -54,7 +63,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Tag: FLOPs | Blog of ZhuoyaYang</title>
+<title>VoxelNet &amp;&amp; PointPillars | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -64,9 +73,9 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
+        isPost: true,
         isArchive: false,
-        isTag: true,
+        isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
         scrollreveal: "//cdn.bootcss.com/scrollReveal.js/3.1.4/scrollreveal.min.js",
@@ -257,60 +266,205 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-VoxelNet&amp;&amp;PointPillars" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2019" class="archive-year">2019</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2019/04/01/CNN/" class="archive-article-date">
-      <time datetime="2019-04-01T08:57:07.000Z" itemprop="datePublished">04-01</time>
+    <div class="article-meta">
+      <a href="/2019/06/15/VoxelNet&&PointPillars/" class="article-date">
+      <time datetime="2019-06-15T08:57:07.000Z" itemprop="datePublished">2019-06-15</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2019/04/01/CNN/">CNN相关</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      VoxelNet &amp;&amp; PointPillars
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+      </header>
+      
+      <div class="article-info article-info-post">
+        
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/CNN/">CNN</a>
+    <a class="article-category-link" href="/categories/paper/">paper</a>
     </div>
 
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/para/" rel="tag">para</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+          
+        <p>3D Object Dection for Point Clounds的两篇论文。</p>
+<a id="more"></a>
+<h1 id="网络的整体结构"><a href="#网络的整体结构" class="headerlink" title="网络的整体结构"></a>网络的整体结构</h1><p>这两篇论文思路相似，PointPillars可以看做是VoxelNet的优化，将3D卷积变为2D，速度提升较大。此外，还有一些零零碎碎的改进，使总体准确率较VoxelNet也有一定提升。二者在以下方面一致：</p>
+<ol>
+<li><strong>数据类型</strong>，只使用激光雷达(LiDAR)数据，没有image的RGB信息</li>
+<li><strong>特征提取</strong>，用可学习的encoder得到machine-learned feature，取代人为设计的特征（hand-crafted feature）。每个单位（Voxel/Pillar）都对应一个特征向量。</li>
+<li><strong>网络整体结构</strong>都包含三部分，虽然论文中有不同的叫法，但功能是一致的：</li>
+</ol>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:left"></th>
+<th style="text-align:left">VoxelNet</th>
+<th style="text-align:left">PointPillars</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">第一部分</td>
+<td style="text-align:left">feature learning network</td>
+<td style="text-align:left">eature encoder network</td>
+</tr>
+<tr>
+<td style="text-align:left">第二部分</td>
+<td style="text-align:left">convolutional middle layers(3D)</td>
+<td style="text-align:left">convolutional backbone(2D)</td>
+</tr>
+<tr>
+<td style="text-align:left">第三部分</td>
+<td style="text-align:left">RPN</td>
+<td style="text-align:left">detection head(SSD)</td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul>
+<li><strong>在网络第一部分，将3D空间划分为若干单位（Voxel/Pillar），对非空单位进行编码</strong>。对内部points进行取样、特征表示、特征学习，得到Voxel/Pillar的特征向量，即voxel-wise/pillar-wise feature。按照单位原有的空间oxel/VoxelNet得到4D tensor，而PointPillars得到3D tensor。&lt;/li&gt;</li>
+<li><strong>在网络第二部分，用3D/2D卷积进一步学习4D/3D tensor中单位与单位之间的空间关系（aggregate spatial context）</strong>。最终得到<strong>与3D空间平面长宽W、H相关的3D tensor</strong>，这与图像卷积得到的结果相似。类比一下，两者都得到$W’ \times H’ \times D$的feature map。图像卷积的feature map上每一点代表原图（2D平面）上一定邻域（具体邻域大小与感受野相关）的$D$维特征。而空间卷积的feature map上每一点代表BEV视角（2D平面）上以一定领域为底面的立方体的$D$维特征。仿佛把空间压扁，或者俯视整个空间，将空间在Z方向上的特征整合在feature map的深度$D$中。</li>
+<li><strong>在网络的第三部分，predict 3D bounding box</strong>。虽然VoxelNet使用改进后的RPN，而PointPillars使用SSD，但二者在本质上没有区别。都采用upsample+concatanate得到多尺度特征图。都是全卷积网络，最后用卷积代替全连接，得到probability score map和regression map。如VoxelNet的网络图所示，concatanated后的特征图大小为$W’/2 \times H’/2 \times 768$，分别用$(2+14)$个大小为$W_{f} \times H_{f} \times 768$)的filter，对齐特征图的深度768，在特征图平面上滑动。进行16趟独立的卷积操作，得到16张map。<ul>
+<li>score map的2维分别为正例、负例的概率。</li>
+<li>regression map的14维为正例、负例的3D bounding box的7维坐标。中心点坐标$x,y,z$，长宽高$l,w,h$，rotation(Z轴偏移)$\theta$。</li>
+</ul>
+</li>
+</ul>
+<p>总而言之，把Voxel在Z方向上合并，即可将若干Voxel合为一个Pillar。3D空间划分为Voxels后，<strong>Voxel grid仍然是3D的</strong>，而不同Pillars在Z方向上跨度相同，<strong>Pillars grid是2D的</strong>。<strong>维度减少是PointPillars更快的关键</strong>。</p>
+<h1 id="Feature-Learning-Network"><a href="#Feature-Learning-Network" class="headerlink" title="Feature Learning Network"></a>Feature Learning Network</h1><p>对于3D目标检测网络来说，<strong>网络的第一步特征提取是关键</strong>，也是与2D目标检测的最不同之处。下面再详细介绍一下两个网络编码部分的不同。</p>
+<h2 id="VoxelNet"><a href="#VoxelNet" class="headerlink" title="VoxelNet"></a>VoxelNet</h2><p><img src="/2019/06/15/VoxelNet&&PointPillars/1.png" alt></p>
+<ol>
+<li>Voxel Partition<br>将大小为$D\times H \times W$的3D空间划分为equally spaced的voxels，如图所示。一个voxel的大小为$v_{D}\times v_{H} \times v_{W}$，得到的3D voxel grid的大小为$D’=D/v_{D}$，$H’=H/v_{H}$，$W’=W/v_{W}$。</li>
+<li>Grouping<br>将每个voxel中的点视为一组。</li>
+<li>Random Sampling<br>对于点较密集的voxel，随机选取$T$个点。</li>
+</ol>
+
+      
+    </div>
+    
   </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2019/04/01/CNN/">
+                    CNN相关
+                </a>
+            </div>
+        
+    </nav>
+
+  
 </article>
-  
-  
-    </div></section>
-  
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络的整体结构"><span class="toc-number">1.</span> <span class="toc-text">网络的整体结构</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Feature-Learning-Network"><span class="toc-number">2.</span> <span class="toc-text">Feature Learning Network</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#VoxelNet"><span class="toc-number">2.1.</span> <span class="toc-text">VoxelNet</span></a></li></ol></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"VoxelNet && PointPillars　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
 
     
 
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2019/04/01/CNN/" title="下一篇: CNN相关">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
+    </div>
+
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Algorithm/">保研机试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+
+
+
+
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
