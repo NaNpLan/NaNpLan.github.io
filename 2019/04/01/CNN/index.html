@@ -21,12 +21,14 @@
 <meta property="og:url" content="http://yoursite.com/2019/04/01/CNN/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="关于CNN中的参数量、计算量，1*1卷积的作用。  输入大小: $W \times H \times C $ 卷积大小: $W_{f} \times H_{f} \times C \times N$，其中，$C$为input channel，$N$为output channel。 卷积后的feature map大小: $w’ \times h’ \times N$">
+<meta property="og:image" content="http://yoursite.com/2019/04/01/CNN/1.png">
 <meta property="article:published_time" content="2019-04-01T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-14T10:08:33.981Z">
+<meta property="article:modified_time" content="2020-03-14T10:09:59.036Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FLOPs">
 <meta property="article:tag" content="para">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/04/01/CNN/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -315,6 +317,7 @@
 </ul>
 <a id="more"></a>
 <h1 id="卷积过程"><a href="#卷积过程" class="headerlink" title="卷积过程"></a>卷积过程</h1><p><a href="http://cs231n.github.io/assets/conv-demo/index.html" target="_blank" rel="noopener">CS231N-卷积过程动态演示</a>，再结合CS231N-lecture7对卷积运算的讲解，<a href="http://cs231n.stanford.edu/slides/2016/winter1516_lecture7.pdf" target="_blank" rel="noopener">slide-lecture7</a>。</p>
+<p><img src="/2019/04/01/CNN/1.png" alt></p>
 <ul>
 <li>有$N$个filter，大小为$W_{f} \times H_{f} \times C$，分别与$W \times H \times C$的input进行$N$组独立的卷积运算。</li>
 <li>对于每组运算，kernel与input对齐（depth一定是同维度的），<strong>kernel从input内部每个位置划过</strong>，进行点积运算$W_{f}^T X + b$（$X$是input的一小块区域），得到2每个位置的输出。每次滑动的计算量为$W_{f} \times H_{f} \times C + 1$。如下图所示，每次其实是进行$5 \times 5 \times 3 = 75$维的点乘运算。再加上偏置b，共76次运算。</li>
