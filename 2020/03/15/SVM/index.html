@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="article:published_time" content="2020-03-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-15T09:36:44.464Z">
+<meta property="article:modified_time" content="2020-03-15T09:47:02.698Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
@@ -339,14 +339,10 @@
 <p>首先构造拉格朗日函数，对于每个不等式约束，引人拉格朗日乘子$\alpha_i \geq 0$：</p>
 <script type="math/tex; mode=display">L(w,b,\alpha) = \frac{1}{2}{||w||}^2 + \sum_{i=1}^N \alpha_i[y_i(w x_i+b)-1]</script><p>原始问题$\underset{w,b}{min} ~ \underset{\alpha}{max} ~ L(w,b,\alpha)$。</p>
 <p>根据拉格朗日对偶性，原始问题的对偶问题是极大极小问题$\underset{\alpha}{max} ~ \underset{w,b}{min} ~ L(w,b,\alpha)$。</p>
-<ul>
-<li>$L(w,b,\alpha)$对w,b求极小<br>令w,b偏导为0：<script type="math/tex; mode=display">\nabla_{w}L(w,b,\alpha) = w - \sum_{i-1}^N \alpha_i x_i y_i = 0</script><script type="math/tex; mode=display">\nabla_{b}L(w,b,\alpha) = - \sum_{i-1}^N \alpha_i y_i = 0</script>代入拉格朗日函数，化简，得到：<script type="math/tex; mode=display">\underset{w,b}{min} ~ L(w,b,\alpha) = -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i</script></li>
-</ul>
-<script type="math/tex; mode=display">s.t. ~~ \sum_{i=1}^N \alpha_i y_i = 0</script><script type="math/tex; mode=display">~~~~~~~~~~~~~~~~~~~~~
-          \alpha_i \geq 0, i=1,...,N</script><ul>
-<li>$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大</li>
-</ul>
-<p>根据KKT的三个条件，可以将对偶问题的解$\alpha$转化为原始问题的解$w,b$:<br>KKT条件：</p>
+<h2 id="L-w-b-alpha-对w-b求极小"><a href="#L-w-b-alpha-对w-b求极小" class="headerlink" title="$L(w,b,\alpha)$对w,b求极小"></a>$L(w,b,\alpha)$对w,b求极小</h2><p>令w,b偏导为0：</p>
+<script type="math/tex; mode=display">\nabla_{w}L(w,b,\alpha) = w - \sum_{i-1}^N \alpha_i x_i y_i = 0</script><script type="math/tex; mode=display">\nabla_{b}L(w,b,\alpha) = - \sum_{i-1}^N \alpha_i y_i = 0</script><p>代入拉格朗日函数，化简，得到：</p>
+<script type="math/tex; mode=display">\underset{w,b}{min} ~ L(w,b,\alpha) = -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i</script><script type="math/tex; mode=display">s.t. ~~ \sum_{i=1}^N \alpha_i y_i = 0</script><script type="math/tex; mode=display">~~~~~~~~~~~~~~~~~~~~~
+          \alpha_i \geq 0, i=1,...,N</script><h2 id="underset-w-b-min-L-w-b-alpha-对-alpha-求极大"><a href="#underset-w-b-min-L-w-b-alpha-对-alpha-求极大" class="headerlink" title="$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大"></a>$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大</h2><p>根据KKT的三个条件，可以将对偶问题的解$\alpha$转化为原始问题的解$w,b$:<br>KKT条件：</p>
 <ul>
 <li>乘子非负：$\alpha \geq 0$</li>
 <li>约束条件：$y_i(w x_i+b) - 1\geq 0$</li>
@@ -378,7 +374,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#L-w-b-alpha-对w-b求极小"><span class="toc-number">2.1.</span> <span class="toc-text">$L(w,b,\alpha)$对w,b求极小</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#underset-w-b-min-L-w-b-alpha-对-alpha-求极大"><span class="toc-number">2.2.</span> <span class="toc-text">$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大</span></a></li></ol></li></ol>
         
     </div>
     <style>
