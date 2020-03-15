@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="article:published_time" content="2020-03-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-15T08:15:18.740Z">
+<meta property="article:modified_time" content="2020-03-15T08:16:21.888Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
@@ -340,8 +340,6 @@
 <script type="math/tex; mode=display">L(w,b,\alpha) = \frac{1}{2}{||w||}^2 + \sum_{i=1}^N \alpha_i[y_i(w x_i+b)-1]</script><p>原始问题$\underset{w,b}{min}<del>\underset{\alpha}{max} L(w,b,\alpha)$。<br>根据拉格朗日对偶像，原始问题的对偶问题是极大极小问题$\underset{\alpha}{max}</del>\underset{w,b}{min} L(w,b,\alpha)$。</p>
 <ol>
 <li>$L(w,b,\alpha)$对w,b求极小<br>令w,b偏导为0，代入拉格朗日函数，化简：</li>
-</ol>
-<ol>
 <li>$\underset{w,b}{min}~~L(w,b,\alpha)$对$\alpha$求极大</li>
 </ol>
 
