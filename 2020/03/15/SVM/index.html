@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="article:published_time" content="2020-03-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-15T08:35:35.349Z">
+<meta property="article:modified_time" content="2020-03-15T08:37:27.078Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
@@ -342,7 +342,7 @@
 <ol>
 <li><p>$L(w,b,\alpha)$对w,b求极小<br>令w,b偏导为0：</p>
 <script type="math/tex; mode=display">\nabla_{w}L(w,b,\alpha) = w - \sum_{i-1}^N \alpha_i x_i y_i = 0</script><script type="math/tex; mode=display">\nabla_{b}L(w,b,\alpha) = - \sum_{i-1}^N \alpha_i y_i = 0</script><p>代入拉格朗日函数，化简，得到：</p>
-<script type="math/tex; mode=display">\underset{w,b}{min} ~ L(w,b,\alpha) = \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j x_i x_j y_i y_j - \sum_{i=1}^N \alpha_i</script></li>
+<script type="math/tex; mode=display">\underset{w,b}{min} ~ L(w,b,\alpha) = -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \dot x_j) - \sum_{i=1}^N \alpha_i</script></li>
 <li><p>$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大</p>
 </li>
 </ol>
