@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="article:published_time" content="2020-03-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-15T09:52:33.835Z">
+<meta property="article:modified_time" content="2020-03-15T12:12:45.921Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
@@ -343,12 +343,14 @@
 <script type="math/tex; mode=display">\nabla_{w}L(w,b,\alpha) = w - \sum_{i-1}^N \alpha_i x_i y_i = 0</script><script type="math/tex; mode=display">\nabla_{b}L(w,b,\alpha) = - \sum_{i-1}^N \alpha_i y_i = 0</script><p>代入拉格朗日函数，化简，得到：</p>
 <script type="math/tex; mode=display">\underset{w,b}{min} ~ L(w,b,\alpha) = -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i</script><script type="math/tex; mode=display">s.t. ~~ \sum_{i=1}^N \alpha_i y_i = 0</script><script type="math/tex; mode=display">~~~~~~~~~~~~~~~~~~~~~
           \alpha_i \geq 0, i=1,...,N</script><p>2.$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大</p>
-<p>根据KKT的三个条件，可以将对偶问题的解$\alpha$转化为原始问题的解$w,b$:<br>KKT条件：</p>
+<script type="math/tex; mode=display">\underset{\alpha}{max}  -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i</script><script type="math/tex; mode=display">s.t. ~~ \sum_{i=1}^N \alpha_i y_i = 0</script><script type="math/tex; mode=display">~~~~~~~~~~~~~~~~~~~~~
+          \alpha_i \geq 0, i=1,...,N</script><p>根据KKT的三个条件，可以将对偶问题的解$\alpha$转化为原始问题的解$w,b$:<br>KKT条件：</p>
 <ul>
 <li>乘子非负：$\alpha \geq 0$</li>
 <li>约束条件：$y_i(w x_i+b) - 1\geq 0$</li>
 <li>互补条件：$\alpha_i [y_i(w x_i+b) - 1] = 0$<br>已有w的表达式：<script type="math/tex; mode=display">w = \sum_{i=1}^N \alpha_i y_i x_i</script>只少有一个$\alpha_j &gt; 0$，不然有$w=0$。对此j，结合KKT的互补条件，有：<script type="math/tex; mode=display">y_j(w x_j+b) - 1 = 0</script><script type="math/tex; mode=display">y_j(w x_j+b) - {y_j}^2 = 0</script>代入w的表达式：<script type="math/tex; mode=display">b = y_j - \sum_{i=1}^N \alpha_i y_i (x_i \cdot x_j)</script></li>
 </ul>
+<h1 id="SMO高效优化算法"><a href="#SMO高效优化算法" class="headerlink" title="SMO高效优化算法"></a>SMO高效优化算法</h1><p>对偶问题的求解复杂度取决于训练集的样本数，当处理海量数据时，开销过大。<br>SMO将原始的大优化问题，分解为多个只有两个变量的优化子问题。不断地对子问题进行求解，直到所有变量满足KKT条件为止。因为子问题有解析解，虽然要计算很多次，总体还是高效的。</p>
 
       
     </div>
@@ -375,7 +377,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SMO高效优化算法"><span class="toc-number">3.</span> <span class="toc-text">SMO高效优化算法</span></a></li></ol>
         
     </div>
     <style>
