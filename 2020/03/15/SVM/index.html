@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="article:published_time" content="2020-03-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-15T08:00:29.930Z">
+<meta property="article:modified_time" content="2020-03-15T08:03:58.439Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
@@ -337,7 +337,7 @@
 </ul>
 <h1 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h1><!--拉格朗日函数是求解带约束优化问题的重要方法。-->
 <p>首先构造拉格朗日函数，对于每个不等式约束，引人拉格朗日乘子$\alpha_i \geq 0$：</p>
-<script type="math/tex; mode=display">L(w,b,\alpha) = \frac{1}{2}{||w||}^2 + \sum{i=1}{N}\alpha_i[y_i(w x_i+b)-1]</script><p>根据拉格朗日对偶像，原始问题的对偶问题是极大极小问题$\underset{\alpha}{max} \underset{w,b}{min} L(w,b,\alpha)$</p>
+<script type="math/tex; mode=display">L(w,b,\alpha) = \frac{1}{2}{||w||}^2 + \sum{i=1}^N \alpha_i[y_i(w x_i+b)-1]</script><p>根据拉格朗日对偶像，原始问题的对偶问题是极大极小问题$\underset{\alpha}{max} \underset{w,b}{min} L(w,b,\alpha)$</p>
 
       
     </div>
