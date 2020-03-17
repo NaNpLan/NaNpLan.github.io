@@ -23,7 +23,7 @@
 <meta property="og:description" content="word2vec将one-hot向量，转换为低维词向量（word embedding），将单词从原先的空间映射到另一个空间。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和Hierarc">
 <meta property="og:image" content="http://yoursite.com/2020/03/16/word2vec/1.png">
 <meta property="article:published_time" content="2020-03-16T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-17T12:12:15.819Z">
+<meta property="article:modified_time" content="2020-03-17T12:18:12.921Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
@@ -314,7 +314,10 @@
 <li>CBOW, 输入上下文，预测中心词W(t)</li>
 <li>Skip-gram, 输入中心词W(t)，预测上下文</li>
 </ul>
-<p><img src="/2020/03/16/word2vec/1.png" alt><br>下面的模型流程以CBOW为例，如上图所示：</p>
+<!--![](/word2vec/1.png)-->
+<p><div align="center">
+  <img height="100" src="/2020/03/16/word2vec/1.png">
+</div><br>下面的模型流程以CBOW为例，如上图所示：</p>
 <ul>
 <li>输入层：C个上下文单词，每个单词的one-hot编码V维，整个输入$C \times V$维。</li>
 <li>将输入乘以权重矩阵$W_{V \times N}$，得到$C \times N$维的矩阵，每行对应一个单词。每行相加求平均，得到$1 \times N$维的隐层向量。</li>
