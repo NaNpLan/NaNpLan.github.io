@@ -17,12 +17,12 @@
 
 <meta name="description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SVM的理解与实现">
+<meta property="og:title" content="SVM推导">
 <meta property="og:url" content="http://yoursite.com/2020/03/15/SVM/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
 <meta property="article:published_time" content="2020-03-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-16T06:00:33.635Z">
+<meta property="article:modified_time" content="2020-03-16T09:26:12.533Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="SVM">
 <meta name="twitter:card" content="summary">
@@ -59,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>SVM的理解与实现 | Blog of ZhuoyaYang</title>
+<title>SVM推导 | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -191,7 +191,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E7%A0%94%E6%9C%BA%E8%AF%95/" rel="tag">保研机试</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E7%A0%94%E6%9C%BA%E8%AF%95/" rel="tag">保研机试</a></li></ul>
                     </div>
                 </section>
                 
@@ -281,7 +281,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SVM的理解与实现
+      SVM推导
     </h1>
   
 
@@ -356,7 +356,7 @@
 <li>固定$\alpha_i$和$\alpha_j$以外的参数，利用约束条件$\sum_{i=1}^N \alpha_i y_i = 0$，求解目标函数$\underset{\alpha}{max} ~~~ -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i$</li>
 </ul>
 <p>如果所有样本点都满足KKT条件，那么最优化的解已经得到。因为KKT条件是该优化问题的充分必要条件。<br>如果$\alpha_i$、$\alpha_j$中有一个不满足KKT条件，目标函数会在迭代后增大。<br>SMO采用了启发式方法：选取间隔最大的两个样本对应的$\alpha_i$、$\alpha_j$。这比选择两个相似的变量，会给目标函数带来更大变化。</p>
-
+<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1>
       
     </div>
     
@@ -366,6 +366,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/03/16/word2vec/">
+                    word2vec
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -382,7 +388,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SMO高效优化算法"><span class="toc-number">3.</span> <span class="toc-text">SMO高效优化算法</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SMO高效优化算法"><span class="toc-number">3.</span> <span class="toc-text">SMO高效优化算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python实现"><span class="toc-number">4.</span> <span class="toc-text">Python实现</span></a></li></ol>
         
     </div>
     <style>
@@ -418,7 +424,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"SVM的理解与实现　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"SVM推导　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -438,7 +444,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/03/16/word2vec/" title="上一篇: word2vec">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -450,7 +458,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/SVM/">SVM的理解与实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Algorithm/">保研机试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Algorithm/">保研机试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
