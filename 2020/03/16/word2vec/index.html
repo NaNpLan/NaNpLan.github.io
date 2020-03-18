@@ -15,15 +15,15 @@
 
 
 
-<meta name="description" content="word2vec将one-hot向量，转换为低维词向量（word embedding），将单词从原先的空间映射到另一个空间。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和Hierarc">
+<meta name="description" content="word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和H">
 <meta property="og:type" content="article">
 <meta property="og:title" content="word2vec">
 <meta property="og:url" content="http://yoursite.com/2020/03/16/word2vec/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="word2vec将one-hot向量，转换为低维词向量（word embedding），将单词从原先的空间映射到另一个空间。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和Hierarc">
+<meta property="og:description" content="word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和H">
 <meta property="og:image" content="http://yoursite.com/2020/03/16/word2vec/1.png">
 <meta property="article:published_time" content="2020-03-16T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-17T12:19:52.796Z">
+<meta property="article:modified_time" content="2020-03-18T02:18:19.843Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
@@ -308,8 +308,12 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>word2vec将one-hot向量，转换为低维词向量（word embedding），将单词从原先的空间映射到另一个空间。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。<br>目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和Hierarchical Softmax。<br><a id="more"></a></p>
-<h1 id="模型原理"><a href="#模型原理" class="headerlink" title="模型原理"></a>模型原理</h1><p>word2vec主要包含CBOW和Skip-gram两种模型，两者只是输入层和输出层不同：</p>
+        <p>word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。<br>整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。<br>目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和Hierarchical Softmax。<br><a id="more"></a></p>
+<h1 id="模型原理"><a href="#模型原理" class="headerlink" title="模型原理"></a>模型原理</h1><p>我们经常用one-hot方法对离散特征编码，在实际业务中，常常会产生非常高维的系数特征。从工程的角度，高维稀疏向量会带来存储、计算效率上的问题。从模型优化的角度，特征过于稀疏会导致整个网络收敛过慢，每次只有极少数的权重得到更新，在样本有限的情况下会导致模型不收敛。</p>
+<blockquote>
+<p>插播：为什么LR适合处理高维稀疏特征，而GBDT不适合？<br>比如用户id转化为one-hot，树模型每次选择一个特征进行分类——id特征的第i维，每次只能区分出是这个id的样本和不是这个id的样本，分的过细，会导致过拟合。<br>而lr会对id的所有one-hot维度进行加权求和，而不是只选择一个维度进行分裂。把id变成高维，一定程度上起到了核函数，使样本线性可分，有利于lr的学习。<br>总之GBDT这样的树模型适合低维稠密特征，需要特征的每一维度有充足信息；而lr可以整合特征的不同维度的信息。</p>
+</blockquote>
+<p>word2vec主要包含CBOW和Skip-gram两种模型，两者只是输入层和输出层不同：</p>
 <ul>
 <li>CBOW, 输入上下文，预测中心词W(t)</li>
 <li>Skip-gram, 输入中心词W(t)，预测上下文</li>
@@ -325,7 +329,7 @@
 <li>将$1 \times V$维概率分布，与中心词的真实one-hot编码作比较，计算损失。</li>
 </ul>
 <h1 id="加速技巧"><a href="#加速技巧" class="headerlink" title="加速技巧"></a>加速技巧</h1><h1 id="效果评估"><a href="#效果评估" class="headerlink" title="效果评估"></a>效果评估</h1><p>word2vec属于无监督学习，和其他无监督模型一样，难以直接评价。</p>
-<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.zhihu.com/question/44832436/answer/266068967" target="_blank" rel="noopener">word2vec是如何得到词向量的？ - crystalajj的回答</a></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.zhihu.com/question/44832436/answer/266068967" target="_blank" rel="noopener">word2vec是如何得到词向量的？ - crystalajj的回答</a><br><a href="https://zhuanlan.zhihu.com/p/53194407" target="_blank" rel="noopener">万物皆Embedding，从经典的word2vec到深度学习基本操作item2vec</a></p>
 
       
     </div>
