@@ -23,7 +23,7 @@
 <meta property="og:description" content="word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和H">
 <meta property="og:image" content="http://yoursite.com/2020/03/16/word2vec/1.png">
 <meta property="article:published_time" content="2020-03-16T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-18T02:20:18.607Z">
+<meta property="article:modified_time" content="2020-03-19T05:30:32.623Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
@@ -193,7 +193,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E7%A0%94%E6%9C%BA%E8%AF%95/" rel="tag">保研机试</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgb/" rel="tag">lgb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xgb/" rel="tag">xgb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E4%BF%9D%E7%A0%94%E6%9C%BA%E8%AF%95/" rel="tag">保研机试</a></li></ul>
                     </div>
                 </section>
                 
@@ -328,7 +328,8 @@
 <li>将$1 \times N$维的隐层向量乘以权重矩阵的逆$W’_{N \times V}$得到$1 \times V$维的向量，经过softmax激活函数处理，得到相同维度的概率分布。</li>
 <li>将$1 \times V$维概率分布，与中心词的真实one-hot编码作比较，计算损失。</li>
 </ul>
-<h1 id="加速技巧"><a href="#加速技巧" class="headerlink" title="加速技巧"></a>加速技巧</h1><h1 id="效果评估"><a href="#效果评估" class="headerlink" title="效果评估"></a>效果评估</h1><p>word2vec属于无监督学习，和其他无监督模型一样，难以直接评价。</p>
+<h1 id="加速技巧"><a href="#加速技巧" class="headerlink" title="加速技巧"></a>加速技巧</h1><h2 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h2><p>采用哈夫曼树的方法进行softmax，</p>
+<h2 id="Negative-Sample"><a href="#Negative-Sample" class="headerlink" title="Negative Sample"></a>Negative Sample</h2><h1 id="效果评估"><a href="#效果评估" class="headerlink" title="效果评估"></a>效果评估</h1><p>word2vec属于无监督学习，和其他无监督模型一样，难以直接评价。</p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.zhihu.com/question/44832436/answer/266068967" target="_blank" rel="noopener">word2vec是如何得到词向量的？ - crystalajj的回答</a><br><a href="https://zhuanlan.zhihu.com/p/53194407" target="_blank" rel="noopener">万物皆Embedding，从经典的word2vec到深度学习基本操作item2vec</a></p>
 
       
@@ -340,6 +341,12 @@
 
 
     <nav id="article-nav">
+        
+            <div id="article-nav-newer" class="article-nav-title">
+                <a href="/2020/03/16/xgb&lgb/">
+                    XGBoost 与 LightGBM
+                </a>
+            </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
@@ -356,7 +363,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#低维稠密与高维稀疏"><span class="toc-number">1.</span> <span class="toc-text">低维稠密与高维稀疏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型原理"><span class="toc-number">2.</span> <span class="toc-text">模型原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#加速技巧"><span class="toc-number">3.</span> <span class="toc-text">加速技巧</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果评估"><span class="toc-number">4.</span> <span class="toc-text">效果评估</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#低维稠密与高维稀疏"><span class="toc-number">1.</span> <span class="toc-text">低维稠密与高维稀疏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型原理"><span class="toc-number">2.</span> <span class="toc-text">模型原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#加速技巧"><span class="toc-number">3.</span> <span class="toc-text">加速技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hierarchical-Softmax"><span class="toc-number">3.1.</span> <span class="toc-text">Hierarchical Softmax</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Negative-Sample"><span class="toc-number">3.2.</span> <span class="toc-text">Negative Sample</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果评估"><span class="toc-number">4.</span> <span class="toc-text">效果评估</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
         
     </div>
     <style>
@@ -412,7 +419,9 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+            <a href="/2020/03/16/xgb&lgb/" title="上一篇: XGBoost 与 LightGBM">
+                <i class="fa fa-angle-left"></i>
+            </a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
@@ -424,7 +433,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Algorithm/">保研机试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/08/08/Algorithm/">保研机试</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
