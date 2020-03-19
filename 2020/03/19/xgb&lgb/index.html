@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="XGBoost参考官网">
 <meta property="article:published_time" content="2020-03-19T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-19T08:07:31.019Z">
+<meta property="article:modified_time" content="2020-03-19T08:10:50.105Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="xgb">
 <meta property="article:tag" content="lgb">
@@ -318,7 +318,7 @@ obj^{(t)} & = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t)}) + \sum_{i=1}^t\Omega(f_i) \\
             & = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) 
 \end{split}
 \nonumber
-\end{equation}</script><p>对于回归问题，最常用的损失函数是均方误差，以MSE为例，$obj^(t)$可以化简为：</p>
+\end{equation}</script><p>对于回归问题，最常用的损失函数是均方误差，以MSE为例，$obj^{(t)}$可以化简为：</p>
 <script type="math/tex; mode=display">
 \begin{equation}
 \begin{split}
@@ -326,16 +326,16 @@ obj^{(t)} & = \sum_{i=1}^n (y_i - (\hat{y}_i^{(t-1)} + f_t(x_i)))^2 + \sum_{i=1}
             & = \sum_{i=1}^n [2(\hat{y}_i^{(t-1)} - y_i)f_t(x_i) + f_t(x_i)^2] + \Omega(f_t) + constant
 \end{split}
 \nonumber
-\end{equation}</script><p>MSE目标函数形式是友好的，具有一阶项（残差）和二阶项。对于其他损失函数，比如交叉熵，无法转化成这样友好的形式。因此，在一般情况下，我们使用二阶泰勒展开构造二阶项：</p>
+\end{equation}</script><p>MSE目标函数形式是友好的，具有一阶项（残差）和二阶项。对于其他损失函数，比如交叉熵，无法转化成这样友好的形式。因此，在一般情况下，我们使用二阶泰勒展开构造二阶项，$g_i$、$h_i$分别对应一阶偏导、二阶偏导：</p>
 <script type="math/tex; mode=display">
 \begin{equation}
 \begin{split}
 obj^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + constant
+\end{split}
 
 g_i &= \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})\\
 h_i &= \partial_{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})
 
-\end{split}
 \nonumber
 \end{equation}</script><h1 id="xgb与lgb对比"><a href="#xgb与lgb对比" class="headerlink" title="xgb与lgb对比"></a>xgb与lgb对比</h1><h1 id="为什么xgb使用二阶泰勒展开，效果更好"><a href="#为什么xgb使用二阶泰勒展开，效果更好" class="headerlink" title="为什么xgb使用二阶泰勒展开，效果更好"></a>为什么xgb使用二阶泰勒展开，效果更好</h1><ul>
 <li>类似牛顿法比梯度下降法收敛的更快更准确。</li>
