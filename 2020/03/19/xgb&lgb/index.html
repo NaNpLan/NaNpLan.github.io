@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="XGBoost参考官网">
 <meta property="article:published_time" content="2020-03-19T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-19T08:10:50.105Z">
+<meta property="article:modified_time" content="2020-03-19T08:12:08.787Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="xgb">
 <meta property="article:tag" content="lgb">
@@ -333,7 +333,7 @@ obj^{(t)} & = \sum_{i=1}^n (y_i - (\hat{y}_i^{(t-1)} + f_t(x_i)))^2 + \sum_{i=1}
 obj^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + constant
 \end{split}
 
-g_i &= \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})\\
+g_i &= \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})
 h_i &= \partial_{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})
 
 \nonumber
