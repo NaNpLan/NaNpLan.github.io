@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="XGBoost参考官网">
 <meta property="article:published_time" content="2020-03-19T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-19T06:12:40.560Z">
+<meta property="article:modified_time" content="2020-03-19T06:13:29.499Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="xgb">
 <meta property="article:tag" content="lgb">
@@ -310,7 +310,7 @@
         <p>XGBoost参考<a href="https://xgboost.readthedocs.io/en/latest/tutorials/model.html" target="_blank" rel="noopener">官网</a></p>
 <a id="more"></a>
 <h1 id="xgb"><a href="#xgb" class="headerlink" title="xgb"></a>xgb</h1><h2 id="加法模型"><a href="#加法模型" class="headerlink" title="加法模型"></a>加法模型</h2><p>Xgboost采用加法策略，每次学习一颗新树，已修正上次的学习内容。将第$t$步的预测值记为$\hat{y}^{(t)}_{i}$：</p>
-<script type="math/tex; mode=display">\hat{y}_{i}^{(t)} = \sum{k=1}^t</script><h1 id="xgb与lgb对比"><a href="#xgb与lgb对比" class="headerlink" title="xgb与lgb对比"></a>xgb与lgb对比</h1><h1 id="为什么xgb使用二阶泰勒展开，效果更好"><a href="#为什么xgb使用二阶泰勒展开，效果更好" class="headerlink" title="为什么xgb使用二阶泰勒展开，效果更好"></a>为什么xgb使用二阶泰勒展开，效果更好</h1><ul>
+<script type="math/tex; mode=display">\hat{y}_{i}^{(t)} = \sum{k=1}^{t}f_{k}(x_i)=y_{i}^(t-1)+f_{t}(x_i)</script><h1 id="xgb与lgb对比"><a href="#xgb与lgb对比" class="headerlink" title="xgb与lgb对比"></a>xgb与lgb对比</h1><h1 id="为什么xgb使用二阶泰勒展开，效果更好"><a href="#为什么xgb使用二阶泰勒展开，效果更好" class="headerlink" title="为什么xgb使用二阶泰勒展开，效果更好"></a>为什么xgb使用二阶泰勒展开，效果更好</h1><ul>
 <li>类似牛顿法比梯度下降法收敛的更快更准确。</li>
 </ul>
 
