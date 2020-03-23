@@ -15,16 +15,17 @@
 
 
 
-<meta name="description" content="YOLO">
+<meta name="description" content="网络流程YOLO将整张图片分成$S \times S$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：  预测$B$个bbox，并且每个bbox有一个置信度（box confidence score） 只检测一种类别的目标，无论每个网格预测多少bbox 预测网格包含$C$个类别目标的条件概率（conditional class probability）  每个预测的bbox">
 <meta property="og:type" content="article">
 <meta property="og:title" content="YOLO">
 <meta property="og:url" content="http://yoursite.com/2020/03/23/yolo/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="YOLO">
+<meta property="og:description" content="网络流程YOLO将整张图片分成$S \times S$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：  预测$B$个bbox，并且每个bbox有一个置信度（box confidence score） 只检测一种类别的目标，无论每个网格预测多少bbox 预测网格包含$C$个类别目标的条件概率（conditional class probability）  每个预测的bbox">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/3.png">
 <meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T06:40:25.673Z">
+<meta property="article:modified_time" content="2020-03-23T09:48:21.099Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="YOLO">
 <meta name="twitter:card" content="summary">
@@ -309,9 +310,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>YOLO</p>
-<a id="more"></a>
-<p>YOLO将整张图片分成$S \times S$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：</p>
+        <a id="more"></a>
+<h1 id="网络流程"><a href="#网络流程" class="headerlink" title="网络流程"></a>网络流程</h1><p>YOLO将整张图片分成$S \times S$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：</p>
 <ul>
 <li>预测$B$个bbox，并且每个bbox有一个置信度（<code>box confidence score</code>）</li>
 <li>只检测一种类别的目标，无论每个网格预测多少bbox</li>
@@ -319,11 +319,21 @@
 </ul>
 <p>每个预测的bbox包含5个元素：$(x，y，w，h)$和置信度。置信度得分反映了bbox包含对象的可能性以及bbox的准确性。用整个图像的宽、高对边界框的w、h进行归一化。x、y是对应网格的偏移量。因此，x，y，w和h的范围都在0和1之间。每个网格都有20个条件类概率。因此，YOLO的输出是$(S,S,B \times 5+C)=(7,7,2 \times 5+20)= (7,7,30)$。</p>
 <p>YOLO的任务就是建立一个网络，得到$(7, 7, 30)$的输出。如下图所示，先经过24个卷积层，将w、h减少到$7 \times \7$，每个点对应1000维的深度。然后再通过2个全连接层，得到$(7, 7, 30)$的输出。<br><img src="/2020/03/23/yolo/1.png" alt></p>
-<p>最终，每个bbox的最终得分，<code>class confidence score</code>由<code>box confidence score</code>和<code>conditional class probability</code>的乘积得到，相当于即考虑分类又定位精确性的综合得分。<br><!--![](/YOLO/2.png)--></p>
+<p>每个bbox的最终得分——类别置信度<code>class confidence score</code>由box置信度<code>box confidence score</code>和类别概率<code>conditional class probability</code>的乘积得到，相当于考虑分类准确度、定位精度的综合得分。<br><!--![](/YOLO/2.png)--></p>
 <div align="center">
-  <img height="150" src="/2020/03/23/yolo/2.png">
+  <img height="200" src="/2020/03/23/yolo/2.png">
 </div>
 
+<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><ul>
+<li>快。可用于工业中的实时处理。</li>
+<li>类别预测+定位可由一个网络得到。</li>
+<li>YOLO更通用。从自然场景推广到其他领域时，如艺术品时，有更好的表现。<div align="center">
+<img height="300" src="/2020/03/23/yolo/3.png">
+</div>
+
+
+</li>
+</ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a></p>
 
       
@@ -351,7 +361,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">1.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络流程"><span class="toc-number">1.</span> <span class="toc-text">网络流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#损失函数"><span class="toc-number">2.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优点"><span class="toc-number">3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
