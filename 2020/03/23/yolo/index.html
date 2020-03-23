@@ -24,8 +24,9 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/4.png">
 <meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T14:37:01.452Z">
+<meta property="article:modified_time" content="2020-03-23T15:48:56.532Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="YOLO">
 <meta name="twitter:card" content="summary">
@@ -342,9 +343,15 @@
 <ol>
 <li><p>BN<br>在卷积层中加入BN，不再需要使用drop out，mAP提升2%。</p>
 </li>
-<li><p>将预测从cell级别转换至anchor(先验框)级别<br>每个anchor的预测包括：4个坐标$(x,y,w,h)$，1个置信度，20个类别概率。每个cell产生5种不同大小的anchor，对应$5 \times 25 = 125$维的输出。整张图片得到$7 \times 7 \times 125$维的输出。为了得到这样的预测结果，YOLOv2去掉了最后的2个全连接层，并用3个$3 \times 3$大小的卷积层替换最后一组卷积，先得到 $7 \times 7 \times 1024$的输出。再用一组$1 \times 1$的卷积层，得到$7 \times 7 \times 125$的输出。</p>
+<li><p>将预测从cell级别转换至anchor(先验框)级别<br>每个anchor都对应一组类别概率。每个anchor的预测值包含25维：4个坐标$(x,y,w,h)$，1个置信度，20个类别概率。每个cell产生5种不同大小的anchor，对应$5 \times 25 = 125$维的输出。整张图片得到$7 \times 7 \times 125$维的输出。为了得到这样的预测结果，YOLOv2去掉了最后的2个全连接层，并用3个$3 \times 3$大小的卷积层替换最后一组卷积，先得到 $7 \times 7 \times 1024$的输出。再用一组$1 \times 1$的卷积层，得到$7 \times 7 \times 125$的输出。</p>
+</li>
+<li><p>Fine-Grained Features<br>YOLOv2的输入图像的大小为$416 \times 416$，经过darknet的5次下采样，得到大小为$13 \times 13$的特征图。对于大物体来说，这个特征图是理想的。但对于小物体来说，需要更精细的特征图提供更多细节信息。<br>YOLOv2引入<code>passthrough</code>层来提供更精细的特征图。passthrough层本质就是特征重排，将$26 \times \26 \times 512$维的特征图按行和列隔点采样，得到4张$13 \times 13 \times 512$维的特征图，再将这四张特征图的channel维concat起来，得到$13 \times 13 \times 2048$维的特征图，该特征图有更大的分辨率。将$13 \times 13 \times 2048$的大分辨率特征图与$13 \times 13 \times 1024$的小分辨率特征图的channel维concat起来，得到passthrough的输出——$13 \times 13 \times 3072$维的特征图。</p>
 </li>
 </ol>
+<div align="center">
+  <img height="200" src="/2020/03/23/yolo/4.png">
+</div>
+
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a></p>
 
       
