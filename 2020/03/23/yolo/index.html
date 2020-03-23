@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/4.png">
 <meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T15:51:32.264Z">
+<meta property="article:modified_time" content="2020-03-23T15:59:44.916Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="YOLO">
 <meta name="twitter:card" content="summary">
@@ -352,7 +352,10 @@
   <img height="150" src="/2020/03/23/yolo/4.png">
 </div>
 
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a></p>
+<ol>
+<li>Multi-Scale Training<br>由于YOLOv2去掉了全连接层，只包含卷积层、池化层，不限制输入图像的大小。为了模型的鲁棒性，在训练的时候采取多尺寸训练的方法，每隔一定的iteration，改变输入的图像大小，采取下采样倍数32的整数倍：{320, 352, 384, 416, 448, 480, …, 608}。</li>
+</ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a><br><a href="https://zhuanlan.zhihu.com/p/80855877" target="_blank" rel="noopener">YOLO v1 v2 v3系列原理与实现</a></p>
 
       
     </div>
