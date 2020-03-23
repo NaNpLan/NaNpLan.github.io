@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="YOLO">
 <meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T06:05:27.243Z">
+<meta property="article:modified_time" content="2020-03-23T06:28:56.179Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="YOLO">
 <meta name="twitter:card" content="summary">
@@ -308,13 +308,15 @@
           
         <p>YOLO</p>
 <a id="more"></a>
-<p>YOLO将整张图片分成$S\timesS$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：</p>
+<p>YOLO将整张图片分成$S \times S$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：</p>
 <ul>
 <li>预测$B$个bbox，并且每个bbox有一个置信度</li>
 <li>只检测一种类别的目标，无论每个网格预测多少bbox</li>
 <li>预测网格包含$C$个类别目标的条件概率</li>
 </ul>
-<p>每个预测的bbox包含5个元素：$(x，y，w，h)$和置信度。置信度得分反映了bbox包含对象的可能性以及bbox的准确性。用整个图像的宽、高对边界框的w、h进行归一化。x、y是对应网格的偏移量。因此，x，y，w和h的范围都在0和1之间。每个网格都有20个条件类概率。因此，YOLO的输出是$(S,S,B×5+C)=(7,7,2×5+20)= (7,7,30)$。</p>
+<p>每个预测的bbox包含5个元素：$(x，y，w，h)$和置信度。置信度得分反映了bbox包含对象的可能性以及bbox的准确性。用整个图像的宽、高对边界框的w、h进行归一化。x、y是对应网格的偏移量。因此，x，y，w和h的范围都在0和1之间。每个网格都有20个条件类概率。因此，YOLO的输出是$(S,S,B \times 5+C)=(7,7,2 \times 5+20)= (7,7,30)$。</p>
+<p>YOLO的任务就是建立一个网络，得到$(7, 7, 30)$的输出。如下图所示，先经过24个卷积层，将w、h减少到$7 \times \7$，每个点对应1000维的深度。然后再通过2个全连接层，得到$(7, 7, 30)$的输出。<br><img src alt="/YOLO/1.png"></p>
+<p>最终，每个bbox的<br><img src alt="/YOLO/2.png"></p>
 <p>Reference<br><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a></p>
 
       
