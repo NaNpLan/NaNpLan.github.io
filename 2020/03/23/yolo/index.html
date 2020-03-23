@@ -25,7 +25,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/3.png">
 <meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T14:05:22.048Z">
+<meta property="article:modified_time" content="2020-03-23T14:37:01.452Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="YOLO">
 <meta name="twitter:card" content="summary">
@@ -342,7 +342,8 @@
 <ol>
 <li><p>BN<br>在卷积层中加入BN，不再需要使用drop out，mAP提升2%。</p>
 </li>
-<li></li>
+<li><p>将预测从cell级别转换至anchor(先验框)级别<br>每个anchor的预测包括：4个坐标$(x,y,w,h)$，1个置信度，20个类别概率。每个cell产生5种不同大小的anchor，对应$5 \times 25 = 125$维的输出。整张图片得到$7 \times 7 \times 125$维的输出。为了得到这样的预测结果，YOLOv2去掉了最后的2个全连接层，并用3个$3 \times 3$大小的卷积层替换最后一组卷积，先得到 $7 \times 7 \times 1024$的输出。再用一组$1 \times 1$的卷积层，得到$7 \times 7 \times 125$的输出。</p>
+</li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a></p>
 
