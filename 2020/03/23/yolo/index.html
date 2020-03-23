@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/4.png">
 <meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T15:59:44.916Z">
+<meta property="article:modified_time" content="2020-03-23T16:18:42.327Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="YOLO">
 <meta name="twitter:card" content="summary">
@@ -343,9 +343,11 @@
 <ol>
 <li><p>BN<br>在卷积层中加入BN，不再需要使用drop out，mAP提升2%。</p>
 </li>
-<li><p>将预测从cell级别转换至anchor(先验框)级别<br>每个anchor都对应一组类别概率。每个anchor的预测值包含25维：4个坐标$(x,y,w,h)$，1个置信度，20个类别概率。每个cell产生5种不同大小的anchor，对应$5 \times 25 = 125$维的输出。整张图片得到$7 \times 7 \times 125$维的输出。为了得到这样的预测结果，YOLOv2去掉了最后的2个全连接层，并用3个$3 \times 3$大小的卷积层替换最后一组卷积，先得到 $7 \times 7 \times 1024$的输出。再用一组$1 \times 1$的卷积层，得到$7 \times 7 \times 125$的输出。</p>
+<li><p>将预测从cell级别转换至anchor(先验框)级别<br>YOLOv2借鉴了Faster R-CNN中anchor的思想，每个cell对应5种尺寸的anchor。<br>并将预测从cell级别转换至anchor级别。YOLOv1每个cell对应一组类别概率，而YOLOv2每个anchor都对应一组类别概率。每个anchor的预测值包含25维：4个坐标$(x,y,w,h)$，1个置信度，20个类别概率。每个cell产生5种不同大小的anchor，对应$5 \times 25 = 125$维的输出。整张图片得到$7 \times 7 \times 125$维的输出。为了得到这样的预测结果，YOLOv2去掉了最后的2个全连接层，并用3个$3 \times 3$大小的卷积层替换最后一组卷积，先得到 $7 \times 7 \times 1024$的输出。再用一组$1 \times 1$的卷积层，得到$7 \times 7 \times 125$的输出。</p>
 </li>
-<li><p>Fine-Grained Features<br>YOLOv2的输入图像的大小为$416 \times 416$，经过darknet的5次下采样，得到大小为$13 \times 13$的特征图。对于大物体来说，这个特征图是理想的。但对于小物体来说，需要更精细的特征图提供更多细节信息。<br>YOLOv2引入<code>passthrough</code>层来提供更精细的特征图。passthrough层本质就是特征重排，将$26 \times 26 \times 512$维的特征图按行和列隔点采样，得到4张$13 \times 13 \times 512$维的特征图，再将这四张特征图的channel维concat起来，得到$13 \times 13 \times 2048$维的特征图，该特征图有更大的分辨率。将$13 \times 13 \times 2048$的大分辨率特征图与$13 \times 13 \times 1024$的小分辨率特征图的channel维concat起来，得到passthrough的输出——$13 \times 13 \times 3072$维的特征图。</p>
+<li><p>Dimension Clusters<br>采用K-Means聚类指导anchor的设置。</p>
+</li>
+<li><p>Fine-Grained Features<br>YOLOv2的输入图像的大小为$416 \times 416$，经过darknet-19的5次下采样，得到大小为$13 \times 13$的特征图。对于大物体来说，这个特征图是理想的。但对于小物体来说，需要更精细的特征图提供更多细节信息。<br>YOLOv2引入<code>passthrough</code>层来提供更精细的特征图。passthrough层本质就是特征重排，将$26 \times 26 \times 512$维的特征图按行和列隔点采样，得到4张$13 \times 13 \times 512$维的特征图，再将这四张特征图的channel维concat起来，得到$13 \times 13 \times 2048$维的特征图，该特征图有更大的分辨率。将$13 \times 13 \times 2048$的大分辨率特征图与$13 \times 13 \times 1024$的小分辨率特征图的channel维concat起来，得到passthrough的输出——$13 \times 13 \times 3072$维的特征图。</p>
 </li>
 </ol>
 <div align="center">
@@ -354,6 +356,14 @@
 
 <ol>
 <li>Multi-Scale Training<br>由于YOLOv2去掉了全连接层，只包含卷积层、池化层，不限制输入图像的大小。为了模型的鲁棒性，在训练的时候采取多尺寸训练的方法，每隔一定的iteration，改变输入的图像大小，采取下采样倍数32的整数倍：{320, 352, 384, 416, 448, 480, …, 608}。</li>
+</ol>
+<h1 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h1><ol>
+<li><p>backbone采用darknet-53</p>
+</li>
+<li><p>FPN实现多尺度特征的捕捉<br>YOLOv2采用passthrough，综合了2个不同尺度的特征图。YOLOv3采用FPN，结合3个不同尺度的特征图进行检测。</p>
+</li>
+<li><p>9种尺度的anchor<br>YOLOv3通过K-Means聚类，得到9种anchor。再将9种anchor划分给3种特征图，分辨率较大的特征图对应较小的anchor。</p>
+</li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a><br><a href="https://zhuanlan.zhihu.com/p/80855877" target="_blank" rel="noopener">YOLO v1 v2 v3系列原理与实现</a></p>
 
@@ -382,7 +392,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络流程"><span class="toc-number">1.</span> <span class="toc-text">网络流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#损失函数"><span class="toc-number">2.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优点"><span class="toc-number">3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#YOLOv2"><span class="toc-number">4.</span> <span class="toc-text">YOLOv2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络流程"><span class="toc-number">1.</span> <span class="toc-text">网络流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#损失函数"><span class="toc-number">2.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优点"><span class="toc-number">3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#YOLOv2"><span class="toc-number">4.</span> <span class="toc-text">YOLOv2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#YOLOv3"><span class="toc-number">5.</span> <span class="toc-text">YOLOv3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
