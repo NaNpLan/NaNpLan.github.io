@@ -293,7 +293,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">228字</span>
+        <span class="post-count">248字</span>
       </span>
     </span>
 
@@ -313,18 +313,8 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
-<p>Faster R-CNN、YOLOv2 v3等方法都是anchor-based，需要设置anchor大小、比例等超参数。anchor-free方法减少了人工调优，同时避免了计算GT和proposal的IoU。<br>看了一些论文后，感觉anchor-based和anchor-free没有太大的不同，绝大多数在anchor-based上的trick在anchor-free上也同样适用。如果说以往的anchor-based方法将目标检测问题视为region-level的分类、回归问题，anchor-free方法就是将目标检测问题视为pixel-level的分类、回归问题。<br>下面按照anchor-free的发展路线，将其分为3类：</p>
-<ul>
-<li>基于keypoint: CornerNet、CenterNet、ExtremeNet</li>
-<li>基于segmentation: FCOS、FoveaBox、FSAF</li>
-</ul>
-<h1 id="基于keypoint"><a href="#基于keypoint" class="headerlink" title="基于keypoint"></a>基于keypoint</h1><h2 id="CornerNet-ECCV2018"><a href="#CornerNet-ECCV2018" class="headerlink" title="CornerNet ECCV2018"></a>CornerNet ECCV2018</h2><p>将目标检测问题视为关键点检测问题，通过检测目标的左上角、右下角坐标获得预测框。整个网络包含3个部分：</p>
-<ol>
-<li>backbone：hourglass，出自ECCV2016，<br><img src="/2020/05/22/anchor-free/1.png" alt></li>
-</ol>
-<h2 id="ExtremeNet-CVPR2019"><a href="#ExtremeNet-CVPR2019" class="headerlink" title="ExtremeNet CVPR2019"></a>ExtremeNet CVPR2019</h2><h2 id="CenterNet-ICCV2019"><a href="#CenterNet-ICCV2019" class="headerlink" title="CenterNet ICCV2019"></a>CenterNet ICCV2019</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://zhuanlan.zhihu.com/p/44449116" target="_blank" rel="noopener">目标检测论文阅读：CornerNet</a></p>
-
+              <p>Faster R-CNN、YOLOv2 v3等方法都是anchor-based，需要设置anchor大小、比例等超参数。anchor-free方法减少了人工调优，同时避免了计算GT和proposal的IoU。<br></p>
+          
       
     </div>
     
@@ -341,6 +331,10 @@
         <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Anchor-Free/" rel="tag">Anchor-Free</a></li></ul>
     </div>
 
+      
+        <p class="article-more-link">
+          <a href="/2020/05/22/anchor-free/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
