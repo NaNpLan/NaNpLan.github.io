@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/4.png">
 <meta property="article:published_time" content="2020-05-22T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-05-22T13:06:21.458Z">
+<meta property="article:modified_time" content="2020-05-22T13:07:49.409Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Anchor-Free">
 <meta name="twitter:card" content="summary">
@@ -337,20 +337,19 @@
 <li>基于segmentation: FCOS、FoveaBox、FSAF</li>
 </ul>
 <h1 id="基于keypoint"><a href="#基于keypoint" class="headerlink" title="基于keypoint"></a>基于keypoint</h1><h2 id="CornerNet-ECCV2018"><a href="#CornerNet-ECCV2018" class="headerlink" title="CornerNet ECCV2018"></a>CornerNet ECCV2018</h2><p>将目标检测问题视为关键点检测问题，通过检测目标的左上角、右下角坐标获得预测框。整个网络包含3个部分：</p>
-<ol>
-<li>backbone：hourglass，出自ECCV2016，用于人体姿态估计。下面，简单介绍一下这个网络：<br><img src="/2020/05/22/anchor-free/1.png" alt><br>如图所示，一个hourglass网络，包含若干个沙漏状的hourglass moudle。每个moudle先经过bottom-up过程下采样，将图片从高分辨率降到低分辨率；再经过top-down过程上采样，将图片从低分辨率恢复至高分辨率。每次上采样之后，和bottom-up通道中相同分辨率的特征图相加。<br><img src="/2020/05/22/anchor-free/2.png" alt></li>
-</ol>
+<ul>
+<li><p>backbone：hourglass，出自ECCV2016，用于人体姿态估计。下面，简单介绍一下这个网络：<br><img src="/2020/05/22/anchor-free/1.png" alt><br>如图所示，一个hourglass网络，包含若干个沙漏状的hourglass moudle。每个moudle先经过bottom-up过程下采样，将图片从高分辨率降到低分辨率；再经过top-down过程上采样，将图片从低分辨率恢复至高分辨率。每次上采样之后，和bottom-up通道中相同分辨率的特征图相加。<br><div align="center">
+<img height="300" src="/2020/05/22/anchor-free/2.png">
+</div></p>
 <ul>
 <li>bottom-up阶段：卷积层+maxpooling</li>
 <li>top-down阶段：上采样+跨层融合</li>
 </ul>
-<ol>
+</li>
 <li><p>detect corner &amp; group corner<br>对于C个类别，每个类别生成一张heatmap，</p>
 </li>
 <li><p>corner pooling<br>本文的一个创新点是提出了corner pooling。以top-left corner pooling为例，如下图所示，我们想得到红色位置上的corner pooling结果，可以这样操作：</p>
 </li>
-</ol>
-<ul>
 <li>对于每个通道的特征图，分别取水平向右的最大值、竖直向下的最大值。</li>
 <li>将两个最大值相加，即可得到蓝色处的结果。<br><div align="center">
 <img height="300" src="/2020/05/22/anchor-free/3.png">
