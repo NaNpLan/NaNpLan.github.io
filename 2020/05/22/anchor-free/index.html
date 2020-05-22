@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/4.png">
 <meta property="article:published_time" content="2020-05-22T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-05-22T13:07:49.409Z">
+<meta property="article:modified_time" content="2020-05-22T13:09:47.106Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Anchor-Free">
 <meta name="twitter:card" content="summary">
@@ -337,24 +337,25 @@
 <li>基于segmentation: FCOS、FoveaBox、FSAF</li>
 </ul>
 <h1 id="基于keypoint"><a href="#基于keypoint" class="headerlink" title="基于keypoint"></a>基于keypoint</h1><h2 id="CornerNet-ECCV2018"><a href="#CornerNet-ECCV2018" class="headerlink" title="CornerNet ECCV2018"></a>CornerNet ECCV2018</h2><p>将目标检测问题视为关键点检测问题，通过检测目标的左上角、右下角坐标获得预测框。整个网络包含3个部分：</p>
-<ul>
-<li><p>backbone：hourglass，出自ECCV2016，用于人体姿态估计。下面，简单介绍一下这个网络：<br><img src="/2020/05/22/anchor-free/1.png" alt><br>如图所示，一个hourglass网络，包含若干个沙漏状的hourglass moudle。每个moudle先经过bottom-up过程下采样，将图片从高分辨率降到低分辨率；再经过top-down过程上采样，将图片从低分辨率恢复至高分辨率。每次上采样之后，和bottom-up通道中相同分辨率的特征图相加。<br><div align="center">
-<img height="300" src="/2020/05/22/anchor-free/2.png">
-</div></p>
-<ul>
-<li>bottom-up阶段：卷积层+maxpooling</li>
-<li>top-down阶段：上采样+跨层融合</li>
-</ul>
-</li>
-<li><p>detect corner &amp; group corner<br>对于C个类别，每个类别生成一张heatmap，</p>
-</li>
-<li><p>corner pooling<br>本文的一个创新点是提出了corner pooling。以top-left corner pooling为例，如下图所示，我们想得到红色位置上的corner pooling结果，可以这样操作：</p>
-</li>
-<li>对于每个通道的特征图，分别取水平向右的最大值、竖直向下的最大值。</li>
-<li>将两个最大值相加，即可得到蓝色处的结果。<br><div align="center">
-<img height="300" src="/2020/05/22/anchor-free/3.png">
-</div><br>作者设计这个方法的思路在论文中也有讲解：在确定某个像素点是否为左上角corner的时候，我们需要水平地向右查看是否包含对象的最顶部边界，垂直地向下查看是否包含对象的最左侧边界。以下图的第一张为例，对于左上角角点（雪地），局部的信息不足以决定右下方是否存在目标（滑雪的人）。所以我们需要进行corner pooling，将上边缘包含的目标顶部特征信息（帽子顶部），和目标左侧特征信息（左手），用最大值相加的方法，传递给左上角角点。</li>
-</ul>
+<h3 id="backbone"><a href="#backbone" class="headerlink" title="backbone"></a>backbone</h3><p>hourglass，出自ECCV2016，用于人体姿态估计。下面，简单介绍一下这个网络：<br><img src="/2020/05/22/anchor-free/1.png" alt><br>如图所示，一个hourglass网络，包含若干个沙漏状的hourglass moudle。每个moudle先经过bottom-up过程下采样，将图片从高分辨率降到低分辨率；再经过top-down过程上采样，将图片从低分辨率恢复至高分辨率。每次上采样之后，和bottom-up通道中相同分辨率的特征图相加。</p>
+<div align="center">
+  <img height="300" src="/2020/05/22/anchor-free/2.png">
+</div>
+- bottom-up阶段：卷积层+maxpooling
+- top-down阶段：上采样+跨层融合
+
+### detect corner & group corner
+对于C个类别，每个类别生成一张heatmap，
+
+### corner pooling
+本文的一个创新点是提出了corner pooling。以top-left corner pooling为例，如下图所示，我们想得到红色位置上的corner pooling结果，可以这样操作：
+- 对于每个通道的特征图，分别取水平向右的最大值、竖直向下的最大值。
+- 将两个最大值相加，即可得到蓝色处的结果。
+<div align="center">
+  <img height="300" src="/2020/05/22/anchor-free/3.png">
+</div>
+作者设计这个方法的思路在论文中也有讲解：在确定某个像素点是否为左上角corner的时候，我们需要水平地向右查看是否包含对象的最顶部边界，垂直地向下查看是否包含对象的最左侧边界。以下图的第一张为例，对于左上角角点（雪地），局部的信息不足以决定右下方是否存在目标（滑雪的人）。所以我们需要进行corner pooling，将上边缘包含的目标顶部特征信息（帽子顶部），和目标左侧特征信息（左手），用最大值相加的方法，传递给左上角角点。
+
 <div align="center">
   <img height="200" src="/2020/05/22/anchor-free/4.png">
 </div>
@@ -386,7 +387,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于keypoint"><span class="toc-number">1.</span> <span class="toc-text">基于keypoint</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CornerNet-ECCV2018"><span class="toc-number">1.1.</span> <span class="toc-text">CornerNet ECCV2018</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ExtremeNet-CVPR2019"><span class="toc-number">1.2.</span> <span class="toc-text">ExtremeNet CVPR2019</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CenterNet-ICCV2019"><span class="toc-number">1.3.</span> <span class="toc-text">CenterNet ICCV2019</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#基于keypoint"><span class="toc-number">1.</span> <span class="toc-text">基于keypoint</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#CornerNet-ECCV2018"><span class="toc-number">1.1.</span> <span class="toc-text">CornerNet ECCV2018</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#backbone"><span class="toc-number">1.1.1.</span> <span class="toc-text">backbone</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ExtremeNet-CVPR2019"><span class="toc-number">1.2.</span> <span class="toc-text">ExtremeNet CVPR2019</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CenterNet-ICCV2019"><span class="toc-number">1.3.</span> <span class="toc-text">CenterNet ICCV2019</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">2.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
