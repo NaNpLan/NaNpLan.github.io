@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/4.png">
 <meta property="article:published_time" content="2020-05-22T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-05-22T13:03:55.588Z">
+<meta property="article:modified_time" content="2020-05-22T13:06:21.458Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Anchor-Free">
 <meta name="twitter:card" content="summary">
@@ -352,8 +352,14 @@
 </ol>
 <ul>
 <li>对于每个通道的特征图，分别取水平向右的最大值、竖直向下的最大值。</li>
-<li>将两个最大值相加，即可得到蓝色处的结果。<br><img src="/2020/05/22/anchor-free/3.png" alt><br>作者设计这个方法的思路在论文中也有讲解：在确定某个像素点是否为左上角corner的时候，我们需要水平地向右查看是否包含对象的最顶部边界，垂直地向下查看是否包含对象的最左侧边界。以下图的第一张为例，对于左上角角点（雪地），局部的信息不足以决定右下方是否存在目标（滑雪的人）。所以我们需要进行corner pooling，将上边缘包含的目标顶部特征信息（帽子顶部），和目标左侧特征信息（左手），用最大值相加的方法，传递给左上角角点。<br><img src="/2020/05/22/anchor-free/4.png" alt></li>
+<li>将两个最大值相加，即可得到蓝色处的结果。<br><div align="center">
+<img height="300" src="/2020/05/22/anchor-free/3.png">
+</div><br>作者设计这个方法的思路在论文中也有讲解：在确定某个像素点是否为左上角corner的时候，我们需要水平地向右查看是否包含对象的最顶部边界，垂直地向下查看是否包含对象的最左侧边界。以下图的第一张为例，对于左上角角点（雪地），局部的信息不足以决定右下方是否存在目标（滑雪的人）。所以我们需要进行corner pooling，将上边缘包含的目标顶部特征信息（帽子顶部），和目标左侧特征信息（左手），用最大值相加的方法，传递给左上角角点。</li>
 </ul>
+<div align="center">
+  <img height="200" src="/2020/05/22/anchor-free/4.png">
+</div>
+
 <h2 id="ExtremeNet-CVPR2019"><a href="#ExtremeNet-CVPR2019" class="headerlink" title="ExtremeNet CVPR2019"></a>ExtremeNet CVPR2019</h2><h2 id="CenterNet-ICCV2019"><a href="#CenterNet-ICCV2019" class="headerlink" title="CenterNet ICCV2019"></a>CenterNet ICCV2019</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://zhuanlan.zhihu.com/p/44449116" target="_blank" rel="noopener">目标检测论文阅读：CornerNet</a><br><a href="https://zhuanlan.zhihu.com/p/57614239" target="_blank" rel="noopener">目标检测： CornerNet</a></p>
 
       
