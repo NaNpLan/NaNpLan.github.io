@@ -26,11 +26,11 @@
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/5.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/6.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/7.png">
-<meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/7.png">
+<meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/8.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/05/22/anchor-free/4.png">
 <meta property="article:published_time" content="2020-05-22T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-05-23T02:45:06.360Z">
+<meta property="article:modified_time" content="2020-05-23T02:46:51.838Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Anchor-Free">
 <meta name="twitter:card" content="summary">
@@ -371,7 +371,7 @@
 <p><img src="/2020/05/22/anchor-free/7.png" alt></p>
 <p>使用smooth l1损失函数来训练offsets，和heatmaps同理，这里top-left corner和bottom-right corner分别对应一组offsets，C个通道共享一个offset。</p>
 <h3 id="group-corner"><a href="#group-corner" class="headerlink" title="group corner"></a>group corner</h3><p>一张图片中可能包含多个目标，在detect corner步骤中，我们检测出多个top-left corner和多个bottom-right corner，在group corner阶段，我们将这些corner组队，判断一对角点是否对应同一个目标。详见公式（4）（5），其中，$e_{t_{k}}$、$e_{b_{k}}$分别表示左上角、右下角的embedding，$e_k$表示$e_{t_{k}}$和$e_{b_{k}}$的均值，$\delta$在作者的实验中，默认为1。<br>pull loss用于拉近同一目标对应corner的距离，push loss用于分离不同目标对应corner。</p>
-<p><img src="/2020/05/22/anchor-free/7.png" alt></p>
+<p><img src="/2020/05/22/anchor-free/8.png" alt></p>
 <h3 id="corner-pooling"><a href="#corner-pooling" class="headerlink" title="corner pooling"></a>corner pooling</h3><p>本文的一个创新点是提出了corner pooling。以top-left corner pooling为例，如下图所示，我们想得到红色位置上的corner pooling结果，可以这样操作：</p>
 <ul>
 <li>对于每个通道的特征图，分别取水平向右的最大值、竖直向下的最大值。</li>
