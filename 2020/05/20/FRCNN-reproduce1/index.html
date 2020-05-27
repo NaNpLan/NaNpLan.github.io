@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="pytorch版本的Faster R-CNN复现。">
 <meta property="article:published_time" content="2020-05-20T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-05-27T11:55:49.257Z">
+<meta property="article:modified_time" content="2020-05-27T12:01:53.786Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Faster R-CNN">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">582字</span>
+        <span class="post-count">622字</span>
       </span>
     </span>
 
@@ -342,7 +342,7 @@
 <li>nms，阈值默认为0.7</li>
 <li>对nms后的proposal，选择score最大的前n_post_nms个roi，对于训练阶段n_pre_nms一般为2000，测试阶段一般为300。</li>
 </ul>
-
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ProposalCreator</span>:</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self,</span></span></span><br><span class="line"><span class="function"><span class="params">                 parent_model,</span></span></span><br><span class="line"><span class="function"><span class="params">                 nms_thresh = <span class="number">0.7</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 n_train_pre_nms=<span class="number">12000</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 n_train_post_nms=<span class="number">2000</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 n_test_pre_nms=<span class="number">6000</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 n_test_post_nms=<span class="number">300</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">                 min_size=<span class="number">16</span></span></span></span><br><span class="line"><span class="function"><span class="params">                 )</span>:</span></span><br><span class="line">        self.parent_model = parent_model</span><br><span class="line">        self.nms_thresh = nms_thresh</span><br><span class="line">        self.n_train_pre_nms = n_train_pre_nms</span><br><span class="line">        self.n_train_post_nms = n_train_post_nms</span><br><span class="line">        self.n_test_pre_nms = n_test_pre_nms</span><br><span class="line">        self.n_test_post_nms = n_test_post_nms</span><br><span class="line">        self.min_size = min_size</span><br></pre></td></tr></table></figure>
       
     </div>
     
