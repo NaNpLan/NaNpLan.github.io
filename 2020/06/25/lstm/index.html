@@ -15,20 +15,21 @@
 
 
 
-<meta name="description" content="最近实习接触到一些序列模型，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。">
+<meta name="description" content="最近实习接触到一些用户行为序列建模，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="序列模型">
 <meta property="og:url" content="http://yoursite.com/2020/06/25/lstm/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="最近实习接触到一些序列模型，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。">
+<meta property="og:description" content="最近实习接触到一些用户行为序列建模，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。">
 <meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/4.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/5.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/lstm/7.png">
 <meta property="article:published_time" content="2020-06-25T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-06-27T01:47:42.895Z">
+<meta property="article:modified_time" content="2020-06-27T02:08:14.749Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="RNN">
 <meta property="article:tag" content="LSTM">
@@ -300,7 +301,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">723字</span>
+        <span class="post-count">760字</span>
       </span>
     </span>
 
@@ -335,7 +336,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>最近实习接触到一些序列模型，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。<br><a id="more"></a></p>
+        <p>最近实习接触到一些用户行为序列建模，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。<br><a id="more"></a></p>
 <h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><p>如下图所示：</p>
 <ul>
 <li>每个结点的输入包含：表示上一个结点隐藏层的输出$h$，当前结点的输入$x$</li>
@@ -373,10 +374,16 @@
   <img height="200" src="/2020/06/25/lstm/6.png">
 </div>
 
-<h1 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h1><ul>
+<h1 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h1><p>比lstm简单，计算量小。</p>
+<div align="center">
+  <img height="200" src="/2020/06/25/lstm/7.png">
+</div>
+
+<ul>
 <li>更新门</li>
 <li>重置门</li>
 </ul>
+<h1 id="LSTM与Attention"><a href="#LSTM与Attention" class="headerlink" title="LSTM与Attention"></a>LSTM与Attention</h1><p>用户行为序列建模</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://www.zhihu.com/question/44895610/answer/616818627" target="_blank" rel="noopener">为什么相比于RNN，LSTM在梯度消失上表现更好？</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/30844905" target="_blank" rel="noopener">一文搞懂RNN（循环神经网络）基础篇</a></li>
@@ -385,6 +392,7 @@
 <li><a href="https://mp.weixin.qq.com/s/aV9Rj-CnJZRXRm0rDOK6gg" target="_blank" rel="noopener">LSTM和GRU的解析</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/83496936" target="_blank" rel="noopener">LSTM介绍及反向传播算法推导</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/104475016" target="_blank" rel="noopener">深入浅出LSTM及其Python代码实现</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/138136777" target="_blank" rel="noopener">谈谈推荐系统中的用户行为序列建模</a></li>
 </ul>
 
       
@@ -412,7 +420,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN"><span class="toc-number">1.</span> <span class="toc-text">RNN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSTM"><span class="toc-number">2.</span> <span class="toc-text">LSTM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遗忘门"><span class="toc-number">2.1.</span> <span class="toc-text">遗忘门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#记忆门"><span class="toc-number">2.2.</span> <span class="toc-text">记忆门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细胞状态更新"><span class="toc-number">2.3.</span> <span class="toc-text">细胞状态更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输出门"><span class="toc-number">2.4.</span> <span class="toc-text">输出门</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GRU"><span class="toc-number">3.</span> <span class="toc-text">GRU</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN"><span class="toc-number">1.</span> <span class="toc-text">RNN</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSTM"><span class="toc-number">2.</span> <span class="toc-text">LSTM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遗忘门"><span class="toc-number">2.1.</span> <span class="toc-text">遗忘门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#记忆门"><span class="toc-number">2.2.</span> <span class="toc-text">记忆门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细胞状态更新"><span class="toc-number">2.3.</span> <span class="toc-text">细胞状态更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输出门"><span class="toc-number">2.4.</span> <span class="toc-text">输出门</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GRU"><span class="toc-number">3.</span> <span class="toc-text">GRU</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSTM与Attention"><span class="toc-number">4.</span> <span class="toc-text">LSTM与Attention</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
