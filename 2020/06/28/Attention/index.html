@@ -15,16 +15,16 @@
 
 
 
-<meta name="description" content="Attention机制很简单，通过学习特征的权重进行信息refine，去除不重要的噪声、保留值得关注的信息，权重的大小反映了对不同特征的重视程度。与Attention最早的接触到是CV领域的SENet，我们把它引入到CNN backbone中，在比赛中带来了不错的涨点。如下图，SE模块实际是学习了多个特征通道的权重系数。">
+<meta name="description" content="Attention机制很简单，本质是“带权求和”，即通过学习特征的权重进行信息refine，去除不重要的噪声、保留值得关注的信息，权重的大小反映了对不同特征的重视程度。与Attention最早的接触到是CV领域的SENet，我们把它引入到CNN backbone中，在比赛中带来了不错的涨点。如下图，SE模块实际是学习了多个特征通道的权重系数。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Attention机制">
 <meta property="og:url" content="http://yoursite.com/2020/06/28/Attention/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="Attention机制很简单，通过学习特征的权重进行信息refine，去除不重要的噪声、保留值得关注的信息，权重的大小反映了对不同特征的重视程度。与Attention最早的接触到是CV领域的SENet，我们把它引入到CNN backbone中，在比赛中带来了不错的涨点。如下图，SE模块实际是学习了多个特征通道的权重系数。">
+<meta property="og:description" content="Attention机制很简单，本质是“带权求和”，即通过学习特征的权重进行信息refine，去除不重要的噪声、保留值得关注的信息，权重的大小反映了对不同特征的重视程度。与Attention最早的接触到是CV领域的SENet，我们把它引入到CNN backbone中，在比赛中带来了不错的涨点。如下图，SE模块实际是学习了多个特征通道的权重系数。">
 <meta property="og:image" content="http://yoursite.com/2020/06/28/Attention/1.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/28/Attention/2.png">
 <meta property="article:published_time" content="2020-06-28T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-06-28T10:15:17.725Z">
+<meta property="article:modified_time" content="2020-06-28T14:33:52.766Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Attention">
 <meta property="article:tag" content="SENet">
@@ -296,7 +296,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">239字</span>
+        <span class="post-count">247字</span>
       </span>
     </span>
 
@@ -331,7 +331,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>Attention机制很简单，通过学习特征的权重进行信息refine，去除不重要的噪声、保留值得关注的信息，权重的大小反映了对不同特征的重视程度。与Attention最早的接触到是CV领域的SENet，我们把它引入到CNN backbone中，在比赛中带来了不错的涨点。如下图，SE模块实际是学习了多个特征通道的权重系数。<br><img src="/2020/06/28/Attention/1.png" alt><br><a id="more"></a></p>
+        <p>Attention机制很简单，本质是“带权求和”，即通过学习特征的权重进行信息refine，去除不重要的噪声、保留值得关注的信息，权重的大小反映了对不同特征的重视程度。与Attention最早的接触到是CV领域的SENet，我们把它引入到CNN backbone中，在比赛中带来了不错的涨点。如下图，SE模块实际是学习了多个特征通道的权重系数。<br><img src="/2020/06/28/Attention/1.png" alt><br><a id="more"></a></p>
 <h1 id="SE模块"><a href="#SE模块" class="headerlink" title="SE模块"></a>SE模块</h1><p>SE模块可以非常方便的引入到现有网络中，如下图所示，在inception网络中，我们可以将SE模块加入到block结束的位置。SE包括2部分：</p>
 <ul>
 <li><code>Squeeze</code>: 进行Global Average Pooling，得到$1 \times 1 \times C$大小的粗提取权重，对应每个feature map。</li>
