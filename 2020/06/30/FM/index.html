@@ -15,14 +15,14 @@
 
 
 
-<meta name="description" content="GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：  人工的特征组合和特征筛选 改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。">
+<meta name="description" content="FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。  特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。 特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学">
 <meta property="og:type" content="article">
 <meta property="og:title" content="传统推荐系统算法">
 <meta property="og:url" content="http://yoursite.com/2020/06/30/FM/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：  人工的特征组合和特征筛选 改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。">
+<meta property="og:description" content="FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。  特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。 特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-03T03:07:18.006Z">
+<meta property="article:modified_time" content="2020-07-03T03:45:50.064Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -292,7 +292,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">465字</span>
+        <span class="post-count">670字</span>
       </span>
     </span>
 
@@ -301,7 +301,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1.5分</span>
+        <span class="post-count">3分</span>
       </span>
     </span>
 </div>
@@ -327,18 +327,21 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：</p>
-<ol>
-<li>人工的特征组合和特征筛选</li>
-<li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。<a id="more"></a>
-<h1 id="Poly2"><a href="#Poly2" class="headerlink" title="Poly2"></a>Poly2</h1><script type="math/tex; mode=display">y(x) = w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n} w_{ij} x_i y_j</script>每对<i,j>对应唯一的参数$w_{ij}$，任意两个参数间都是独立的，在数据非常稀疏的情况下，$w_{ij}$的训练是十分困难的。每个$w_{ij}$的训练需要大量的$x_i$和$x_j$同时非零的样本$x$。如果满足条件的样本不足，会导致$w_{ij}$不准确，影响模型稳定性。<br>Poly2可以进行特征交叉，但没有解决稀疏样本不易学习的问题。</i,j></li>
-</ol>
-<h1 id="FM"><a href="#FM" class="headerlink" title="FM"></a>FM</h1><p>FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。</p>
+        <p>FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。</p>
 <ul>
 <li>特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。</li>
-<li>特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。<br>FM模型的方程是：<script type="math/tex; mode=display">y(x) = w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n}<v_i,v_j>x_i y_j</script></li>
+<li>特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。<br>GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学习高阶特征的问题。</li>
 </ul>
-<h1 id="FFM"><a href="#FFM" class="headerlink" title="FFM"></a>FFM</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<a id="more"></a>
+<h1 id="Poly2"><a href="#Poly2" class="headerlink" title="Poly2"></a>Poly2</h1><script type="math/tex; mode=display">y(x) = w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n} w_{ij} x_i y_j</script><p>每对<i,j>对应唯一的参数$w_{ij}$，任意两个参数间都是独立的，在数据非常稀疏的情况下，$w_{ij}$的训练是十分困难的。每个$w_{ij}$的训练需要大量的$x_i$和$x_j$同时非零的样本$x$。如果满足条件的样本不足，会导致$w_{ij}$不准确，影响模型稳定性。<br>Poly2可以进行特征交叉，但没有解决稀疏样本不易学习的问题。</i,j></p>
+<h1 id="FM"><a href="#FM" class="headerlink" title="FM"></a>FM</h1><p>FM模型的方程是：</p>
+<script type="math/tex; mode=display">y(x) = w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n}<v_i,v_j>x_i y_j</script><p>其中，$v_i$和$v_j$是第$i$、$j$个特征的隐向量，每个参数$w_{ij} = <v_i,v_j>$。这样使参数从$n^2$减少到了$nk$，n为特征的维度，k为隐向量的维度。<br>二阶特征$x_i,x_j$，$j = 1-n, j \neq i$的系数为$w_{ij} = <v_i,v_j>$，$w_{jk} = <v_j,v_k>$，他们具有相同的隐向量$v_i$。也就是说，想要学习$v_i$，只需要一个样本中特征$x_i$和任意特征同时非零即可，即样本中包含<code>$x_i$的非零组合特征</code>即可。这很大程度上改善了数据稀疏不易学习的问题。</v_j,v_k></v_i,v_j></v_i,v_j></p>
+<h1 id="FFM"><a href="#FFM" class="headerlink" title="FFM"></a>FFM</h1><h1 id="GBDT-LR"><a href="#GBDT-LR" class="headerlink" title="GBDT+LR"></a>GBDT+LR</h1><p>GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：</p>
+<ol>
+<li>人工的特征组合和特征筛选</li>
+<li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。</li>
+</ol>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/102035721" target="_blank" rel="noopener">【CV中的Attention机制】SENet中的SE模块</a></li>
 <li>语雀-铸云-机器学习笔记</li>
 </ul>
@@ -368,7 +371,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>

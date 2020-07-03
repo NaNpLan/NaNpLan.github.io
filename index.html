@@ -293,7 +293,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">465字</span>
+        <span class="post-count">670字</span>
       </span>
     </span>
 
@@ -302,7 +302,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1.5分</span>
+        <span class="post-count">3分</span>
       </span>
     </span>
 </div>
@@ -313,10 +313,11 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-              <p>GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：</p>
-<ol>
-<li>人工的特征组合和特征筛选</li>
-<li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。</li></ol>
+              <p>FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。</p>
+<ul>
+<li>特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。</li>
+<li>特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。<br>GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学习高阶特征的问题。</li>
+</ul>
           
       
     </div>
