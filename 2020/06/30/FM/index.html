@@ -15,16 +15,17 @@
 
 
 
-<meta name="description" content="LeetCode(139) Word BreakLeetCode(718) Maximum Length of Repeated SubarrayLeetCode(898) Bitwise ORs of SubarraysLeetCode(221) Maximal SquareLeetCode(464) Can I Win">
+<meta name="description" content="GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：  人工的特征组合和特征筛选 改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Dynamic Programming 6">
-<meta property="og:url" content="http://yoursite.com/2018/10/15/dp1015-6/index.html">
+<meta property="og:title" content="传统推荐系统算法">
+<meta property="og:url" content="http://yoursite.com/2020/06/30/FM/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="LeetCode(139) Word BreakLeetCode(718) Maximum Length of Repeated SubarrayLeetCode(898) Bitwise ORs of SubarraysLeetCode(221) Maximal SquareLeetCode(464) Can I Win">
-<meta property="article:published_time" content="2018-10-15T08:09:35.000Z">
-<meta property="article:modified_time" content="2020-03-14T08:55:29.136Z">
+<meta property="og:description" content="GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：  人工的特征组合和特征筛选 改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。">
+<meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-07-03T02:47:50.568Z">
 <meta property="article:author" content="Yang Zhuoya">
-<meta property="article:tag" content="Dynamic Programming">
+<meta property="article:tag" content="FM">
+<meta property="article:tag" content="FFM">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -59,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Dynamic Programming 6 | Blog of ZhuoyaYang</title>
+<title>传统推荐系统算法 | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +263,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-dp1015-6" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-FM" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2018/10/15/dp1015-6/" class="article-date">
-      <time datetime="2018-10-15T08:09:35.000Z" itemprop="datePublished">2018-10-15</time>
+      <a href="/2020/06/30/FM/" class="article-date">
+      <time datetime="2020-06-30T08:57:07.000Z" itemprop="datePublished">2020-06-30</time>
 </a>
 
 
@@ -281,7 +282,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Dynamic Programming 6
+      传统推荐系统算法
     </h1>
   
 
@@ -291,7 +292,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.3k字</span>
+        <span class="post-count">324字</span>
       </span>
     </span>
 
@@ -300,7 +301,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">9分</span>
+        <span class="post-count">1.5分</span>
       </span>
     </span>
 </div>
@@ -310,13 +311,13 @@
       <div class="article-info article-info-post">
         
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
+    <a class="article-category-link" href="/categories/%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/">基础知识</a>
     </div>
 
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FM/" rel="tag">FM</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -326,32 +327,20 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p><a href="https://leetcode.com/problems/word-break/submissions/" target="_blank" rel="noopener">LeetCode(139) Word Break</a><br><a href="https://leetcode.com/problems/maximum-length-of-repeated-subarray/" target="_blank" rel="noopener">LeetCode(718) Maximum Length of Repeated Subarray</a><br><a href="https://leetcode.com/problems/bitwise-ors-of-subarrays/" target="_blank" rel="noopener">LeetCode(898) Bitwise ORs of Subarrays</a><br><a href="https://leetcode.com/problems/maximal-square/" target="_blank" rel="noopener">LeetCode(221) Maximal Square</a><br><a href="https://leetcode.com/problems/can-i-win/" target="_blank" rel="noopener">LeetCode(464) Can I Win</a><br><a id="more"></a></p>
-<ul>
-<li><strong>Word Break</strong> 字符串S是否可以按照wordDict数组中的字符串划分。一道不错的题，递推关系明显。</li>
-<li><strong>Maximum Length of Repeated Subarray</strong> 简单题，问两个数组中，连续且相同的子串最长是多少。这里用了两种方法，空间复杂度分别为O(n^2)、O(n)。</li>
-<li><strong>Bitwise ORs of Subarrays</strong> 选取数组中连续的子序列，按位或有多少种结果。</li>
-<li><strong>Maximal Square</strong> 最大的正方形面积。</li>
-<li><strong>Can I Win</strong> 从1-max中任选一个数字，第一个人先选，第二个人后选，每个数字只能选一次，总和超过desiredTotal就赢，问第一个人能否赢得比赛</li>
-</ul>
-<h2 id="LeetCode-139-Word-Break"><a href="#LeetCode-139-Word-Break" class="headerlink" title="LeetCode(139) Word Break"></a>LeetCode(139) Word Break</h2><p><strong><font color="#0049a9" size="5">题目</font></strong><br>字符串S是否可以按照wordDict数组中的字符串划分。<br><strong>Example 1:</strong><br><strong>Input:</strong> s = “leetcode”, wordDict = [“leet”, “code”]<br><strong>Output:</strong> true<br><strong>Explanation:</strong> Return true because “leetcode” can be segmented as “leet code”.</p>
-<p><strong>Example 2:</strong><br><strong>Input:</strong> s = “catsandog”, wordDict = [“cats”, “dog”, “sand”, “and”, “cat”]<br><strong>Output:</strong> false</p>
-<p><strong><font color="#0049a9" size="5">思路</font></strong><br>用dp[i] = 0 or 1表示字符串s[0…i-1]是否可以被划分。</p>
+        <p>GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：</p>
 <ol>
-<li><strong>边界条件：</strong><br>空字符串：dp[0]=1;</li>
-<li><strong>转移方程：</strong><br>若s[i…i+l-1]==wordDict[j]，且dp[i-1]==1，有dp[i+l-1]=1</li>
+<li>人工的特征组合和特征筛选</li>
+<li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。<a id="more"></a>
+<h1 id="FM"><a href="#FM" class="headerlink" title="FM"></a>FM</h1>FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。</li>
 </ol>
-<p><strong><font color="#0049a9" size="5">代码</font></strong><br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//string s是否可以按照wordDict完全划分</span></span><br><span class="line"><span class="comment">//dp[i]表示s[0...i-1]是否可以划分</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">wordBreak</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">vector</span>&lt;<span class="built_in">string</span>&gt;&amp; wordDict)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len1=s.length(),i,j,n=wordDict.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">int</span> dp[len1+<span class="number">1</span>];</span><br><span class="line">        <span class="built_in">memset</span>(dp,<span class="number">0</span>,<span class="keyword">sizeof</span>(dp));</span><br><span class="line">        dp[<span class="number">0</span>]=<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">for</span>(i=<span class="number">1</span>;i&lt;=len1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">for</span>(j=<span class="number">0</span>;j&lt;n;j++)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="keyword">int</span> l=wordDict[j].length();</span><br><span class="line">                <span class="keyword">if</span>(i+l<span class="number">-1</span>&gt;len1) <span class="keyword">continue</span>;</span><br><span class="line">                <span class="keyword">if</span>(s.substr(i<span class="number">-1</span>,l)==wordDict[j]&amp;&amp;dp[i<span class="number">-1</span>]==<span class="number">1</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i+l<span class="number">-1</span>]=<span class="number">1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;            </span><br><span class="line">        <span class="keyword">return</span> dp[len1];       </span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h2 id="LeetCode-718-Maximum-Length-of-Repeated-Subarray"><a href="#LeetCode-718-Maximum-Length-of-Repeated-Subarray" class="headerlink" title="LeetCode(718) Maximum Length of Repeated Subarray"></a>LeetCode(718) Maximum Length of Repeated Subarray</h2><p><strong><font color="#0049a9" size="5">题目</font></strong><br>两个数组最长重复子串的最大长度。</p>
-<p><strong><font color="#0049a9" size="5">代码二 O(n^2)</font></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;dp[i][j]表示以A中第i个数，B中第j个结尾的重复子串的长度</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findLength(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B) &#123;</span><br><span class="line">        int n1&#x3D;A.size(),n2&#x3D;B.size();</span><br><span class="line">        if(n1&#x3D;&#x3D;0||n2&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int dp[n1+1][n2+1],i,j,maxx&#x3D;0;</span><br><span class="line">        memset(dp,0,sizeof(dp));</span><br><span class="line">        for(i&#x3D;1;i&lt;&#x3D;n1;i++)</span><br><span class="line">            for(j&#x3D;1;j&lt;&#x3D;n2;j++)</span><br><span class="line">            &#123;    </span><br><span class="line">                if(A[i-1]&#x3D;&#x3D;B[j-1]) dp[i][j]&#x3D;dp[i-1][j-1]+1;</span><br><span class="line">                maxx&#x3D;max(dp[i][j],maxx);</span><br><span class="line">            &#125;</span><br><span class="line">        return maxx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br><strong><font color="#0049a9" size="5">代码二 O(n)</font></strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;dp[j]表示以B中第j个结尾的重复子串的长度</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int findLength(vector&lt;int&gt;&amp; A, vector&lt;int&gt;&amp; B) &#123;</span><br><span class="line">        int n1&#x3D;A.size(),n2&#x3D;B.size();</span><br><span class="line">        if(n1&#x3D;&#x3D;0||n2&#x3D;&#x3D;0) return 0;</span><br><span class="line">        int dp[n2+1],i,j,maxx&#x3D;0;</span><br><span class="line">        memset(dp,0,sizeof(dp));</span><br><span class="line">        for(i&#x3D;1;i&lt;&#x3D;n1;i++)</span><br><span class="line">            for(j&#x3D;n2;j&gt;&#x3D;1;j--)</span><br><span class="line">            &#123;    </span><br><span class="line">                if(A[i-1]&#x3D;&#x3D;B[j-1]) dp[j]&#x3D;dp[j-1]+1;</span><br><span class="line">                &#x2F;&#x2F;dp[j]&#x3D;max(dp[j-1]+1,dp[j]);  10001与10011 </span><br><span class="line">                &#x2F;&#x2F;当i为4时dp[j]为0，不能沿用i为3时，dp[j]&#x3D;3</span><br><span class="line">                else dp[j]&#x3D;0;</span><br><span class="line">                maxx&#x3D;max(dp[j],maxx);</span><br><span class="line">            &#125;</span><br><span class="line">        return maxx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h2 id="LeetCode-898-Bitwise-ORs-of-Subarrays"><a href="#LeetCode-898-Bitwise-ORs-of-Subarrays" class="headerlink" title="LeetCode(898) Bitwise ORs of Subarrays"></a>LeetCode(898) Bitwise ORs of Subarrays</h2><p><strong>Example1:</strong><br><strong>Input:</strong> [1,1,2]<br><strong>Output:</strong> 3<br><strong>Explanation:</strong> </p>
-<blockquote>
-<p>The possible subarrays are [1], [1], [2], [1, 1], [1, 2], [1, 1, 2].<br>These yield the results 1, 1, 2, 1, 3, 3.<br>There are 3 unique values, so the answer is 3.<br>参考了这个思路：<a href="https://leetcode.com/problems/bitwise-ors-of-subarrays/discuss/165859/" target="_blank" rel="noopener">zhoubowei-O(kN)solution</a></p>
-</blockquote>
-<p>数组分解，如[1,2,3,4,5]:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- [1]</span><br><span class="line">- [1,2]        [2]</span><br><span class="line">- [1,2,3]      [2,3]      [3]</span><br><span class="line">- [1,2,3,4]    [2,3,4]    [3,4]    [4]</span><br><span class="line">- [1,2,3,4,5]  [2,3,4,5]  [3,4,5]  [4,5]  [5]</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;选取数组的连续子串，按位或，有多少种结果</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int subarrayBitwiseORs(vector&lt;int&gt;&amp; A) &#123;</span><br><span class="line">        set&lt;int&gt; all,b;</span><br><span class="line">        int n&#x3D;A.size(),i,j;</span><br><span class="line">        for(i&#x3D;0;i&lt;n;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            set&lt;int&gt; r;</span><br><span class="line">            r.insert(A[i]);</span><br><span class="line">            set&lt;int&gt;::iterator it;</span><br><span class="line">            for(it&#x3D;b.begin();it!&#x3D;b.end();it++) r.insert(*it|A[i]);</span><br><span class="line">            for(it&#x3D;r.begin();it!&#x3D;r.end();it++) all.insert(*it);</span><br><span class="line">            b &#x3D; r;</span><br><span class="line">        &#125;</span><br><span class="line">        return all.size();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<h2 id="LeetCode-221-Maximal-Square"><a href="#LeetCode-221-Maximal-Square" class="headerlink" title="LeetCode(221) Maximal Square"></a>LeetCode(221) Maximal Square</h2><p>一开始dp[i][j]=min(dp[i-1][j],dp[i][j-1])+1;<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;dp[i][j]表示以matrix[i][j]结尾的最大正方形面积</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int maximalSquare(vector&lt;vector&lt;char&gt;&gt;&amp; matrix) &#123;</span><br><span class="line">        int r&#x3D;matrix.size();</span><br><span class="line">        if(r&#x3D;&#x3D;0) return 0;  &#x2F;&#x2F;</span><br><span class="line">        int c&#x3D;matrix[0].size();</span><br><span class="line">        int dp[r+1][c+1],i,j,maxx&#x3D;0;</span><br><span class="line">        memset(dp,0,sizeof(dp));</span><br><span class="line">        for(i&#x3D;1;i&lt;&#x3D;r;i++)</span><br><span class="line">            for(j&#x3D;1;j&lt;&#x3D;c;j++)</span><br><span class="line">            &#123;    </span><br><span class="line">                if(matrix[i-1][j-1]&#x3D;&#x3D;&#39;1&#39;)</span><br><span class="line">                &#123;</span><br><span class="line">                    dp[i][j]&#x3D;min(dp[i-1][j],min(dp[i][j-1],dp[i-1][j-1]))+1;</span><br><span class="line">                &#125;</span><br><span class="line">                maxx&#x3D;max(dp[i][j],maxx);</span><br><span class="line">            &#125;</span><br><span class="line">        return maxx*maxx;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<h2 id="LeetCode-464-Can-I-Win"><a href="#LeetCode-464-Can-I-Win" class="headerlink" title="LeetCode(464) Can I Win"></a>LeetCode(464) Can I Win</h2><p><a href="https://www.liuchuo.net/archives/3155" target="_blank" rel="noopener">参考思路</a><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F;用过的数字不能再用 2^20&#x3D;1,048,576 不会超int</span><br><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    map&lt;int, bool&gt; mp;</span><br><span class="line">    int maxx;</span><br><span class="line">    bool canIWin(int maxChoosableInteger, int desiredTotal) &#123;</span><br><span class="line">        maxx&#x3D;maxChoosableInteger;</span><br><span class="line">        if(maxx&gt;&#x3D;desiredTotal) return true;</span><br><span class="line">        if(maxx*(maxx+1)&#x2F;2&lt;desiredTotal) return false;   </span><br><span class="line">        return dfs(0,desiredTotal);        </span><br><span class="line">    &#125;</span><br><span class="line">    bool dfs(int visited,int target)</span><br><span class="line">    &#123;</span><br><span class="line">       if(mp.find(visited)!&#x3D;mp.end()) return mp[visited];</span><br><span class="line">       for(int i&#x3D;1;i&lt;&#x3D;maxx;i++)</span><br><span class="line">       &#123;</span><br><span class="line">           int mask&#x3D;(1&lt;&lt;i);</span><br><span class="line">           if( (mask&amp;visited)&#x3D;&#x3D;0 &amp;&amp; (i&gt;&#x3D;target || dfs(visited|mask,target-i)&#x3D;&#x3D;false) )</span><br><span class="line">           &#123;</span><br><span class="line">               mp[visited]&#x3D;true;</span><br><span class="line">               return true;</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">        mp[visited]&#x3D;false;</span><br><span class="line">        return false;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。</li>
+<li>特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。<br>FM模型的方程是：<br>$y(x) = w_0 + \sum{i=1}{n} w_i x_i + \sum{i=1}{n} \sum{j=i+1}{n}<v_i,v_j>x_i y_j$</v_i,v_j></li>
+</ul>
+<h1 id="FFM"><a href="#FFM" class="headerlink" title="FFM"></a>FFM</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/102035721" target="_blank" rel="noopener">【CV中的Attention机制】SENet中的SE模块</a></li>
+<li>语雀-铸云-机器学习笔记</li>
+</ul>
 
       
     </div>
@@ -363,16 +352,10 @@
 
     <nav id="article-nav">
         
-            <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/03/22/Softmax/">
-                    Assignment-1 Softmax的实现
-                </a>
-            </div>
-        
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/10/12/dp1012-5/">
-                    Dynamic Programming 5
+                <a href="/2020/06/28/Attention/">
+                    Attention机制
                 </a>
             </div>
         
@@ -384,7 +367,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#LeetCode-139-Word-Break"><span class="toc-number">1.</span> <span class="toc-text">LeetCode(139) Word Break</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LeetCode-718-Maximum-Length-of-Repeated-Subarray"><span class="toc-number">2.</span> <span class="toc-text">LeetCode(718) Maximum Length of Repeated Subarray</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LeetCode-898-Bitwise-ORs-of-Subarrays"><span class="toc-number">3.</span> <span class="toc-text">LeetCode(898) Bitwise ORs of Subarrays</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LeetCode-221-Maximal-Square"><span class="toc-number">4.</span> <span class="toc-text">LeetCode(221) Maximal Square</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LeetCode-464-Can-I-Win"><span class="toc-number">5.</span> <span class="toc-text">LeetCode(464) Can I Win</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">2.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -420,7 +403,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Dynamic Programming 6　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"传统推荐系统算法　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -440,15 +423,13 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/22/Softmax/" title="上一篇: Assignment-1 Softmax的实现">
-                <i class="fa fa-angle-left"></i>
-            </a>
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
         
 
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/10/12/dp1012-5/" title="下一篇: Dynamic Programming 5">
+            <a href="/2020/06/28/Attention/" title="下一篇: Attention机制">
                 <i class="fa fa-angle-right"></i>
             </a>
         
