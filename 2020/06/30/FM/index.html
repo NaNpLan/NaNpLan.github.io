@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：  人工的特征组合和特征筛选 改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-03T03:00:26.093Z">
+<meta property="article:modified_time" content="2020-07-03T03:04:11.883Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -292,7 +292,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">389字</span>
+        <span class="post-count">412字</span>
       </span>
     </span>
 
@@ -331,12 +331,12 @@
 <ol>
 <li>人工的特征组合和特征筛选</li>
 <li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。<a id="more"></a>
-<h1 id="Poly2"><a href="#Poly2" class="headerlink" title="Poly2"></a>Poly2</h1><script type="math/tex; mode=display">y(x) = w_0 + \sum{i=1}{n} w_i x_i + \sum{i=1}{n} \sum{j=i+1}{n} w_{ij} x_i y_j</script>每对<i,j>对应唯一的参数$w_ij$，任意两个参数间都是独立的，在数据非常稀疏的情况下，$w_ij$的训练是十分困难的。</i,j></li>
+<h1 id="Poly2"><a href="#Poly2" class="headerlink" title="Poly2"></a>Poly2</h1><script type="math/tex; mode=display">y(x) = w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n} w_{ij} x_i y_j</script>每对<i,j>对应唯一的参数$w_ij$，任意两个参数间都是独立的，在数据非常稀疏的情况下，$w_ij$的训练是十分困难的。每个$w_{ij}$的训练需要大量的$x_i$和$x_j$同时非零的样本$x$。</i,j></li>
 </ol>
 <h1 id="FM"><a href="#FM" class="headerlink" title="FM"></a>FM</h1><p>FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。</p>
 <ul>
 <li>特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。</li>
-<li>特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。<br>FM模型的方程是：<script type="math/tex; mode=display">y(x) = w_0 + \sum{i=1}{n} w_i x_i + \sum{i=1}{n} \sum{j=i+1}{n}<v_i,v_j>x_i y_j</script></li>
+<li>特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。<br>FM模型的方程是：<script type="math/tex; mode=display">y(x) = w_0 + \sum_{i=1}^{n} w_i x_i + \sum_{i=1}^{n} \sum_{j=i+1}^{n}<v_i,v_j>x_i y_j</script></li>
 </ul>
 <h1 id="FFM"><a href="#FFM" class="headerlink" title="FFM"></a>FFM</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/102035721" target="_blank" rel="noopener">【CV中的Attention机制】SENet中的SE模块</a></li>
