@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。在此之前，特征工程主要依靠：  人工的特征组合和特征筛选 改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-03T02:51:48.470Z">
+<meta property="article:modified_time" content="2020-07-03T02:57:29.838Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -292,7 +292,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">324字</span>
+        <span class="post-count">346字</span>
       </span>
     </span>
 
@@ -331,7 +331,7 @@
 <ol>
 <li>人工的特征组合和特征筛选</li>
 <li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。<a id="more"></a>
-</li>
+<h1 id="Poly2"><a href="#Poly2" class="headerlink" title="Poly2"></a>Poly2</h1><script type="math/tex; mode=display">y(x) = w_0 + \sum{i=1}{n} w_i x_i + \sum{i=1}{n} \sum{j=i+1}{n}w_{ij} x_i y_j</script></li>
 </ol>
 <h1 id="FM"><a href="#FM" class="headerlink" title="FM"></a>FM</h1><p>FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。</p>
 <ul>
@@ -368,7 +368,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">2.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">3.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
