@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SGD -&gt; SGDM -&gt; NAG -&gt; AdaGrad -&gt; AdaDelta -&gt; Adam -&gt; Nadam">
 <meta property="article:published_time" content="2020-07-03T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-10T06:33:48.553Z">
+<meta property="article:modified_time" content="2020-07-10T06:35:30.110Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Adam">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">920字</span>
+        <span class="post-count">921字</span>
       </span>
     </span>
 
@@ -347,7 +347,7 @@
 <script type="math/tex; mode=display">\theta_{t+1,i} = \theta_{t,i} - \frac{\eta}{\sqrt{G_{t,ii}+\epsilon}} g_{t,i}</script><p>如果用向量化的形式表示，其中，$\cdot$表示矩阵$G_t$和向量$g_t$的乘法：</p>
 <script type="math/tex; mode=display">\theta_{t+1} = \theta_{t} - \frac{\eta}{\sqrt{G_{t}+\epsilon}} \cdot g_{t}</script><p>Adagrad的缺点是分母为之前时刻的梯度平方和，随着训练，不断增大，导致学习率下降，最终趋于0，学习停止。</p>
 <h1 id="AdaDelta"><a href="#AdaDelta" class="headerlink" title="AdaDelta"></a>AdaDelta</h1><h1 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h1><p>在Adagrad中二阶动量$G_t$是单调递增的，学习率会单调递减直到为0，可能会导致训练提前结束。为了解决这一问题，可以考虑在计算二阶动量的时候，不累积所有历史梯度，而是采用移动指数平均计算：</p>
-<script type="math/tex; mode=display">E[g^2]_t = 0.9E[g^2]_{t-1} + 0.1g^2_t</script><script type="math/tex; mode=display">\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{ E[g^2]_t+\epsilon}}</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
+<script type="math/tex; mode=display">E[g^2]_t = 0.9E[g^2]_{t-1} + 0.1g^2_t</script><script type="math/tex; mode=display">\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{ E[g^2]_t+\epsilon}} \cdot g_t</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/32626442" target="_blank" rel="noopener">从 SGD 到 Adam —— 深度学习优化算法概览(一)</a></li>
 <li><a href="https://arxiv.org/abs/1609.04747" target="_blank" rel="noopener">An overview of gradient descent optimization algorithms</a></li>
