@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SGD -&gt; SGDM -&gt; NAG -&gt; AdaGrad -&gt; AdaDelta -&gt; Adam -&gt; Nadam">
 <meta property="article:published_time" content="2020-07-03T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-10T04:02:07.441Z">
+<meta property="article:modified_time" content="2020-07-10T06:33:48.553Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Adam">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">814字</span>
+        <span class="post-count">920字</span>
       </span>
     </span>
 
@@ -341,12 +341,13 @@
 <h1 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h1><p>为了抑制SGD的震荡，更快收敛，SGDM加入惯性的思想。在下坡（梯度下降）的时候，如果坡度（梯度）都较大，可以利用惯性下降的快一点。一阶动量$m_t$可以如下计算，这里$\gamma$一般设置为0.9：</p>
 <script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta)</script><script type="math/tex; mode=display">\theta =  \theta - v_t</script><p>一阶动量$v_t$相当于小球速度，即每时刻移动的距离。$\theta$每更新一次相当于一个时刻。速度是各个时刻的梯度的指数移动平均值。</p>
 <h1 id="NAG"><a href="#NAG" class="headerlink" title="NAG"></a>NAG</h1><p>Nesterov是SGD-M的变种，<br>SGD-M的梯度下降方式容易在邻近最优点的地方控制不住速度。SGD-M考虑的是上一时刻的动量和当前时刻的梯度，而NAG考虑的是上一时刻的动量和近似下一时刻的梯度。相当于比SGD-M看的远一步，有更好的预知能力，可以在目标函数增大之前减少速度$v_t$。<br>我们已经知道当前的$\theta$要减去动量项$\gamma v_{t-1}$，计算$\theta - \gamma v_{t-1}$可以让我们知道小球下一时刻的近似位置。</p>
-<script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta-\gamma v_{t-1})</script><script type="math/tex; mode=display">\theta = \theta - v_{t}</script><h1 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h1><p>SGD、SGD-M、NAG中学习率对于$\theta$的不同分量、在不同时刻都是相同的。Adagrad可以对于$\theta$的不同分量加以区分，对于不频繁的分量使用更大的步长更新。<br>对于t时刻的$theta$求导，得到的梯度$g_t$有d维分量，分别对应$theta$的d个维度：</p>
+<script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta-\gamma v_{t-1})</script><script type="math/tex; mode=display">\theta = \theta - v_{t}</script><h1 id="AdaGrad"><a href="#AdaGrad" class="headerlink" title="AdaGrad"></a>AdaGrad</h1><p>SGD、SGD-M、NAG中学习率对于$\theta$的不同分量、在不同时刻都是相同的。Adagrad可以对于$\theta$的不同分量加以区分，对于不频繁的分量使用更大的步长更新。<br>对于t时刻的$\theta$求导，得到的梯度$g_t$有d维分量，分别对应$\theta$的d个维度：</p>
 <script type="math/tex; mode=display">g_{t} = \nabla_{\theta_t} J(\theta_t)</script><p>Adagrad引入二阶动量，$G_t \in \mathbb{R}^{d\times d}$，是一个对角矩阵，其中的第i行i列的元素$G_{t,ii}$为$\theta_i$在1-t时刻所有梯度的和。</p>
 <script type="math/tex; mode=display">G_t = diag(\sum_{i=1}^t {g^2_{i,1}}, \sum_{i=1}^t {g^2_{i,2}}^2, ... , \sum_{i=1}^t {g^2_{i,d}})</script><p>用二阶动量$G_t$对初始学习率$\eta$进行处理，二阶动量越大学习率越小：</p>
 <script type="math/tex; mode=display">\theta_{t+1,i} = \theta_{t,i} - \frac{\eta}{\sqrt{G_{t,ii}+\epsilon}} g_{t,i}</script><p>如果用向量化的形式表示，其中，$\cdot$表示矩阵$G_t$和向量$g_t$的乘法：</p>
 <script type="math/tex; mode=display">\theta_{t+1} = \theta_{t} - \frac{\eta}{\sqrt{G_{t}+\epsilon}} \cdot g_{t}</script><p>Adagrad的缺点是分母为之前时刻的梯度平方和，随着训练，不断增大，导致学习率下降，最终趋于0，学习停止。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
+<h1 id="AdaDelta"><a href="#AdaDelta" class="headerlink" title="AdaDelta"></a>AdaDelta</h1><h1 id="RMSprop"><a href="#RMSprop" class="headerlink" title="RMSprop"></a>RMSprop</h1><p>在Adagrad中二阶动量$G_t$是单调递增的，学习率会单调递减直到为0，可能会导致训练提前结束。为了解决这一问题，可以考虑在计算二阶动量的时候，不累积所有历史梯度，而是采用移动指数平均计算：</p>
+<script type="math/tex; mode=display">E[g^2]_t = 0.9E[g^2]_{t-1} + 0.1g^2_t</script><script type="math/tex; mode=display">\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{ E[g^2]_t+\epsilon}}</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/32626442" target="_blank" rel="noopener">从 SGD 到 Adam —— 深度学习优化算法概览(一)</a></li>
 <li><a href="https://arxiv.org/abs/1609.04747" target="_blank" rel="noopener">An overview of gradient descent optimization algorithms</a></li>
@@ -385,7 +386,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LR-Range-Test"><span class="toc-number">1.</span> <span class="toc-text">LR Range Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SGD"><span class="toc-number">2.</span> <span class="toc-text">SGD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Momentum"><span class="toc-number">3.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NAG"><span class="toc-number">4.</span> <span class="toc-text">NAG</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Adagrad"><span class="toc-number">5.</span> <span class="toc-text">Adagrad</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LR-Range-Test"><span class="toc-number">1.</span> <span class="toc-text">LR Range Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SGD"><span class="toc-number">2.</span> <span class="toc-text">SGD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Momentum"><span class="toc-number">3.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NAG"><span class="toc-number">4.</span> <span class="toc-text">NAG</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AdaGrad"><span class="toc-number">5.</span> <span class="toc-text">AdaGrad</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#AdaDelta"><span class="toc-number">6.</span> <span class="toc-text">AdaDelta</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#RMSprop"><span class="toc-number">7.</span> <span class="toc-text">RMSprop</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
