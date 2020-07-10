@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SGD -&gt; SGDM -&gt; NAG -&gt; AdaGrad -&gt; AdaDelta -&gt; Adam -&gt; Nadam">
 <meta property="article:published_time" content="2020-07-03T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-10T01:52:30.774Z">
+<meta property="article:modified_time" content="2020-07-10T02:07:09.515Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Adam">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">380字</span>
+        <span class="post-count">475字</span>
       </span>
     </span>
 
@@ -339,9 +339,9 @@
 <li>在局部最优点，梯度为0，梯度下降过程会停下，导致<code>陷入局部最优点</code>。</li>
 </ul>
 <h1 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h1><p>为了抑制SGD的震荡，更快收敛，SGDM加入惯性的思想。在下坡（梯度下降）的时候，如果坡度（梯度）都较大，可以利用惯性下降的快一点。一阶动量$m_t$可以如下计算，这里$\gamma$一般设置为0.9：</p>
-<script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta)</script><script type="math/tex; mode=display">\theta =  \theta - v_t</script><p>一阶动量$v_t$是各个时刻梯度方向的指数移动平均。</p>
-<h1 id="NAG"><a href="#NAG" class="headerlink" title="NAG"></a>NAG</h1><p>Nesterov是SGDM的变种，<br>SGD-M的梯度下降方式容易在邻近最优点的地方控制不住速度。SGD-M考虑的是上一时刻的动量和当前时刻的梯度，而NAG考虑的是上一时刻的动量和近似下一时刻的梯度。</p>
-<h1 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta)</script><script type="math/tex; mode=display">\theta =  \theta - v_t</script><p>一阶动量$v_t$相当于小球速度，即每时刻移动的距离。$\theta$每更新一次相当于一个时刻。速度是各个时刻的梯度的指数移动平均值。</p>
+<h1 id="NAG"><a href="#NAG" class="headerlink" title="NAG"></a>NAG</h1><p>Nesterov是SGD-M的变种，<br>SGD-M的梯度下降方式容易在邻近最优点的地方控制不住速度。SGD-M考虑的是上一时刻的动量和当前时刻的梯度，而NAG考虑的是上一时刻的动量和近似下一时刻的梯度。<br>我们已经知道当前的$\theta$要减去动量项$\gamma v_{t-1}$，计算$\theta - \gamma v_{t-1}$可以让我们知道小球下一时刻的近似位置。</p>
+<script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta-\gamma v_{t-1})</script><script type="math/tex; mode=display">\theta = \theta - v_{t}</script><h1 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/32230623" target="_blank" rel="noopener">优化算法之异同 SGD/AdaGrad/Adam</a>，错误有点多</li>
 <li><a href="https://zhuanlan.zhihu.com/p/22810533s" target="_blank" rel="noopener">Nesterov Accelerated Gradient</a></li>
 <li><a href="https://zhuanlan.zhihu.com/p/32626442" target="_blank" rel="noopener">从 SGD 到 Adam —— 深度学习优化算法概览(一)</a></li>
