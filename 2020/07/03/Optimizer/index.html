@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SGD -&gt; SGDM -&gt; NAG -&gt; AdaGrad -&gt; AdaDelta -&gt; Adam -&gt; Nadam">
 <meta property="article:published_time" content="2020-07-03T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-09T12:15:38.257Z">
+<meta property="article:modified_time" content="2020-07-10T01:47:05.037Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Adam">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">390字</span>
+        <span class="post-count">378字</span>
       </span>
     </span>
 
@@ -332,24 +332,20 @@
 <li>如果损失值的变化没有明确的方向，降低学习率</li>
 <li>如果小数点后5-6位才看到损失减小，提高学习率<br>重复上述过程</li>
 </ul>
-<p>在了解各个优化器之前，统一一些符号：</p>
-<ul>
-<li>将参数的梯度记为：$g_t=\nabla f(w_t)$</li>
-<li>基于历史梯度的一阶动量、二阶动量：$m_t = \phi(g_1, g_2, \cdots, g_t); V_t = \psi(g_1, g_2, \cdots, g_t)$</li>
-<li>当前时刻要下降的梯度：$\eta_t = \alpha \cdot m_t / \sqrt{V_t}$</li>
-<li>参数更新：$w_{t+1} = w_t - \eta_t $<br>不同优化算法在前两点有所不同，后两点都是相同的。</li>
-</ul>
-<h1 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h1><p>SGD每次随机采样一个样本进行参数更新，没有动量的概念，$m_t = g_t$，$\eta_t = \alpha \cdot g_t$。<br>SGD的缺点是：</p>
+<h1 id="SGD"><a href="#SGD" class="headerlink" title="SGD"></a>SGD</h1><p>SGD每次随机采样一个样本进行参数更新，没有动量的概念，</p>
+<script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta)</script><script type="math/tex; mode=display">\theta =  \theta - v_t</script><p>SGD的缺点是：</p>
 <ul>
 <li>没有利用动量（惯性），速度慢、容易震荡。</li>
 <li>在局部最优点，梯度为0，梯度下降过程会停下，导致<code>陷入局部最优点</code>。</li>
 </ul>
-<h1 id="SGDM（SGD-with-Momentum）"><a href="#SGDM（SGD-with-Momentum）" class="headerlink" title="SGDM（SGD with Momentum）"></a>SGDM（SGD with Momentum）</h1><p>为了抑制SGD的震荡，SGDM加入惯性的思想。在下坡（梯度下降）的时候，如果坡度（梯度）都较大，可以利用惯性下降的快一点。一阶动量$m_t$可以如下计算，这里$\beta$一般设置为0.9：</p>
+<h1 id="Momentum"><a href="#Momentum" class="headerlink" title="Momentum"></a>Momentum</h1><p>为了抑制SGD的震荡，SGDM加入惯性的思想。在下坡（梯度下降）的时候，如果坡度（梯度）都较大，可以利用惯性下降的快一点。一阶动量$m_t$可以如下计算，这里$\beta$一般设置为0.9：</p>
 <script type="math/tex; mode=display">m_t = \beta \cdot m_{t-1} + (1-\beta)\cdot g_t</script><p>一阶动量$m_t$是各个时刻梯度方向的指数移动平均。</p>
-<h1 id="NAG（Nesterov-Accelerated-Gradient）"><a href="#NAG（Nesterov-Accelerated-Gradient）" class="headerlink" title="NAG（Nesterov Accelerated Gradient）"></a>NAG（Nesterov Accelerated Gradient）</h1><p>Nesterov是SGDM的变种，</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<h1 id="NAG"><a href="#NAG" class="headerlink" title="NAG"></a>NAG</h1><p>Nesterov是SGDM的变种，<br>SGD-M的梯度下降方式容易在邻近最优点的地方控制不住速度。SGD-M考虑的是上一时刻的动量和当前时刻的梯度，而NAG考虑的是上一时刻的动量和近似下一时刻的梯度。</p>
+<h1 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/32230623" target="_blank" rel="noopener">优化算法之异同 SGD/AdaGrad/Adam</a>，错误有点多</li>
 <li><a href="https://zhuanlan.zhihu.com/p/22810533s" target="_blank" rel="noopener">Nesterov Accelerated Gradient</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/32626442" target="_blank" rel="noopener">从 SGD 到 Adam —— 深度学习优化算法概览(一)</a></li>
+<li><a href="https://arxiv.org/abs/1609.04747" target="_blank" rel="noopener">An overview of gradient descent optimization algorithms</a></li>
 </ul>
 
       
@@ -383,7 +379,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LR-Range-Test"><span class="toc-number">1.</span> <span class="toc-text">LR Range Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SGD"><span class="toc-number">2.</span> <span class="toc-text">SGD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SGDM（SGD-with-Momentum）"><span class="toc-number">3.</span> <span class="toc-text">SGDM（SGD with Momentum）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NAG（Nesterov-Accelerated-Gradient）"><span class="toc-number">4.</span> <span class="toc-text">NAG（Nesterov Accelerated Gradient）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#LR-Range-Test"><span class="toc-number">1.</span> <span class="toc-text">LR Range Test</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SGD"><span class="toc-number">2.</span> <span class="toc-text">SGD</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Momentum"><span class="toc-number">3.</span> <span class="toc-text">Momentum</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#NAG"><span class="toc-number">4.</span> <span class="toc-text">NAG</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Adagrad"><span class="toc-number">5.</span> <span class="toc-text">Adagrad</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
