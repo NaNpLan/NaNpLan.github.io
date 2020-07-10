@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SGD -&gt; SGDM -&gt; NAG -&gt; AdaGrad -&gt; RMSprop -&gt; Adam">
 <meta property="article:published_time" content="2020-07-03T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-10T09:39:43.811Z">
+<meta property="article:modified_time" content="2020-07-10T09:41:21.415Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Adam">
 <meta name="twitter:card" content="summary">
@@ -351,8 +351,8 @@
 <script type="math/tex; mode=display">v_t = \beta v_{t-1} + (1-\beta) g^2_t</script><script type="math/tex; mode=display">\theta_{t+1} = \theta_t - \frac{\eta}{\sqrt{ v_t+\epsilon}} \cdot g_t</script><h1 id="Adam"><a href="#Adam" class="headerlink" title="Adam"></a>Adam</h1><p>SGD-M在SGD的基础上增加了一阶动量，AdaGrad、RMSprop在SGD的基础上增加了二阶动量，Adam可以看做是一阶动量和二阶动量的结合：<br>SGD-M的一阶动量：</p>
 <script type="math/tex; mode=display">m_t = \beta_1 m_{t-1} + (1-\beta_1) g_t</script><p>RMSprop的二阶动量：</p>
 <script type="math/tex; mode=display">v_t = \beta_2 v_{t-1} + (1-\beta_2) g_t^2</script><p>因为$m_t$、$v_t$初始化为0，在训练的前期，由于$\beta$接近1，衰减很小，动量的更新很慢，所以对一阶动量和二阶动量进行校正：</p>
-<script type="math/tex; mode=display">\hat{m}_t = frac{m_t}{1-\beta_1}</script><script type="math/tex; mode=display">\hat{v}_t = frac{v_t}{1-\beta_2}</script><p>然后用一阶动量、二阶动量对参数$\theta$进行更新：</p>
-<script type="math/tex; mode=display">\theta_{t+1} = \theta_t + \eta frac{m_t}{\sqrt{ v_t + \epsilon}}</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
+<script type="math/tex; mode=display">\hat{m}_t = \frac{m_t}{1-\beta_1}</script><script type="math/tex; mode=display">\hat{v}_t = \frac{v_t}{1-\beta_2}</script><p>然后用一阶动量、二阶动量对参数$\theta$进行更新：</p>
+<script type="math/tex; mode=display">\theta_{t+1} = \theta_t + \eta \frac{m_t}{\sqrt{ v_t + \epsilon}}</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
 <ul>
 <li><a href="https://zhuanlan.zhihu.com/p/32626442" target="_blank" rel="noopener">从 SGD 到 Adam —— 深度学习优化算法概览(一)</a></li>
 <li><a href="https://arxiv.org/abs/1609.04747" target="_blank" rel="noopener">An overview of gradient descent optimization algorithms</a></li>
