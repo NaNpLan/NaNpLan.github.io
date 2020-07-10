@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="SGD -&gt; SGDM -&gt; NAG -&gt; AdaGrad -&gt; AdaDelta -&gt; Adam -&gt; Nadam">
 <meta property="article:published_time" content="2020-07-03T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-10T03:28:07.390Z">
+<meta property="article:modified_time" content="2020-07-10T03:30:02.765Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="Adam">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">666字</span>
+        <span class="post-count">663字</span>
       </span>
     </span>
 
@@ -342,7 +342,7 @@
 <script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta)</script><script type="math/tex; mode=display">\theta =  \theta - v_t</script><p>一阶动量$v_t$相当于小球速度，即每时刻移动的距离。$\theta$每更新一次相当于一个时刻。速度是各个时刻的梯度的指数移动平均值。</p>
 <h1 id="NAG"><a href="#NAG" class="headerlink" title="NAG"></a>NAG</h1><p>Nesterov是SGD-M的变种，<br>SGD-M的梯度下降方式容易在邻近最优点的地方控制不住速度。SGD-M考虑的是上一时刻的动量和当前时刻的梯度，而NAG考虑的是上一时刻的动量和近似下一时刻的梯度。相当于比SGD-M看的远一步，有更好的预知能力，可以在目标函数增大之前减少速度$v_t$。<br>我们已经知道当前的$\theta$要减去动量项$\gamma v_{t-1}$，计算$\theta - \gamma v_{t-1}$可以让我们知道小球下一时刻的近似位置。</p>
 <script type="math/tex; mode=display">v_t = \gamma v_{t-1} + \eta \nabla_{\theta} J(\theta-\gamma v_{t-1})</script><script type="math/tex; mode=display">\theta = \theta - v_{t}</script><h1 id="Adagrad"><a href="#Adagrad" class="headerlink" title="Adagrad"></a>Adagrad</h1><p>SGD、SGD-M、NAG中学习率对于$\theta$的不同分量、在不同时刻都是相同的。Adagrad可以对于$\theta$的不同分量加以区分，对于不频繁的分量使用更大的步长更新。</p>
-<script type="math/tex; mode=display">g_{t,i} = \nabla_{\theta_t} J(\theta_t,i)</script><script type="math/tex; mode=display">v_t = diag(\sum_{i=1}^t {g^2}_{i,1}, \sum_{i=1}^t {g^2}_{i,2}, ... , \sum_{i=1}^t {g^2}_{i,d})
+<script type="math/tex; mode=display">g_{t,i} = \nabla_{\theta_t} J(\theta_t,i)</script><script type="math/tex; mode=display">v_t = diag(\sum_{i=1}^t {g_{i,1}}^2, \sum_{i=1}^t {g_{i,2}}^2, ... , \sum_{i=1}^t {g_{i,d}}^2)
 $$\theta_{t+1,i} = \theta_{t,i} - \J(\theta_t,i)</script><p>Adagrad的缺点是分母为之前时刻的梯度平方和，随着训练，不断增大，导致学习率下降，最终趋于0，学习停止。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>主要还是看的前两篇：</p>
 <ul>
