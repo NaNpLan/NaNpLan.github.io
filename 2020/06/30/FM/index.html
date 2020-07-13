@@ -17,15 +17,18 @@
 
 <meta name="description" content="FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。  特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。 特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学">
 <meta property="og:type" content="article">
-<meta property="og:title" content="传统推荐系统算法">
+<meta property="og:title" content="推荐系统算法">
 <meta property="og:url" content="http://yoursite.com/2020/06/30/FM/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。  特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。 特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-03T06:16:38.790Z">
+<meta property="article:modified_time" content="2020-07-12T18:47:02.065Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
+<meta property="article:tag" content="DeepFM">
+<meta property="article:tag" content="DIN">
+<meta property="article:tag" content="DIEN">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -60,7 +63,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>传统推荐系统算法 | Blog of ZhuoyaYang</title>
+<title>推荐系统算法 | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -192,7 +195,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adam/" rel="tag">Adam</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Anchor-Free/" rel="tag">Anchor-Free</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention/" rel="tag">Attention</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CE-Net/" rel="tag">CE-Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CornerNet/" rel="tag">CornerNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FM/" rel="tag">FM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Faster-R-CNN/" rel="tag">Faster R-CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRU/" rel="tag">GRU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/" rel="tag">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/" rel="tag">RNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SENet/" rel="tag">SENet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/" rel="tag">Transformer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UNet/" rel="tag">UNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/" rel="tag">YOLO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgb/" rel="tag">lgb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xgb/" rel="tag">xgb</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adam/" rel="tag">Adam</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Anchor-Free/" rel="tag">Anchor-Free</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention/" rel="tag">Attention</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CE-Net/" rel="tag">CE-Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CornerNet/" rel="tag">CornerNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIEN/" rel="tag">DIEN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIN/" rel="tag">DIN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DeepFM/" rel="tag">DeepFM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FM/" rel="tag">FM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Faster-R-CNN/" rel="tag">Faster R-CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRU/" rel="tag">GRU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/" rel="tag">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/" rel="tag">RNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SENet/" rel="tag">SENet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/" rel="tag">Transformer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UNet/" rel="tag">UNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/" rel="tag">YOLO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgb/" rel="tag">lgb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xgb/" rel="tag">xgb</a></li></ul>
                     </div>
                 </section>
                 
@@ -282,7 +285,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      传统推荐系统算法
+      推荐系统算法
     </h1>
   
 
@@ -292,7 +295,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">858字</span>
+        <span class="post-count">928字</span>
       </span>
     </span>
 
@@ -317,7 +320,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FM/" rel="tag">FM</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DIEN/" rel="tag">DIEN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DIN/" rel="tag">DIN</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/DeepFM/" rel="tag">DeepFM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/FM/" rel="tag">FM</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -343,7 +346,8 @@
 <li>人工的特征组合和特征筛选</li>
 <li>改造目标函数、模型结构、增加特征交叉项的方式，提升模型的特征组合能力<br>前者对算法工程师的经验、精力要求较高，而后者对模型设计能力要求较高。GBDT+LR的出现，意味着特征工程可以完全交由一个独立的模型来完成，不必人工筛选特征、更改模型结构，可以做到端到端的训练。</li>
 </ol>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<h1 id="Wide-amp-Deep"><a href="#Wide-amp-Deep" class="headerlink" title="Wide &amp; Deep"></a>Wide &amp; Deep</h1><p>设计了一种将浅层模型（wide）和深层模型（deep）联合训练的框架，综合利用浅层模型的记忆能力和深层模型的泛化能力，实现单模型对推荐系统准确性、扩展性的兼顾。<br>ftrl??</p>
+<h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
 </ul>
 
@@ -378,7 +382,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -414,7 +418,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"传统推荐系统算法　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"推荐系统算法　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -448,7 +452,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">传统推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/28/Attention/">Attention机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/27/userbehavior/">推荐系统-用户行为建模</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/28/Attention/">Attention机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/27/userbehavior/">推荐系统-用户行为建模</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 

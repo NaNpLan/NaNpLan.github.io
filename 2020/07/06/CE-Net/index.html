@@ -15,18 +15,24 @@
 
 
 
-<meta name="description" content="Reference">
+<meta name="description" content="最近看血管分割相关的论文，调研一下UNet的变种，CE-Net和UNet++。两者都是在多尺度特征图上做文章，通过不同感受野的特征图的拼接、融合，为不同尺寸的目标提供合适的感受野。让网络兼顾大目标的全局特征与小目标的细粒度特征。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="CE-Net">
+<meta property="og:title" content="CE-Net &amp; UNet++">
 <meta property="og:url" content="http://yoursite.com/2020/07/06/CE-Net/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="Reference">
+<meta property="og:description" content="最近看血管分割相关的论文，调研一下UNet的变种，CE-Net和UNet++。两者都是在多尺度特征图上做文章，通过不同感受野的特征图的拼接、融合，为不同尺寸的目标提供合适的感受野。让网络兼顾大目标的全局特征与小目标的细粒度特征。">
+<meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/5.png">
 <meta property="article:published_time" content="2020-07-06T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-06T02:11:47.436Z">
+<meta property="article:modified_time" content="2020-07-13T15:43:41.269Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="UNet">
 <meta property="article:tag" content="CE-Net">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/07/06/CE-Net/4.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -60,7 +66,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>CE-Net | Blog of ZhuoyaYang</title>
+<title>CE-Net &amp; UNet++ | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -192,7 +198,7 @@
                 
                 <section class="switch-part switch-part2">
                     <div class="widget tagcloud" id="js-tagcloud">
-                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adam/" rel="tag">Adam</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Anchor-Free/" rel="tag">Anchor-Free</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention/" rel="tag">Attention</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CE-Net/" rel="tag">CE-Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CornerNet/" rel="tag">CornerNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FM/" rel="tag">FM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Faster-R-CNN/" rel="tag">Faster R-CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRU/" rel="tag">GRU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/" rel="tag">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/" rel="tag">RNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SENet/" rel="tag">SENet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/" rel="tag">Transformer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UNet/" rel="tag">UNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/" rel="tag">YOLO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgb/" rel="tag">lgb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xgb/" rel="tag">xgb</a></li></ul>
+                        <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/3D-Object-Detection/" rel="tag">3D Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Adam/" rel="tag">Adam</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Anchor-Free/" rel="tag">Anchor-Free</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Attention/" rel="tag">Attention</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CE-Net/" rel="tag">CE-Net</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CornerNet/" rel="tag">CornerNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIEN/" rel="tag">DIEN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DIN/" rel="tag">DIN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/DeepFM/" rel="tag">DeepFM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dynamic-Programming/" rel="tag">Dynamic Programming</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FFM/" rel="tag">FFM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FLOPs/" rel="tag">FLOPs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/FM/" rel="tag">FM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Faster-R-CNN/" rel="tag">Faster R-CNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GRU/" rel="tag">GRU</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/LSTM/" rel="tag">LSTM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/NetWork/" rel="tag">NetWork</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Object-Detection/" rel="tag">Object Detection</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/PointPillars/" rel="tag">PointPillars</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/RNN/" rel="tag">RNN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SENet/" rel="tag">SENet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/TensorFlow/" rel="tag">TensorFlow</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Transformer/" rel="tag">Transformer</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/UNet/" rel="tag">UNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/VoxelNet/" rel="tag">VoxelNet</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/YOLO/" rel="tag">YOLO</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lgb/" rel="tag">lgb</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/para/" rel="tag">para</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/xgb/" rel="tag">xgb</a></li></ul>
                     </div>
                 </section>
                 
@@ -282,7 +288,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      CE-Net
+      CE-Net &amp; UNet++
     </h1>
   
 
@@ -292,7 +298,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1字</span>
+        <span class="post-count">589字</span>
       </span>
     </span>
 
@@ -301,7 +307,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">1.5分</span>
+        <span class="post-count">3分</span>
       </span>
     </span>
 </div>
@@ -327,8 +333,33 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <a id="more"></a>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1>
+        <p>最近看血管分割相关的论文，调研一下UNet的变种，CE-Net和UNet++。<br>两者都是在多尺度特征图上做文章，通过不同感受野的特征图的拼接、融合，为不同尺寸的目标提供合适的感受野。让网络兼顾大目标的全局特征与小目标的细粒度特征。</p>
+<a id="more"></a>
+<h1 id="UNet"><a href="#UNet" class="headerlink" title="UNet"></a>UNet</h1><p><img src="/2020/07/06/CE-Net/4.png" alt><br>这个不多说，图里画的很清楚。UNet由下采样、上采样和跨层连接组成。每个block包括2组Conv+ReLu和一个maxpool。<br>进行下采样的encoder部分可以用resnet来替代，</p>
+<h1 id="CE-Net"><a href="#CE-Net" class="headerlink" title="CE-Net"></a>CE-Net</h1><p>CE-Net包含3个模块：</p>
+<ul>
+<li>feature encoder module：用预训练的ResNet-34替换U-Net原始encoder。</li>
+<li>context extractor module：本文的核心贡献，提出DAC和RMP block，可以捕捉更丰富的多尺度信息，为不同尺寸的目标提供不同大小的感受野。</li>
+<li>feature decoder module：采用3*3的deconv和1*1卷积。<br><img src="/2020/07/06/CE-Net/1.png" alt><br>下面重点描述一下文本主要贡献context extractor module。<h2 id="DAC"><a href="#DAC" class="headerlink" title="DAC"></a>DAC</h2><img src="/2020/07/06/CE-Net/2.png" alt><br>在encoder模块之后加入DAC，DAC包含4个级联分支，每个分支采用不同的卷积提取特征，感受野分别为3，7，9，19。将四个分支提取的feature map点对点相加，得到最终的feature map。</li>
+</ul>
+<h2 id="RMP"><a href="#RMP" class="headerlink" title="RMP"></a>RMP</h2><p><img src="/2020/07/06/CE-Net/3.png" alt></p>
+<ul>
+<li>采用不同的kernel size对原始14*14*512的feature map进行池化，得到不同大小的4组特征图。</li>
+<li>对于4组特征图分别使用一个1*1的卷积，将特征图的通道数缩小为1。</li>
+<li>使用双线性插值将特征图恢复至14*14的大小。</li>
+<li>将14*14*4的特征图拼接在原始14*14*512的特征图之后。</li>
+</ul>
+<h2 id="实验效果"><a href="#实验效果" class="headerlink" title="实验效果"></a>实验效果</h2><p>作者主要在视盘分割、眼底血管分割、肺分割、细胞分割、OCT层次分割，五类数据集上验证了验证了CE-Net模型的通用能力。其中实验使用的眼底血管分割的数据集为DRIVE。DRIVE包含40张图片，20张train，20张test。</p>
+<ul>
+<li>Sen=TP/(TP+FN)，灵敏度即召回率，0.8309    </li>
+<li>Acc，0.9545    </li>
+<li>AUC，0.9779</li>
+</ul>
+<h1 id="UNet-1"><a href="#UNet-1" class="headerlink" title="UNet++"></a>UNet++</h1><p><img src="/2020/07/06/CE-Net/5.png" alt><br>UNet++就是把UNet不同层级的特征图反复进行上采样，拼接。以融合不同尺度的特征，旨在让模型自己学习需要什么粒度的特征。<br>同时保留UNet原有的长连接，有助于还原降采样带来的信息损失。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://zhuanlan.zhihu.com/p/128138930" target="_blank" rel="noopener">当UNet遇见ResNet</a></li>
+</ul>
+
       
     </div>
     
@@ -354,7 +385,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">1.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#UNet"><span class="toc-number">1.</span> <span class="toc-text">UNet</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#CE-Net"><span class="toc-number">2.</span> <span class="toc-text">CE-Net</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#DAC"><span class="toc-number">2.1.</span> <span class="toc-text">DAC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RMP"><span class="toc-number">2.2.</span> <span class="toc-text">RMP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#实验效果"><span class="toc-number">2.3.</span> <span class="toc-text">实验效果</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#UNet-1"><span class="toc-number">3.</span> <span class="toc-text">UNet++</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -390,7 +421,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"CE-Net　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"CE-Net & UNet++　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -422,7 +453,7 @@
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">传统推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/28/Attention/">Attention机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/27/userbehavior/">推荐系统-用户行为建模</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/28/Attention/">Attention机制</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/27/userbehavior/">推荐系统-用户行为建模</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
