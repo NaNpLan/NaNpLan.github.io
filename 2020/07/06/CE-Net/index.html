@@ -27,7 +27,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/07/06/CE-Net/5.png">
 <meta property="article:published_time" content="2020-07-06T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-13T15:43:41.269Z">
+<meta property="article:modified_time" content="2020-07-13T17:00:32.292Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="UNet">
 <meta property="article:tag" content="CE-Net">
@@ -298,7 +298,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">589字</span>
+        <span class="post-count">590字</span>
       </span>
     </span>
 
@@ -335,14 +335,31 @@
           
         <p>最近看血管分割相关的论文，调研一下UNet的变种，CE-Net和UNet++。<br>两者都是在多尺度特征图上做文章，通过不同感受野的特征图的拼接、融合，为不同尺寸的目标提供合适的感受野。让网络兼顾大目标的全局特征与小目标的细粒度特征。</p>
 <a id="more"></a>
-<h1 id="UNet"><a href="#UNet" class="headerlink" title="UNet"></a>UNet</h1><p><img src="/2020/07/06/CE-Net/4.png" alt><br>这个不多说，图里画的很清楚。UNet由下采样、上采样和跨层连接组成。每个block包括2组Conv+ReLu和一个maxpool。<br>进行下采样的encoder部分可以用resnet来替代，</p>
+<h1 id="UNet"><a href="#UNet" class="headerlink" title="UNet"></a>UNet</h1><div align="center">
+  <img width="400" src="/2020/07/06/CE-Net/4.png">
+</div>
+
+<p>这个不多说，图里画的很清楚。UNet由下采样、上采样和跨层连接组成。每个block包括2组Conv+ReLu和一个maxpool。<br>进行下采样的encoder部分可以用resnet来替代，</p>
 <h1 id="CE-Net"><a href="#CE-Net" class="headerlink" title="CE-Net"></a>CE-Net</h1><p>CE-Net包含3个模块：</p>
 <ul>
 <li>feature encoder module：用预训练的ResNet-34替换U-Net原始encoder。</li>
 <li>context extractor module：本文的核心贡献，提出DAC和RMP block，可以捕捉更丰富的多尺度信息，为不同尺寸的目标提供不同大小的感受野。</li>
-<li>feature decoder module：采用3*3的deconv和1*1卷积。<br><img src="/2020/07/06/CE-Net/1.png" alt><br>下面重点描述一下文本主要贡献context extractor module。<h2 id="DAC"><a href="#DAC" class="headerlink" title="DAC"></a>DAC</h2><img src="/2020/07/06/CE-Net/2.png" alt><br>在encoder模块之后加入DAC，DAC包含4个级联分支，每个分支采用不同的卷积提取特征，感受野分别为3，7，9，19。将四个分支提取的feature map点对点相加，得到最终的feature map。</li>
+<li>feature decoder module：采用3*3的deconv和1*1卷积。<div align="center">
+<img width="400" src="/2020/07/06/CE-Net/1.png">
+</div>
+
+</li>
 </ul>
-<h2 id="RMP"><a href="#RMP" class="headerlink" title="RMP"></a>RMP</h2><p><img src="/2020/07/06/CE-Net/3.png" alt></p>
+<p>下面重点描述一下文本主要贡献context extractor module。</p>
+<h2 id="DAC"><a href="#DAC" class="headerlink" title="DAC"></a>DAC</h2><div align="center">
+  <img width="400" src="/2020/07/06/CE-Net/2.png">
+</div>
+
+<p>在encoder模块之后加入DAC，DAC包含4个级联分支，每个分支采用不同的卷积提取特征，感受野分别为3，7，9，19。将四个分支提取的feature map点对点相加，得到最终的feature map。</p>
+<h2 id="RMP"><a href="#RMP" class="headerlink" title="RMP"></a>RMP</h2><div align="center">
+  <img width="400" src="/2020/07/06/CE-Net/3.png">
+</div>
+
 <ul>
 <li>采用不同的kernel size对原始14*14*512的feature map进行池化，得到不同大小的4组特征图。</li>
 <li>对于4组特征图分别使用一个1*1的卷积，将特征图的通道数缩小为1。</li>
@@ -355,7 +372,11 @@
 <li>Acc，0.9545    </li>
 <li>AUC，0.9779</li>
 </ul>
-<h1 id="UNet-1"><a href="#UNet-1" class="headerlink" title="UNet++"></a>UNet++</h1><p><img src="/2020/07/06/CE-Net/5.png" alt><br>UNet++就是把UNet不同层级的特征图反复进行上采样，拼接。以融合不同尺度的特征，旨在让模型自己学习需要什么粒度的特征。<br>同时保留UNet原有的长连接，有助于还原降采样带来的信息损失。</p>
+<h1 id="UNet-1"><a href="#UNet-1" class="headerlink" title="UNet++"></a>UNet++</h1><div align="center">
+  <img width="400" src="/2020/07/06/CE-Net/5.png">
+</div>
+
+<p>UNet++就是把UNet不同层级的特征图反复进行上采样，拼接。以融合不同尺度的特征，旨在让模型自己学习需要什么粒度的特征。<br>同时保留UNet原有的长连接，有助于还原降采样带来的信息损失。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li><a href="https://zhuanlan.zhihu.com/p/128138930" target="_blank" rel="noopener">当UNet遇见ResNet</a></li>
 </ul>
