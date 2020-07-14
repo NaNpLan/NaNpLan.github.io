@@ -470,7 +470,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.5k字</span>
+        <span class="post-count">1.6k字</span>
       </span>
     </span>
 
@@ -516,7 +516,16 @@
 <script type="math/tex; mode=display">a^{(l)} f(w^{(l)} a^{(l-1)} + b^{(l)})</script><p>其中$f$表示激活函数，一般用ReLu。$a^{(l-1)}$、$w^{(l)}$、$b^{(l)}$分别为第$i$层神经网络的输入/第$i-1$层神经网络的激活值、权重、偏置。</p>
 <h2 id="Joint-Training"><a href="#Joint-Training" class="headerlink" title="Joint Training"></a>Joint Training</h2><p>对于Wide部分，采用FRIL方法优化，可以得到更稀疏的解，适合online learing，在线上实时接收用户反馈，动态调整模型。对于Deep部分，论文中提到采用AdaGrad方法优化。</p>
 <script type="math/tex; mode=display">P(Y=1|x) = \sigma{( w_{wide} [x,\phi{(x)}] + w_{deep} a^{lf} + b )} = \sigma{y_wide+y_deep}</script><h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><p>与Wide&amp;Deep的不同是，使用FM替代了原有Wide中的LR。DeepFM包含FM和DNN。<br>DeepFM最终与预估的CTR结果可以记为：</p>
-<script type="math/tex; mode=display">y = \sigma{ (y_FM + y_DNN)}</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<script type="math/tex; mode=display">y = \sigma{ (y_FM + y_DNN)}</script><p>FM不讲了，主要是对一阶特征、二阶组合特征去学习一个权重。如下图：</p>
+<div align="center">
+  <img width="400" src="/2020/06/30/FM/2.png">
+</div>
+输入到网络的特征通常是高维稀疏的，通常需要使用embedding层压缩至低维稠密向量。
+<div align="center">
+  <img width="400" src="/2020/06/30/FM/3.png">
+</div>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
 <li><a href="https://arxiv.org/pdf/1606.07792.pdf" target="_blank" rel="noopener">Wide &amp; Deep Learning for Recommender Systems</a></li>
 <li><a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="noopener">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a></li>
