@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="FM可以解决特征稀疏不易学习的问题，并进行特征的二阶组合，构造有用的特征。  特征稀疏问题：对于类别特征采用one-hot编码，会导致大量的稀疏特征。这些特征信息量小，不易学习。 特征交叉：一些特征经过交叉后，会产生更有价值的特征，比如女性和化妆品使用情况，男性和游戏等。GBDT+LR组合模型的出现，推进了特征工程模型化趋势的发展。GBDT有很好的特征交叉能力，用GBDT提取特征，解决了LR无法学">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-13T16:53:29.845Z">
+<meta property="article:modified_time" content="2020-07-14T01:02:39.031Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -295,7 +295,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.2k字</span>
+        <span class="post-count">1.3k字</span>
       </span>
     </span>
 
@@ -349,10 +349,11 @@
 <h1 id="Wide-amp-Deep"><a href="#Wide-amp-Deep" class="headerlink" title="Wide &amp; Deep"></a>Wide &amp; Deep</h1><!--设计了一种将浅层模型（wide）和深层模型（deep）联合训练的框架，综合利用浅层模型的记忆能力和深层模型的泛化能力.-->
 <p>推荐系统可以看做搜索排序（Search Ranking）系统，输入是一组用户和上下文信息，输出是item的排序列表。给定查询，推荐系统的任务是在数据库中找到相关的item，并根据目标（点击或购买），对项目进行排序。<br>推荐系统的一项挑战是同时实现记忆化和泛化。</p>
 <ul>
-<li>记忆化：从历史数据中学习物品或特征的频繁共现关系、相关性。<br>例如：购买口红的人中90%购买了粉底，如果label=是否购买粉底。“购买口红”这一特征与“购买粉底”的共现率高达90%，显然是否购买口红是一个强特。像逻辑回归这样的简单模型，一旦发现这样的强特，强特的权重会在模型训练过程中被调整的很大，这样就实现了这个强特的<code>直接记忆</code>。而对于DNN来说，特征会经过多层处理，不断与其他特征交叉，对于强特的记忆没有简单模型深刻。</li>
-<li>泛化：DNN网络通过特征的多次自动组合，深度挖掘数据中的潜在模式。<br>Wide &amp; Deep网络将线性模型与神经网络结合起来，在一个模型中实现记忆化和泛化。</li>
+<li>记忆化：从历史数据中学习特征与标签的频繁共现关系、相关性。学习数据中明显的关联规则的能力。<br>例如：购买口红的人中90%购买了粉底，如果label=是否购买粉底。“购买口红”这一特征与“购买粉底”的共现率高达90%，显然是否购买口红是一个强特。像逻辑回归这样的简单模型，一旦发现这样的强特，强特的权重会在模型训练过程中被调整的很大，这样就实现了这个强特的<code>直接记忆</code>。而对于DNN来说，特征会经过多层处理，不断与其他特征交叉，对于强特的记忆没有简单模型深刻。</li>
+<li>泛化：DNN网络通过特征的多次自动组合，深度挖掘数据中的潜在模式。<br>Wide &amp; Deep网络将线性模型与神经网络结合起来，在一个模型中实现记忆化和泛化。<h2 id="Wide"><a href="#Wide" class="headerlink" title="Wide"></a>Wide</h2>将一阶特征进行交叉积变换（Cross Product Transformation）得到$\phi(x)$，$\phi(x)$包含若干个交叉积特征，其中每个特征可以看做从特征集合中取出若干个特征做乘法。</li>
 </ul>
-<h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<h2 id="Deep"><a href="#Deep" class="headerlink" title="Deep"></a>Deep</h2><p>deep部分就是基本的神经网络，以公式的形式表示可以写作：</p>
+<script type="math/tex; mode=display">a^{(l+1)} f(w^{(l)} a^{(l)} + b^{(l)})</script><h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
 <li><a href="https://arxiv.org/pdf/1606.07792.pdf" target="_blank" rel="noopener">Wide &amp; Deep Learning for Recommender Systems</a></li>
 <li><a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="noopener">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a></li>
@@ -390,7 +391,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
