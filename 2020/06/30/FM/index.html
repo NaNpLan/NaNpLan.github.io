@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/3.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-14T07:34:43.639Z">
+<meta property="article:modified_time" content="2020-07-16T06:26:44.595Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -298,7 +298,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.8k字</span>
+        <span class="post-count">2.1k字</span>
       </span>
     </span>
 
@@ -307,7 +307,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">10.5分</span>
+        <span class="post-count">12分</span>
       </span>
     </span>
 </div>
@@ -358,8 +358,8 @@
 <h2 id="Deep"><a href="#Deep" class="headerlink" title="Deep"></a>Deep</h2><p>deep部分就是基本的神经网络，以公式的形式表示可以写作：</p>
 <script type="math/tex; mode=display">a^{(l)} f(w^{(l)} a^{(l-1)} + b^{(l)})</script><p>其中$f$表示激活函数，一般用ReLu。$a^{(l-1)}$、$w^{(l)}$、$b^{(l)}$分别为第$i$层神经网络的输入/第$i-1$层神经网络的激活值、权重、偏置。</p>
 <h2 id="Joint-Training"><a href="#Joint-Training" class="headerlink" title="Joint Training"></a>Joint Training</h2><p>对于Wide部分，采用FRIL方法优化，可以得到更稀疏的解，适合online learing，在线上实时接收用户反馈，动态调整模型。对于Deep部分，论文中提到采用AdaGrad方法优化。</p>
-<script type="math/tex; mode=display">P(Y=1|x) = \sigma{( w_{wide} [x,\phi{(x)}] + w_{deep} a^{lf} + b )} = \sigma{y_wide+y_deep}</script><h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><p>与Wide&amp;Deep的不同是，使用FM替代了原有Wide中的LR。DeepFM包含FM和DNN。<br>DeepFM最终与预估的CTR结果可以记为：</p>
-<script type="math/tex; mode=display">y = \sigma{ (y_FM + y_DNN)}</script><h2 id="FM-1"><a href="#FM-1" class="headerlink" title="FM"></a>FM</h2><p>FM不讲了，主要是对一阶特征、二阶组合特征去学习一个权重。如下图：</p>
+<script type="math/tex; mode=display">P(Y=1|x) = \sigma{( w_{wide} [x,\phi{(x)}] + w_{deep} a^{lf} + b )} = \sigma{y_{wide}+y_{deep}}</script><h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><p>与Wide&amp;Deep的不同是，使用FM替代了原有Wide中的LR。DeepFM包含FM和DNN。<br>DeepFM最终与预估的CTR结果可以记为：</p>
+<script type="math/tex; mode=display">y = \sigma{ (y_{FM} + y_{DNN})}</script><h2 id="FM-1"><a href="#FM-1" class="headerlink" title="FM"></a>FM</h2><p>FM不讲了，主要是对一阶特征、二阶组合特征去学习一个权重。如下图：</p>
 <script type="math/tex; mode=display">y_{FM} = w_0 + \sum^n_{i=1} w_i x_i + \sum^n_{i=1} \sum^n_{j=i+1} <v_i,v_j> x_i x_j</script><div align="center">
   <img width="500" src="/2020/06/30/FM/2.png">
 </div>
@@ -370,7 +370,15 @@
 </div><br>DNN第一层的输入：</p>
 <script type="math/tex; mode=display">a^{(0)} = [e_1,e_2,...e_n]</script><p>每一层的变化可以记为：</p>
 <script type="math/tex; mode=display">a^{l} = \sigma{ w^{l} a^{l-1} + b^{l} }</script><p>DNN的输出层输出记为$y_{DNN}$，其中$|H|$为隐含层的个数：</p>
-<script type="math/tex; mode=display">y_{DNN} = \sigma{( w^{|H|+1} a^{|H|} + b^{|H|+1} )}</script><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<script type="math/tex; mode=display">y_{DNN} = \sigma{( w^{|H|+1} a^{|H|} + b^{|H|+1} )}</script><h1 id="DIN"><a href="#DIN" class="headerlink" title="DIN"></a>DIN</h1><h2 id="Base-Model"><a href="#Base-Model" class="headerlink" title="Base Model"></a>Base Model</h2><p>之前的模型一般采用Embedding&amp;MLP的模型架构，称为base model，包含以下几个部分：</p>
+<h3 id="Embedding层"><a href="#Embedding层" class="headerlink" title="Embedding层"></a>Embedding层</h3><p>输入是高维的稀疏向量，embedding层将他们转化为低维稠密向量。</p>
+<p>DIN同时对diversity和local activation进行建模。</p>
+<h3 id="GAUC"><a href="#GAUC" class="headerlink" title="GAUC"></a>GAUC</h3><p>因为AUC反映的是为所有用户推荐的内容的排序能力，在很多情况下，我们需要以用户为单位分析每个用户的推荐效果，如下面的例子：</p>
+<ul>
+<li>模型A：甲-，乙-，甲+，乙+</li>
+<li>模型B：甲-，甲+，乙-，乙+<br>对比这两个模型的AUC，显然模型A的AUC更高，但对于甲乙个体用户来说，正样本的分数都比负样本高，推荐效果是相同的。<br>考虑到用户推荐应该注重单个用户的推荐效果，不同用户的推荐不应该放在一起计算，所以使用Group AUC来进行评估。GAUC计算每个用户自己的AUC，再进行加权平均。<script type="math/tex; mode=display">GAUC = \sqrt{\sum^n{i=1}#impression_i \times AUC_i}{\sum^n{i=1}#impression_i}</script></li>
+</ul>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
 <li><a href="https://arxiv.org/pdf/1606.07792.pdf" target="_blank" rel="noopener">Wide &amp; Deep Learning for Recommender Systems</a></li>
 <li><a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="noopener">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a></li>
@@ -409,7 +417,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DIN"><span class="toc-number">7.</span> <span class="toc-text">DIN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">7.1.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">7.1.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GAUC"><span class="toc-number">7.1.2.</span> <span class="toc-text">GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
