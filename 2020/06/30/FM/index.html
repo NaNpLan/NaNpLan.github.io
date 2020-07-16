@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/3.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-16T06:37:56.854Z">
+<meta property="article:modified_time" content="2020-07-16T06:38:47.856Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -376,7 +376,7 @@
 <h3 id="GAUC"><a href="#GAUC" class="headerlink" title="GAUC"></a>GAUC</h3><p>因为AUC反映的是为所有用户推荐的内容的排序能力，在很多情况下，我们需要以用户为单位分析每个用户的推荐效果，如下面的例子：</p>
 <ul>
 <li>模型A：甲-，乙-，甲+，乙+</li>
-<li>模型B：甲-，甲+，乙-，乙+<br>对比这两个模型的AUC，显然模型A的AUC更高，但对于甲乙个体用户来说，正样本的分数都比负样本高，推荐效果是相同的。<br>考虑到用户推荐应该注重单个用户的推荐效果，不同用户的推荐不应该放在一起计算，所以使用Group AUC来进行评估。GAUC计算每个用户自己的AUC，再进行加权平均。<script type="math/tex; mode=display">GAUC = \frac{\sum^n_{i=1} impression_i \times AUC_i}{\sum^n_{i=1} impression_i}</script></li>
+<li>模型B：甲-，甲+，乙-，乙+<br>对比这两个模型的AUC，显然模型A的AUC更高，但对于甲乙个体用户来说，正样本的分数都比负样本高，推荐效果是相同的。<br>考虑到用户推荐应该注重单个用户的推荐效果，不同用户的推荐不应该放在一起计算，所以使用Group AUC来进行评估。GAUC计算每个用户自己的AUC，再进行加权平均。<script type="math/tex; mode=display">GAUC = \frac{\sum_{i=1}^n impression_i \times AUC_i}{\sum_{i=1}^n impression_i}</script></li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
