@@ -23,8 +23,9 @@
 <meta property="og:description" content="关于Poly2、FM、FFM、DeepFM、DIN、DIEN算法的学习笔记。">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/4.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-16T06:38:47.856Z">
+<meta property="article:modified_time" content="2020-07-16T09:14:55.432Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -298,7 +299,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">2.1k字</span>
+        <span class="post-count">2.3k字</span>
       </span>
     </span>
 
@@ -365,18 +366,36 @@
 </div>
 
 <h2 id="DNN"><a href="#DNN" class="headerlink" title="DNN"></a>DNN</h2><p>输入到网络的特征通常是高维稀疏的，通常需要使用embedding层压缩至低维稠密向量。这里FM与DNN共享embedding层，注意wide&amp;deep中的wide部分，输入的是原始的离散化后的特征。<br>这里embedding层的输入向量维度可以不一致，因为不同特征的总类别数目不同，one-hot维度不同。embedding输出向量的维度一致，都是K维的。</p>
-<p><div align="center">
+<div align="center">
   <img width="500" src="/2020/06/30/FM/3.png">
-</div><br>DNN第一层的输入：</p>
-<script type="math/tex; mode=display">a^{(0)} = [e_1,e_2,...e_n]</script><p>每一层的变化可以记为：</p>
-<script type="math/tex; mode=display">a^{l} = \sigma{ w^{l} a^{l-1} + b^{l} }</script><p>DNN的输出层输出记为$y_{DNN}$，其中$|H|$为隐含层的个数：</p>
-<script type="math/tex; mode=display">y_{DNN} = \sigma{( w^{|H|+1} a^{|H|} + b^{|H|+1} )}</script><h1 id="DIN"><a href="#DIN" class="headerlink" title="DIN"></a>DIN</h1><h2 id="Base-Model"><a href="#Base-Model" class="headerlink" title="Base Model"></a>Base Model</h2><p>之前的模型一般采用Embedding&amp;MLP的模型架构，称为base model，包含以下几个部分：</p>
-<h3 id="Embedding层"><a href="#Embedding层" class="headerlink" title="Embedding层"></a>Embedding层</h3><p>输入是高维的稀疏向量，embedding层将他们转化为低维稠密向量。</p>
-<p>DIN同时对diversity和local activation进行建模。</p>
-<h3 id="GAUC"><a href="#GAUC" class="headerlink" title="GAUC"></a>GAUC</h3><p>因为AUC反映的是为所有用户推荐的内容的排序能力，在很多情况下，我们需要以用户为单位分析每个用户的推荐效果，如下面的例子：</p>
+</div>
+DNN第一层的输入：
+$$a^{(0)} = [e_1,e_2,...e_n] $$
+每一层的变化可以记为：
+$$a^{l} = \sigma{ w^{l} a^{l-1} + b^{l} }$$
+DNN的输出层输出记为$y_{DNN}$，其中$|H|$为隐含层的个数：
+$$y_{DNN} = \sigma{( w^{|H|+1} a^{|H|} + b^{|H|+1} )}$$
+
+# DIN
+DIN同时对diversity和local activation进行建模。
+论文将特征分为如下四个类别：
+- 用户画像特征
+- 用户行为特征
+- 广告特征
+- 上下文特征
+其中，用户行为特征多为multi-hot形式，表示用户浏览、点击过的多个商品/店铺信息。
+
+<div align="center">
+  <img width="500" src="/2020/06/30/FM/4.png">
+</div>
+
+<h2 id="Feature-Representation"><a href="#Feature-Representation" class="headerlink" title="Feature Representation"></a>Feature Representation</h2><p>有$M$组特征，第$i$组特征可以表示为$t_i \in R^{K_i}$，这里$K_i$表示第$i$组特征的维度（类别数）。一个instance可以表示为$x = [t^T_1,t^T_2…t^T_M]$。instance的特征总维数为K，$\sum^M_{i=1} K_i = K$。</p>
+<h2 id="Base-Model"><a href="#Base-Model" class="headerlink" title="Base Model"></a>Base Model</h2><p>之前的模型一般采用Embedding&amp;MLP的模型架构，称为base model，包含以下几个部分：</p>
+<h3 id="Embedding层"><a href="#Embedding层" class="headerlink" title="Embedding层"></a>Embedding层</h3><p>输入是高维的稀疏向量，embedding层将他们转化为低维稠密向量。对于第i组特征，$W^i = [w^i_1,…,w^i_j,…,w^i_{K_i}] \in R^{D \times K_i}$ 表示第i组特征的embedding字典，它将$K_i$维的特征映射为$D$维。</p>
+<h3 id="Pooling层与Concat层"><a href="#Pooling层与Concat层" class="headerlink" title="Pooling层与Concat层"></a>Pooling层与Concat层</h3><h3 id="评价指标GAUC"><a href="#评价指标GAUC" class="headerlink" title="评价指标GAUC"></a>评价指标GAUC</h3><p>因为AUC反映的是为所有用户推荐的内容的排序能力，在很多情况下，我们需要以用户为单位分析每个用户的推荐效果，如下面的例子：</p>
 <ul>
 <li>模型A：甲-，乙-，甲+，乙+</li>
-<li>模型B：甲-，甲+，乙-，乙+<br>对比这两个模型的AUC，显然模型A的AUC更高，但对于甲乙个体用户来说，正样本的分数都比负样本高，推荐效果是相同的。<br>考虑到用户推荐应该注重单个用户的推荐效果，不同用户的推荐不应该放在一起计算，所以使用Group AUC来进行评估。GAUC计算每个用户自己的AUC，再进行加权平均。<script type="math/tex; mode=display">GAUC = \frac{\sum_{i=1}^n impression_i \times AUC_i}{\sum_{i=1}^n impression_i}</script></li>
+<li>模型B：甲-，甲+，乙-，乙+<br>对比这两个模型的AUC，显然模型A的AUC更高，但对于甲乙个体用户来说，正样本的分数都比负样本高，推荐效果是相同的。<br>考虑到用户推荐应该注重单个用户的推荐效果，不同用户的推荐不应该放在一起计算，所以使用Group AUC来进行评估。GAUC计算每个用户自己的AUC，再进行加权平均。<script type="math/tex; mode=display">GAUC = \frac{\sum_{i=1}^n impression_i \times AUC_i}{\sum_{i=1}^n impression_i}</script>其中，$impression_i$为第i个用户浏览过的商品数量，n为用户总数。</li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
@@ -417,7 +436,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DIN"><span class="toc-number">7.</span> <span class="toc-text">DIN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">7.1.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">7.1.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#GAUC"><span class="toc-number">7.1.2.</span> <span class="toc-text">GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Representation"><span class="toc-number">6.3.</span> <span class="toc-text">Feature Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">6.4.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">6.4.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooling层与Concat层"><span class="toc-number">6.4.2.</span> <span class="toc-text">Pooling层与Concat层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评价指标GAUC"><span class="toc-number">6.4.3.</span> <span class="toc-text">评价指标GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
