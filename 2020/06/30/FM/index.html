@@ -24,8 +24,9 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/2.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/5.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-16T09:46:47.971Z">
+<meta property="article:modified_time" content="2020-07-16T10:15:51.556Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -299,7 +300,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">2.5k字</span>
+        <span class="post-count">2.7k字</span>
       </span>
     </span>
 
@@ -308,7 +309,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">13.5分</span>
+        <span class="post-count">15分</span>
       </span>
     </span>
 </div>
@@ -399,6 +400,12 @@ DIN同时对diversity和local activation进行建模。
 <h3 id="Pooling层与Concat层"><a href="#Pooling层与Concat层" class="headerlink" title="Pooling层与Concat层"></a>Pooling层与Concat层</h3><p>不同用户对应的用户行为特征的个数不同（multi-hot特征中非零特征维度不同），但全连接层只能处理固定长度的特征，所以常见的处理方法是对embedding数组进行池化，以得到固定长度的向量。</p>
 <script type="math/tex; mode=display">e_i = pooling(e_{i_1},e_{i_2},...,e_{i_k})</script><p>可以使用sum pooling或average pooling，对用一组的特征进行池化操作来处理multi-hot特征。</p>
 <p>然后将不同group的特征concat起来，送入MLP。</p>
+<h2 id="DIN结构"><a href="#DIN结构" class="headerlink" title="DIN结构"></a>DIN结构</h2><p>base model通过对一个group内所有embedding vector pooling得到固定的特征。即使candidate不同，特定用户的特征也不会动态发生变化。然而，用户的兴趣是多样的，用有限维度的不变的用户特征很难刻画diverse的用户兴趣。<br>一种解决方案是扩大用户特征的维度，但这样会造成待学习参数的急剧增长，会导致在有限训练数据下的过拟合，大大增加计算量和存储。<br>所以如何用一个有限维度的特征刻画diverse的用户兴趣呢。对于用户的历史行为，比如点击过的商品，不同的商品对于不同的candidate贡献不同。比如对于candidate奶粉，历史行为中的“奶瓶”会比“口红”更重要。DIN考虑到了用户历史行为与candidate的相关性，可适应地计算用户特征。</p>
+<p>DIN引入<code>local activation</code>，对每组的</p>
+<div align="center">
+  <img width="500" src="/2020/06/30/FM/5.png">
+</div>
+
 <h3 id="评价指标GAUC"><a href="#评价指标GAUC" class="headerlink" title="评价指标GAUC"></a>评价指标GAUC</h3><p>因为AUC反映的是为所有用户推荐的内容的排序能力，在很多情况下，我们需要以用户为单位分析每个用户的推荐效果，如下面的例子：</p>
 <ul>
 <li>模型A：甲-，乙-，甲+，乙+</li>
@@ -443,7 +450,7 @@ DIN同时对diversity和local activation进行建模。
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Representation"><span class="toc-number">6.3.</span> <span class="toc-text">Feature Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">6.4.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">6.4.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooling层与Concat层"><span class="toc-number">6.4.2.</span> <span class="toc-text">Pooling层与Concat层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#评价指标GAUC"><span class="toc-number">6.4.3.</span> <span class="toc-text">评价指标GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Representation"><span class="toc-number">6.3.</span> <span class="toc-text">Feature Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">6.4.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">6.4.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooling层与Concat层"><span class="toc-number">6.4.2.</span> <span class="toc-text">Pooling层与Concat层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DIN结构"><span class="toc-number">6.5.</span> <span class="toc-text">DIN结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#评价指标GAUC"><span class="toc-number">6.5.1.</span> <span class="toc-text">评价指标GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
