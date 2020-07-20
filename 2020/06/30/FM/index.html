@@ -25,8 +25,9 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/3.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/4.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/10.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-20T09:00:00.336Z">
+<meta property="article:modified_time" content="2020-07-20T10:05:46.514Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -300,7 +301,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">3.3k字</span>
+        <span class="post-count">3.4k字</span>
       </span>
     </span>
 
@@ -309,7 +310,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">18分</span>
+        <span class="post-count">19.5分</span>
       </span>
     </span>
 </div>
@@ -416,13 +417,15 @@ DIN同时对diversity和local activation进行建模。
 <li>模型A：甲-，乙-，甲+，乙+</li>
 <li>模型B：甲-，甲+，乙-，乙+<br>对比这两个模型的AUC，显然模型A的AUC更高，但对于甲乙个体用户来说，正样本的分数都比负样本高，推荐效果是相同的。<br>考虑到用户推荐应该注重单个用户的推荐效果，不同用户的推荐不应该放在一起计算，所以使用Group AUC来进行评估。GAUC计算每个用户自己的AUC，再进行加权平均。<script type="math/tex; mode=display">GAUC = \frac{\sum_{i=1}^n impression_i \times AUC_i}{\sum_{i=1}^n impression_i}</script>其中，$impression_i$为第i个用户浏览过的商品数量，n为用户总数。</li>
 </ul>
-<h1 id="DIEN"><a href="#DIEN" class="headerlink" title="DIEN"></a>DIEN</h1><h2 id="Interest-Extractor-Layer"><a href="#Interest-Extractor-Layer" class="headerlink" title="Interest Extractor Layer"></a>Interest Extractor Layer</h2><p>使用GRU对用户行为序列进行建模，<br>用$t+1$时刻的用户行为$b_{t+1}$指导$t$时刻隐含层的输出$h_t$<br>辅助loss的引入有如下好处：</p>
+<h1 id="DIEN"><a href="#DIEN" class="headerlink" title="DIEN"></a>DIEN</h1><h2 id="兴趣提取层-Interest-Extractor-Layer"><a href="#兴趣提取层-Interest-Extractor-Layer" class="headerlink" title="兴趣提取层-Interest Extractor Layer"></a>兴趣提取层-Interest Extractor Layer</h2><p>使用GRU对用户行为序列进行建模，<br>用$t+1$时刻的用户行为$b_{t+1}$指导$t$时刻隐含层的输出$h_t$<br>辅助loss的引入有如下好处：</p>
 <ul>
 <li>帮助GRU隐状态更好的表示用户兴趣，学习用户兴趣之间的依赖关系</li>
 <li>在RNN网络的每个时间步都引入一个辅助的监督信号，可以降低优化难度</li>
-<li>给embedding层的学习引入更丰富的语义信息，可以得到更好的item embedding<br>$L_{aux}$表示如下：<script type="math/tex; mode=display">L_{aux} = -\frac{1}{N} (\sum^N_{i=1} \sum_{t} log \sigma{(h_t,e^i_b [t+1])} + log(1-\sigma{(h_t,\hat{e}^i_b[t+1])}) )</script></li>
+<li>给embedding层的学习引入更丰富的语义信息，可以得到更好的item embedding<br>$L_{aux}$表示如下，其中，$e^i_b \in R^{T \times n_E}$表示第i个用户的T个时刻的行为序列embedding，$\hat{e}^i_b \in R^{T \times n_E}$表示抽样得到的负样本序列。<script type="math/tex; mode=display">L_{aux} = -\frac{1}{N} (\sum^N_{i=1} \sum_{t} log \sigma{(h^i_t,e^i_b [t+1])} + log(1-\sigma{(h^i_t,\hat{e}^i_b[t+1])}) )</script><code>auxiliary_net</code>和<code>auxiliary_loss</code>的计算如下所示：<br><div align="center">
+<img width="500" src="/2020/06/30/FM/10.png">
+</div><br>可以看出，是将$h^i_t$与$e^i_b [t+1]$拼接，送入全连接层，得到</li>
 </ul>
-<h2 id="Interest-Evolving-Layer"><a href="#Interest-Evolving-Layer" class="headerlink" title="Interest Evolving Layer"></a>Interest Evolving Layer</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<h2 id="兴趣演化层-Interest-Evolving-Layer"><a href="#兴趣演化层-Interest-Evolving-Layer" class="headerlink" title="兴趣演化层-Interest Evolving Layer"></a>兴趣演化层-Interest Evolving Layer</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
 <li><a href="https://arxiv.org/pdf/1606.07792.pdf" target="_blank" rel="noopener">Wide &amp; Deep Learning for Recommender Systems</a></li>
 <li><a href="https://arxiv.org/pdf/1703.04247.pdf" target="_blank" rel="noopener">DeepFM: A Factorization-Machine based Neural Network for CTR Prediction</a></li>
@@ -461,7 +464,7 @@ DIN同时对diversity和local activation进行建模。
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Representation"><span class="toc-number">6.3.</span> <span class="toc-text">Feature Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">6.4.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">6.4.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooling层与Concat层"><span class="toc-number">6.4.2.</span> <span class="toc-text">Pooling层与Concat层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DIN结构"><span class="toc-number">6.5.</span> <span class="toc-text">DIN结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#评价指标GAUC"><span class="toc-number">6.5.1.</span> <span class="toc-text">评价指标GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DIEN"><span class="toc-number">7.</span> <span class="toc-text">DIEN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Interest-Extractor-Layer"><span class="toc-number">7.1.</span> <span class="toc-text">Interest Extractor Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Interest-Evolving-Layer"><span class="toc-number">7.2.</span> <span class="toc-text">Interest Evolving Layer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Poly2"><span class="toc-number">1.</span> <span class="toc-text">Poly2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FM"><span class="toc-number">2.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#FFM"><span class="toc-number">3.</span> <span class="toc-text">FFM</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GBDT-LR"><span class="toc-number">4.</span> <span class="toc-text">GBDT+LR</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Wide-amp-Deep"><span class="toc-number">5.</span> <span class="toc-text">Wide &amp; Deep</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Wide"><span class="toc-number">5.1.</span> <span class="toc-text">Wide</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep"><span class="toc-number">5.2.</span> <span class="toc-text">Deep</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Joint-Training"><span class="toc-number">5.3.</span> <span class="toc-text">Joint Training</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DeepFM"><span class="toc-number">6.</span> <span class="toc-text">DeepFM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#FM-1"><span class="toc-number">6.1.</span> <span class="toc-text">FM</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DNN"><span class="toc-number">6.2.</span> <span class="toc-text">DNN</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Feature-Representation"><span class="toc-number">6.3.</span> <span class="toc-text">Feature Representation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Base-Model"><span class="toc-number">6.4.</span> <span class="toc-text">Base Model</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Embedding层"><span class="toc-number">6.4.1.</span> <span class="toc-text">Embedding层</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Pooling层与Concat层"><span class="toc-number">6.4.2.</span> <span class="toc-text">Pooling层与Concat层</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DIN结构"><span class="toc-number">6.5.</span> <span class="toc-text">DIN结构</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#评价指标GAUC"><span class="toc-number">6.5.1.</span> <span class="toc-text">评价指标GAUC</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#DIEN"><span class="toc-number">7.</span> <span class="toc-text">DIEN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#兴趣提取层-Interest-Extractor-Layer"><span class="toc-number">7.1.</span> <span class="toc-text">兴趣提取层-Interest Extractor Layer</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#兴趣演化层-Interest-Evolving-Layer"><span class="toc-number">7.2.</span> <span class="toc-text">兴趣演化层-Interest Evolving Layer</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">8.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
