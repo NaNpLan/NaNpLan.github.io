@@ -26,7 +26,7 @@
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/4.png">
 <meta property="og:image" content="http://yoursite.com/2020/06/30/FM/5.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-20T08:56:33.831Z">
+<meta property="article:modified_time" content="2020-07-20T09:00:00.336Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="FM">
 <meta property="article:tag" content="FFM">
@@ -420,7 +420,7 @@ DIN同时对diversity和local activation进行建模。
 <ul>
 <li>帮助GRU隐状态更好的表示用户兴趣，学习用户兴趣之间的依赖关系</li>
 <li>在RNN网络的每个时间步都引入一个辅助的监督信号，可以降低优化难度</li>
-<li>给embedding层的学习引入更丰富的语义信息，可以得到更好的item embedding<br>$L_{aux}$表示如下：<script type="math/tex; mode=display">L_{aux} = -\frac{1}{N} (\sum_^N_{i=1} \sum_{t} log \sigma{(h_t,e^i_b [t+1])} + log(1-\sigma{(h_t,\hat{e}^i_b[t+1])}) )</script></li>
+<li>给embedding层的学习引入更丰富的语义信息，可以得到更好的item embedding<br>$L_{aux}$表示如下：<script type="math/tex; mode=display">L_{aux} = -\frac{1}{N} (\sum^N_{i=1} \sum_{t} log \sigma{(h_t,e^i_b [t+1])} + log(1-\sigma{(h_t,\hat{e}^i_b[t+1])}) )</script></li>
 </ul>
 <h2 id="Interest-Evolving-Layer"><a href="#Interest-Evolving-Layer" class="headerlink" title="Interest Evolving Layer"></a>Interest Evolving Layer</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
 <li>语雀-铸云-机器学习笔记</li>
