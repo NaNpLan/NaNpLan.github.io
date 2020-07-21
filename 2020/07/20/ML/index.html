@@ -22,7 +22,7 @@
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="复习一下常见的机器学习算法。">
 <meta property="article:published_time" content="2020-07-20T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-07-21T05:48:24.170Z">
+<meta property="article:modified_time" content="2020-07-21T05:55:37.450Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="朴素贝叶斯">
 <meta property="article:tag" content="最大似然估计（MLE）">
@@ -295,7 +295,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">171字</span>
+        <span class="post-count">198字</span>
       </span>
     </span>
 
@@ -331,12 +331,11 @@
       
           
         <p>复习一下常见的机器学习算法。<br><a id="more"></a></p>
-<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><script type="math/tex; mode=display">P(Y|X)=\frac{P(X|Y) P(Y)}{P(X)}</script><p>朴素贝叶斯对于条件概率分布作了条件独立性假设，这是一个较强的假设，使得计算变得简单，朴素贝叶斯因此而得名。条件独立性假设是指在类别确定的情况下，用于分类的特征都是条件独立的。</p>
-<ul>
+<h1 id="MLE-与-MAP"><a href="#MLE-与-MAP" class="headerlink" title="MLE 与 MAP"></a>MLE 与 MAP</h1><ul>
 <li>频率学派：最大似然估计MLE</li>
-<li>贝叶斯学派：最大后验概率MAP<h2 id="MLE"><a href="#MLE" class="headerlink" title="MLE"></a>MLE</h2><script type="math/tex; mode=display">\hat{y}_{MLE} = argmax P(X;y) = argmax \prod^N_i P(X_i;y)</script></li>
+<li>贝叶斯学派：最大后验概率MAP<h2 id="MAP"><a href="#MAP" class="headerlink" title="MAP"></a>MAP</h2>贝叶斯学派将X分到具有最大后验概率的类别中，公式为：<script type="math/tex; mode=display">\hat{y}_{MAP} = argmax P(y|X) = argmax \frac{P(X|y) P(y)}{P(X)} = argmax P(X|y)P(y) = argmin -logP(X|y) - P(y)</script>朴素贝叶斯对于条件概率分布作了条件独立性假设，这是一个较强的假设，使得计算变得简单（条件概率的数量大大减少），朴素贝叶斯因此而得名。条件独立性假设是指在类别确定的情况下，用于分类的特征都是条件独立的。</li>
 </ul>
-<h2 id="MAP"><a href="#MAP" class="headerlink" title="MAP"></a>MAP</h2><script type="math/tex; mode=display">\hat{y}_{MAP} = argmax P(y|X) = argmax \frac{P(X|y) P(y)}{P(X)} = argmax P(X|y)P(y)</script>
+<h2 id="MLE"><a href="#MLE" class="headerlink" title="MLE"></a>MLE</h2><script type="math/tex; mode=display">\hat{y}_{MLE} = argmax P(X;y) = argmax \prod^N_i P(X_i;y)</script>
       
     </div>
     
@@ -362,7 +361,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#朴素贝叶斯"><span class="toc-number">1.</span> <span class="toc-text">朴素贝叶斯</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MLE"><span class="toc-number">1.1.</span> <span class="toc-text">MLE</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MAP"><span class="toc-number">1.2.</span> <span class="toc-text">MAP</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#MLE-与-MAP"><span class="toc-number">1.</span> <span class="toc-text">MLE 与 MAP</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#MAP"><span class="toc-number">1.1.</span> <span class="toc-text">MAP</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#MLE"><span class="toc-number">1.2.</span> <span class="toc-text">MLE</span></a></li></ol></li></ol>
         
     </div>
     <style>
