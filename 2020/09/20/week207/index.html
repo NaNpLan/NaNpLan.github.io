@@ -15,14 +15,14 @@
 
 
 
-<meta name="description" content="恢复周赛，手速慢吞吞…A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没来得及看&#x3D; &#x3D;B WA了一次，C TLE了一次 &#x3D; &#x3D;主要写一下D的思路">
+<meta name="description" content="恢复周赛，手速慢吞吞…A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没搞出来&#x3D; &#x3D;B WA了一次，C TLE了一次 &#x3D; &#x3D;主要写一下D的思路">
 <meta property="og:type" content="article">
 <meta property="og:title" content="LeetCode 周赛 207">
 <meta property="og:url" content="http://yoursite.com/2020/09/20/week207/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="恢复周赛，手速慢吞吞…A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没来得及看&#x3D; &#x3D;B WA了一次，C TLE了一次 &#x3D; &#x3D;主要写一下D的思路">
+<meta property="og:description" content="恢复周赛，手速慢吞吞…A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没搞出来&#x3D; &#x3D;B WA了一次，C TLE了一次 &#x3D; &#x3D;主要写一下D的思路">
 <meta property="article:published_time" content="2020-09-20T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-09-20T11:23:42.685Z">
+<meta property="article:modified_time" content="2020-09-20T13:17:45.037Z">
 <meta property="article:author" content="Yang Zhuoya">
 <meta property="article:tag" content="周赛">
 <meta name="twitter:card" content="summary">
@@ -291,7 +291,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">517字</span>
+        <span class="post-count">516字</span>
       </span>
     </span>
 
@@ -326,7 +326,7 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>恢复周赛，手速慢吞吞…<br>A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没来得及看= =<br>B WA了一次，C TLE了一次 = =<br>主要写一下D的思路</p>
+        <p>恢复周赛，手速慢吞吞…<br>A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没搞出来= =<br>B WA了一次，C TLE了一次 = =<br>主要写一下D的思路</p>
 <a id="more"></a>
 <h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><p>有两组点，数量分别为SIZE1、SIZE2，<code>SIZE1&gt;=SIZE2</code>。<br>要对第一组中每个点，在第二组中找到一个点连接。第二组中的每个点也需要与第一组中一个或多个点有连接。问最小代价。</p>
 <h2 id="状态压缩dp"><a href="#状态压缩dp" class="headerlink" title="状态压缩dp"></a>状态压缩dp</h2><p>相当于从矩阵matrix[size1][size2]中选值，使得每一行、每一列都至少有一个元素被选中，使得选中元素的和最小。</p>
