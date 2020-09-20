@@ -15,11 +15,16 @@
 
 
 
-<meta property="og:type" content="website">
-<meta property="og:title" content="Blog of ZhuoyaYang">
-<meta property="og:url" content="http://yoursite.com/archives/2018/07/index.html">
+<meta name="description" content="恢复周赛，手速慢吞吞…A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没来得及看&#x3D; &#x3D;B WA了一次，C TLE了一次 &#x3D; &#x3D;主要写一下D的思路">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LeetCode 周赛207">
+<meta property="og:url" content="http://yoursite.com/2020/09/20/week207/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
+<meta property="og:description" content="恢复周赛，手速慢吞吞…A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没来得及看&#x3D; &#x3D;B WA了一次，C TLE了一次 &#x3D; &#x3D;主要写一下D的思路">
+<meta property="article:published_time" content="2020-09-20T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-09-20T10:58:40.180Z">
 <meta property="article:author" content="Yang Zhuoya">
+<meta property="article:tag" content="周赛">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -54,7 +59,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Archives: 2018/7 | Blog of ZhuoyaYang</title>
+<title>LeetCode 周赛207 | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -64,8 +69,8 @@
         fancybox: true,
         animate: true,
         isHome: false,
-        isPost: false,
-        isArchive: true,
+        isPost: true,
+        isArchive: false,
         isTag: false,
         isCategory: false,
         fancybox_js: "//cdn.bootcss.com/fancybox/2.1.5/jquery.fancybox.min.js",
@@ -257,97 +262,176 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap">
+      <div class="body-wrap"><article id="post-week207" class="article article-type-post" itemscope itemprop="blogPost">
   
-  
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2018" class="archive-year">2018</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/07/26/Mosaic/" class="archive-article-date">
-      <time datetime="2018-07-26T03:38:33.000Z" itemprop="datePublished">07-26</time>
+    <div class="article-meta">
+      <a href="/2020/09/20/week207/" class="article-date">
+      <time datetime="2020-09-20T08:57:07.000Z" itemprop="datePublished">2020-09-20</time>
 </a>
 
 
-        </div>
-         
+    </div>
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a>
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      LeetCode 周赛207
     </h1>
   
 
-        <div class="article-info info-on-archive">
-          
+        
+          <div style="margin-top:30px 0;margin-bottom:30px;">
+    <span class="post-time">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-keyboard-o"></i>
+        <span class="post-meta-item-text">  字数统计: </span>
+        <span class="post-count">360字</span>
+      </span>
+    </span>
+
+    <span class="post-time">
+      &nbsp; | &nbsp;
+      <span class="post-meta-item-icon">
+        <i class="fa fa-hourglass-half"></i>
+        <span class="post-meta-item-text">  阅读时长: </span>
+        <span class="post-count">1.5分</span>
+      </span>
+    </span>
+</div>
+        
+      </header>
+      
+      <div class="article-info article-info-post">
+        
     <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%A5%BD%E7%8E%A9%E7%9A%84/">好玩的</a>
+    <a class="article-category-link" href="/categories/LeetCode/">LeetCode</a>
     </div>
 
 
-          
+        
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Mosaic%E6%8B%BC%E5%9B%BE/" rel="tag">Mosaic拼图</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%91%A8%E8%B5%9B/" rel="tag">周赛</a></li></ul>
     </div>
 
-        </div>
         <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
+      </div>
+      
     
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-          <div class="article-meta">
-              <a href="/2018/07/24/Baidu-Picture-Crawler/" class="archive-article-date">
-      <time datetime="2018-07-24T04:05:20.000Z" itemprop="datePublished">07-24</time>
-</a>
-
-
-        </div>
-         
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a>
-    </h1>
-  
-
-        <div class="article-info info-on-archive">
+    <div class="article-entry" itemprop="articleBody">
+      
           
-    <div class="article-category tagcloud">
-    <a class="article-category-link" href="/categories/%E5%A5%BD%E7%8E%A9%E7%9A%84/">好玩的</a>
+        <p>恢复周赛，手速慢吞吞…<br>A-字符串处理，B-数据不大用dfs+剪枝可以过，C-不难的dp，D没来得及看= =<br>B WA了一次，C TLE了一次 = =<br>主要写一下D的思路</p>
+<a id="more"></a>
+<h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><p>有两组点，数量分别为SIZE1、SIZE2，<code>SIZE1&gt;=SIZE2</code>。<br>要对第一组中每个点，在第二组中找到一个点连接。第二组中的每个点也需要与第一组中一个或多个点有连接。问最小代价。<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">class Solution &#123;</span><br><span class="line">public:</span><br><span class="line">    int connectTwoGroups(vector&lt;vector&lt;int&gt;&gt;&amp; cost) &#123;</span><br><span class="line">        int size1&#x3D;cost.size(),size2&#x3D;cost[0].size();</span><br><span class="line">        int all_state&#x3D;1&lt;&lt;size2;</span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; cost_row(size1,vector&lt;int&gt;(all_state,0));</span><br><span class="line">        </span><br><span class="line">        for(int i&#x3D;0;i&lt;size1;i++)</span><br><span class="line">            for(int j&#x3D;0;j&lt;all_state;j++)</span><br><span class="line">                for(int k&#x3D;0;k&lt;size2;k++)   </span><br><span class="line">                    if(j&amp;(1&lt;&lt;k))  cost_row[i][j]+&#x3D;cost[i][k];</span><br><span class="line"></span><br><span class="line">        vector&lt;vector&lt;int&gt;&gt; dp(size1,vector&lt;int&gt;(all_state,0x3f3f3f));</span><br><span class="line">        for(int j&#x3D;0;j&lt;all_state;j++) dp[0][j]&#x3D;cost_row[0][j];</span><br><span class="line">        for(int i&#x3D;1;i&lt;size1;i++)</span><br><span class="line">        &#123;</span><br><span class="line">            for(int j&#x3D;1;j&lt;all_state;j++) &#x2F;&#x2F;i-1</span><br><span class="line">            &#123;</span><br><span class="line">                for(int k&#x3D;0;k&lt;size2;k++)</span><br><span class="line">                    dp[i][j|(1&lt;&lt;k)] &#x3D; min(dp[i][j|(1&lt;&lt;k)],dp[i-1][j]+cost[i][k]);</span><br><span class="line">                int noSelect &#x3D; all_state -1 -j;</span><br><span class="line">                for(int k&#x3D;noSelect;k&gt;&#x3D;1;k&#x3D;noSelect&amp;(k-1))  &#x2F;&#x2F;i</span><br><span class="line">                     dp[i][j|k] &#x3D; min(dp[i][j|k],dp[i-1][j]+cost_row[i][k]);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        return dp[size1-1][all_state-1];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://leetcode-cn.com/problems/minimum-cost-to-connect-two-groups-of-points/solution/java-zhuang-tai-ya-suo-dp-by-aerysn/" target="_blank" rel="noopener">参考大佬的状态压缩dp</a></p>
+
+      
+    </div>
+    
+  </div>
+  
+    
+
+
+    <nav id="article-nav">
+        
+        
+            <div id="article-nav-older" class="article-nav-title">
+                <a href="/2020/07/06/CE-Net/">
+                    CE-Net &amp; UNet++
+                </a>
+            </div>
+        
+    </nav>
+
+  
+</article>
+
+    <div id="toc" class="toc-article">
+        <strong class="toc-title">文章目录</strong>
+        
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#D"><span class="toc-number">1.</span> <span class="toc-text">D</span></a></li></ol>
+        
+    </div>
+    <style>
+        .left-col .switch-btn,
+        .left-col .switch-area {
+            display: none;
+        }
+        .toc-level-3 i,
+        .toc-level-3 ol {
+            display: none !important;
+        }
+    </style>
+
+    <input type="button" id="tocButton" value="隐藏目录"  title="点击按钮隐藏或者显示文章目录">
+
+    <script>
+        yiliaConfig.toc = ["隐藏目录", "显示目录", !!"false"];
+    </script>
+
+
+
+    
+<div class="share">
+    
+        <div class="bdsharebuttonbox">
+            <a href="#" class="fa fa-twitter bds_twi" data-cmd="twi" title="分享到推特"></a>
+            <a href="#" class="fa fa-weibo bds_tsina" data-cmd="tsina" title="分享到新浪微博"></a>
+            <a href="#" class="fa fa-qq bds_sqq" data-cmd="sqq" title="分享给 QQ 好友"></a>
+            <a href="#" class="fa fa-files-o bds_copy" data-cmd="copy" title="复制网址"></a>
+            <a href="#" class="fa fa fa-envelope-o bds_mail" data-cmd="mail" title="通过邮件分享"></a>
+            <a href="#" class="fa fa-weixin bds_weixin" data-cmd="weixin" title="生成文章二维码"></a>
+            <a href="#" class="fa fa-share-alt bds_more" data-cmd="more"></i></a>
+        </div>
+        <script>
+            window._bd_share_config={
+                "common":{"bdSnsKey":{},"bdText":"LeetCode 周赛207　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+        </script>
+    
+
+    
+</div>
+
+
+
+
+
+
+
+    
+
+
+
+
+    <div class="scroll" id="post-nav-button">
+        
+            <a href="/" title="回到主页"><i class="fa fa-home"></i></a>
+        
+
+        <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
+
+        
+            <a href="/2020/07/06/CE-Net/" title="下一篇: CE-Net &amp; UNet++">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        
     </div>
 
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
-          
-    <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web-Crawler/" rel="tag">Web Crawler</a></li></ul>
-    </div>
 
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
-  
 
-    
 
+    <script>
+        
+    </script>
 </div>
       <footer id="footer">
     <div class="outer">
