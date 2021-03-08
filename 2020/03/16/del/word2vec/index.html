@@ -15,22 +15,19 @@
 
 
 
-<meta name="description" content="YOLO的基本网络流程、版本进化过程、优缺点、与二阶网络的对比。">
+<meta name="description" content="word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和H">
 <meta property="og:type" content="article">
-<meta property="og:title" content="YOLO">
-<meta property="og:url" content="http://yoursite.com/2020/03/23/yolo/index.html">
+<meta property="og:title" content="word2vec">
+<meta property="og:url" content="http://yoursite.com/2020/03/16/del/word2vec/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="YOLO的基本网络流程、版本进化过程、优缺点、与二阶网络的对比。">
-<meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/1.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/03/23/yolo/4.png">
-<meta property="article:published_time" content="2020-03-23T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-23T16:18:42.327Z">
+<meta property="og:description" content="word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和H">
+<meta property="og:image" content="http://yoursite.com/2020/03/16/del/word2vec/1.png">
+<meta property="article:published_time" content="2020-03-16T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-04-23T02:43:45.145Z">
 <meta property="article:author" content="Yang Zhuoya">
-<meta property="article:tag" content="YOLO">
+<meta property="article:tag" content="word2vec">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/03/23/yolo/1.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/03/16/del/word2vec/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -64,7 +61,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>YOLO | Blog of ZhuoyaYang</title>
+<title>word2vec | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -267,11 +264,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-yolo" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-del/word2vec" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/03/23/yolo/" class="article-date">
-      <time datetime="2020-03-23T08:57:07.000Z" itemprop="datePublished">2020-03-23</time>
+      <a href="/2020/03/16/del/word2vec/" class="article-date">
+      <time datetime="2020-03-16T08:57:07.000Z" itemprop="datePublished">2020-03-16</time>
 </a>
 
 
@@ -286,7 +283,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      YOLO
+      word2vec
     </h1>
   
 
@@ -321,7 +318,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/YOLO/" rel="tag">YOLO</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/word2vec/" rel="tag">word2vec</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -331,61 +328,31 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>YOLO的基本网络流程、版本进化过程、优缺点、与二阶网络的对比。<br><a id="more"></a></p>
-<h1 id="网络流程"><a href="#网络流程" class="headerlink" title="网络流程"></a>网络流程</h1><p>YOLO将整张图片分成$S \times S$大小的网格，每个单元格负责检测中心点位于单元格内的目标。对于每个网格：</p>
+        <p>word2vec将one-hot向量，转换为低维词向量（word embedding）。从另一个空间表达物体，并揭示了物体间的潜在关系。<br>整个建模过程与自编码器（auto-encoder）非常相似，通过隐层将输入编码压缩，然后又在输出层将数据解码恢复原始状态。在训练完成后，去掉输出层，只保留隐层的编码过程。<br>目前有两种模型：CBOW和Skip-gram；两种加速算法：Negative Sample和Hierarchical Softmax。<br><a id="more"></a></p>
+<h1 id="低维稠密与高维稀疏"><a href="#低维稠密与高维稀疏" class="headerlink" title="低维稠密与高维稀疏"></a>低维稠密与高维稀疏</h1><p>我们经常用one-hot方法对离散特征编码，在实际业务中，常常会产生非常高维的系数特征。从工程的角度，高维稀疏向量会带来存储、计算效率上的问题。从模型优化的角度，如果采取深度学习方法，特征过于稀疏会导致整个网络收敛过慢，每次只有极少数的权重得到更新，在样本有限的情况下会导致模型不收敛；如果采取树模型，高维稀疏特征容易导致过拟合。</p>
+<blockquote>
+<p>插播：为什么LR适合处理高维稀疏特征，而GBDT不适合？<br>比如用户id转化为one-hot，树模型每次选择一个特征进行分类——id特征的第i维，每次只能区分出是这个id的样本和不是这个id的样本，分的过细，会导致过拟合。<br><!--> 而lr会对id的所有one-hot维度进行加权求和，而不是只选择一个维度进行分裂。把id变成高维，一定程度上起到了核函数，使样本线性可分，有利于lr的学习。--><br>而lr在梯度下降的过程中，会对所以特征不为0的w进行更新。如果特征稀疏，更新会比较慢，但不易过拟合。把id变成高维，一定程度上起到了核函数，使样本线性可分，有利于lr的学习。<br>总之GBDT这样的树模型适合低维稠密特征，需要特征的每一维度有充足信息；而lr可以整合特征的不同维度的信息。</p>
+</blockquote>
+<h1 id="模型原理"><a href="#模型原理" class="headerlink" title="模型原理"></a>模型原理</h1><p>word2vec主要包含CBOW和Skip-gram两种模型，两者只是输入层和输出层不同：</p>
 <ul>
-<li>预测$B$个bbox，并且每个bbox有一个置信度（<code>box confidence score</code>）</li>
-<li>只检测一种类别的目标，无论每个网格预测多少bbox</li>
-<li>预测网格包含$C$个类别目标的条件概率（<code>conditional class probability</code>）</li>
+<li>CBOW, 输入上下文，预测中心词W(t)</li>
+<li>Skip-gram, 输入中心词W(t)，预测上下文</li>
 </ul>
-<p>每个预测的bbox包含5个元素：$(x，y，w，h)$和置信度。置信度得分反映了bbox包含对象的可能性以及bbox的准确性。用整个图像的宽、高对边界框的w、h进行归一化。x、y是对应网格的偏移量。因此，x，y，w和h的范围都在0和1之间。每个网格都有20个条件类概率。因此，YOLO的输出是$(S,S,B \times 5+C)=(7,7,2 \times 5+20)= (7,7,30)$。</p>
-<p>YOLO的任务就是建立一个网络，得到$(7, 7, 30)$的输出。如下图所示，先经过24个卷积层，将w、h减少到$7 \times \7$，每个点对应1000维的深度。然后再通过2个全连接层，得到$(7, 7, 30)$的输出。</p>
-<div align="center">
-  <img height="300" src="/2020/03/23/yolo/1.png">
-</div>
-
-<p>每个bbox的最终得分——类别置信度<code>class confidence score</code>由box置信度<code>box confidence score</code>和类别概率<code>conditional class probability</code>的乘积得到，相当于考虑分类准确度、定位精度的综合得分。<br><!--![](/YOLO/2.png)--></p>
-<div align="center">
-  <img height="200" src="/2020/03/23/yolo/2.png">
-</div>
-
-<h1 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h1><h1 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h1><ul>
-<li>快。可用于工业中的实时处理。</li>
-<li>类别预测+定位可由一个网络得到。</li>
-<li>YOLO更通用。从自然场景推广到其他领域时，如艺术品时，有更好的表现。</li>
-<li>每个网格检测一个对象，预测结果在空间分布更多样。<div align="center">
-<img height="220" src="/2020/03/23/yolo/3.png">
-</div>
-
-</li>
+<!--![](/word2vec/1.png)-->
+<p><div align="center">
+  <img height="300" src="/2020/03/16/del/word2vec/1.png">
+</div><br>下面的模型流程以CBOW为例，如上图所示：</p>
+<ul>
+<li>输入层：C个上下文单词，每个单词的one-hot编码V维，整个输入$C \times V$维。</li>
+<li>将输入乘以权重矩阵$W_{V \times N}$，得到$C \times N$维的矩阵，每行对应一个单词。每行相加求平均，得到$1 \times N$维的隐层向量。</li>
+<li>将$1 \times N$维的隐层向量乘以权重矩阵的逆$W’_{N \times V}$得到$1 \times V$维的向量，经过softmax激活函数处理，得到相同维度的概率分布。</li>
+<li>将$1 \times V$维概率分布，与中心词的真实one-hot编码作比较，计算损失。</li>
 </ul>
-<h1 id="YOLOv2"><a href="#YOLOv2" class="headerlink" title="YOLOv2"></a>YOLOv2</h1><p>YOLOv2以darknet为backbone，改进包含以下几点：</p>
-<ol>
-<li><p>BN<br>在卷积层中加入BN，不再需要使用drop out，mAP提升2%。</p>
-</li>
-<li><p>将预测从cell级别转换至anchor(先验框)级别<br>YOLOv2借鉴了Faster R-CNN中anchor的思想，每个cell对应5种尺寸的anchor。<br>并将预测从cell级别转换至anchor级别。YOLOv1每个cell对应一组类别概率，而YOLOv2每个anchor都对应一组类别概率。每个anchor的预测值包含25维：4个坐标$(x,y,w,h)$，1个置信度，20个类别概率。每个cell产生5种不同大小的anchor，对应$5 \times 25 = 125$维的输出。整张图片得到$7 \times 7 \times 125$维的输出。为了得到这样的预测结果，YOLOv2去掉了最后的2个全连接层，并用3个$3 \times 3$大小的卷积层替换最后一组卷积，先得到 $7 \times 7 \times 1024$的输出。再用一组$1 \times 1$的卷积层，得到$7 \times 7 \times 125$的输出。</p>
-</li>
-<li><p>Dimension Clusters<br>采用K-Means聚类指导anchor的设置。</p>
-</li>
-<li><p>Fine-Grained Features<br>YOLOv2的输入图像的大小为$416 \times 416$，经过darknet-19的5次下采样，得到大小为$13 \times 13$的特征图。对于大物体来说，这个特征图是理想的。但对于小物体来说，需要更精细的特征图提供更多细节信息。<br>YOLOv2引入<code>passthrough</code>层来提供更精细的特征图。passthrough层本质就是特征重排，将$26 \times 26 \times 512$维的特征图按行和列隔点采样，得到4张$13 \times 13 \times 512$维的特征图，再将这四张特征图的channel维concat起来，得到$13 \times 13 \times 2048$维的特征图，该特征图有更大的分辨率。将$13 \times 13 \times 2048$的大分辨率特征图与$13 \times 13 \times 1024$的小分辨率特征图的channel维concat起来，得到passthrough的输出——$13 \times 13 \times 3072$维的特征图。</p>
-</li>
-</ol>
-<div align="center">
-  <img height="150" src="/2020/03/23/yolo/4.png">
-</div>
-
-<ol>
-<li>Multi-Scale Training<br>由于YOLOv2去掉了全连接层，只包含卷积层、池化层，不限制输入图像的大小。为了模型的鲁棒性，在训练的时候采取多尺寸训练的方法，每隔一定的iteration，改变输入的图像大小，采取下采样倍数32的整数倍：{320, 352, 384, 416, 448, 480, …, 608}。</li>
-</ol>
-<h1 id="YOLOv3"><a href="#YOLOv3" class="headerlink" title="YOLOv3"></a>YOLOv3</h1><ol>
-<li><p>backbone采用darknet-53</p>
-</li>
-<li><p>FPN实现多尺度特征的捕捉<br>YOLOv2采用passthrough，综合了2个不同尺度的特征图。YOLOv3采用FPN，结合3个不同尺度的特征图进行检测。</p>
-</li>
-<li><p>9种尺度的anchor<br>YOLOv3通过K-Means聚类，得到9种anchor。再将9种anchor划分给3种特征图，分辨率较大的特征图对应较小的anchor。</p>
-</li>
-</ol>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://medium.com/@jonathan_hui/real-time-object-detection-with-yolo-yolov2-28b1b93e2088" target="_blank" rel="noopener">Real-time Object Detection with YOLO, YOLOv2 and now YOLOv3</a><br><a href="https://zhuanlan.zhihu.com/p/80855877" target="_blank" rel="noopener">YOLO v1 v2 v3系列原理与实现</a></p>
+<h1 id="加速技巧"><a href="#加速技巧" class="headerlink" title="加速技巧"></a>加速技巧</h1><p>在词库中总词数非常多时，softmax的计算量很大，需要计算$V$次exp。</p>
+<h2 id="Hierarchical-Softmax"><a href="#Hierarchical-Softmax" class="headerlink" title="Hierarchical Softmax"></a>Hierarchical Softmax</h2><p>采用哈夫曼树，将$V$分类问题转化为$log{2}{V}$次二分类问题。根据词频建立一棵哈夫曼树，经常出现的词路径会比较短。不同的叶子节点对应不同的词，非叶子结点是模型的参数，比词典个数少一个。将要预测的词的，转化成预测从根节点到该词所在叶子节点的路径，是多个二分类问题。</p>
+<h2 id="Negative-Sample"><a href="#Negative-Sample" class="headerlink" title="Negative Sample"></a>Negative Sample</h2><p>比如我们有一个训练样本，中心词是$w$，它周围上下文共有2𝑐个词，记为$context(w)$。由于这个中心词$w$,的确和$context(w)$相关存在，因此它是一个真实的正例。通过Negative Sampling采样，我们得到neg个和$w$不同的中心词$w_i$,𝑖=1,2,..𝑛𝑒𝑔，这样$context(w)$和$w_i$就组成了neg个并不真实存在的负例。利用这一个正例和neg个负例，我们进行二元逻辑回归，得到负采样对应每个词$w_i$对应的模型参数$\theta_i$，和每个词的词向量。</p>
+<h1 id="效果评估"><a href="#效果评估" class="headerlink" title="效果评估"></a>效果评估</h1><p>word2vec属于无监督学习，和其他无监督模型一样，难以直接评价。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="https://www.zhihu.com/question/44832436/answer/266068967" target="_blank" rel="noopener">word2vec是如何得到词向量的？ - crystalajj的回答</a><br><a href="https://zhuanlan.zhihu.com/p/53194407" target="_blank" rel="noopener">万物皆Embedding，从经典的word2vec到深度学习基本操作item2vec</a></p>
 
       
     </div>
@@ -398,15 +365,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/05/20/FRCNN-reproduce1/">
-                    Faster R-CNN复现（一）
+                <a href="/2020/03/19/del/xgb&lgb/">
+                    XGBoost 与 LightGBM
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/03/19/xgb&lgb/">
-                    XGBoost 与 LightGBM
+                <a href="/2020/01/15/del/SVM/">
+                    SVM推导
                 </a>
             </div>
         
@@ -418,7 +385,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#网络流程"><span class="toc-number">1.</span> <span class="toc-text">网络流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#损失函数"><span class="toc-number">2.</span> <span class="toc-text">损失函数</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#优点"><span class="toc-number">3.</span> <span class="toc-text">优点</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#YOLOv2"><span class="toc-number">4.</span> <span class="toc-text">YOLOv2</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#YOLOv3"><span class="toc-number">5.</span> <span class="toc-text">YOLOv3</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#低维稠密与高维稀疏"><span class="toc-number">1.</span> <span class="toc-text">低维稠密与高维稀疏</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#模型原理"><span class="toc-number">2.</span> <span class="toc-text">模型原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#加速技巧"><span class="toc-number">3.</span> <span class="toc-text">加速技巧</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Hierarchical-Softmax"><span class="toc-number">3.1.</span> <span class="toc-text">Hierarchical Softmax</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Negative-Sample"><span class="toc-number">3.2.</span> <span class="toc-text">Negative Sample</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#效果评估"><span class="toc-number">4.</span> <span class="toc-text">效果评估</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#参考"><span class="toc-number">5.</span> <span class="toc-text">参考</span></a></li></ol>
         
     </div>
     <style>
@@ -454,7 +421,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"YOLO　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"word2vec　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -474,7 +441,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/05/20/FRCNN-reproduce1/" title="上一篇: Faster R-CNN复现（一）">
+            <a href="/2020/03/19/del/xgb&lgb/" title="上一篇: XGBoost 与 LightGBM">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -482,13 +449,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2020/03/19/xgb&lgb/" title="下一篇: XGBoost 与 LightGBM">
+            <a href="/2020/01/15/del/SVM/" title="下一篇: SVM推导">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/del/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/del/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/del/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/del/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/del/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/del/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/del/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/del/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/del/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/del/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
@@ -502,7 +469,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2018-2020 Yang Zhuoya
+                2018-2021 Yang Zhuoya
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by Yang Zhuoya <i class="fa fa-heart animated infinite pulse"></i>

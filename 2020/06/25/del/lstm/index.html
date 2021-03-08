@@ -15,17 +15,28 @@
 
 
 
-<meta name="description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
+<meta name="description" content="最近实习接触到一些用户行为序列建模，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="SVM推导">
-<meta property="og:url" content="http://yoursite.com/2020/01/15/SVM/index.html">
+<meta property="og:title" content="序列模型">
+<meta property="og:url" content="http://yoursite.com/2020/06/25/del/lstm/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="SVM是一种二类分类器，可以处理的数据包含以下三种情况：  线性可分，硬间隔最大化，学习线性分类器 近似线性可分，软间隔最大化，学习线性分类器 线性不可分，核函数+软间隔最大化，学习非线性分类器  硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。">
-<meta property="article:published_time" content="2020-01-15T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-17T12:04:25.985Z">
+<meta property="og:description" content="最近实习接触到一些用户行为序列建模，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/1.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/8.jpg">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/6.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/25/del/lstm/7.png">
+<meta property="article:published_time" content="2020-06-25T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-06-28T17:11:01.265Z">
 <meta property="article:author" content="Yang Zhuoya">
-<meta property="article:tag" content="SVM">
+<meta property="article:tag" content="RNN">
+<meta property="article:tag" content="LSTM">
+<meta property="article:tag" content="GRU">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/25/del/lstm/1.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -59,7 +70,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>SVM推导 | Blog of ZhuoyaYang</title>
+<title>序列模型 | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +273,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-SVM" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-del/lstm" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/01/15/SVM/" class="article-date">
-      <time datetime="2020-01-15T08:57:07.000Z" itemprop="datePublished">2020-01-15</time>
+      <a href="/2020/06/25/del/lstm/" class="article-date">
+      <time datetime="2020-06-25T08:57:07.000Z" itemprop="datePublished">2020-06-25</time>
 </a>
 
 
@@ -281,7 +292,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      SVM推导
+      序列模型
     </h1>
   
 
@@ -291,7 +302,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">1.1k字</span>
+        <span class="post-count">948字</span>
       </span>
     </span>
 
@@ -300,7 +311,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
+        <span class="post-count">4.5分</span>
       </span>
     </span>
 </div>
@@ -316,7 +327,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/SVM/" rel="tag">SVM</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GRU/" rel="tag">GRU</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/LSTM/" rel="tag">LSTM</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/RNN/" rel="tag">RNN</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -326,58 +337,73 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <!--date: 2020-03-15-->
-<p>SVM是一种二类分类器，可以处理的数据包含以下三种情况：</p>
+        <p>最近实习接触到一些用户行为序列建模，在看这方面的东西，把看懂的一些记下来，可能会写的比较乱。<br><a id="more"></a></p>
+<h1 id="RNN"><a href="#RNN" class="headerlink" title="RNN"></a>RNN</h1><p>如下图所示：</p>
 <ul>
-<li>线性可分，硬间隔最大化，学习线性分类器</li>
-<li>近似线性可分，软间隔最大化，学习线性分类器</li>
-<li>线性不可分，核函数+软间隔最大化，学习非线性分类器</li>
+<li>每个结点的输入包含：表示上一个结点隐藏层的输出$h$，当前结点的输入$x$</li>
+<li>每个结点的输出包含：当前结点的输出$y$，当前结点隐藏层的输出$h‘$<br>从公式可以看出，$h’$与两个输入都相关；$y$由$h’$得到<div align="center">
+<img height="200" src="/2020/06/25/del/lstm/1.png">
+</div>
+
+</li>
 </ul>
-<p>硬间隔最大化受噪声的影响很大。软间隔最大化允许超平面附近的点被错分。</p>
-<a id="more"></a>
-<p>对于线性可分/近似线性可分的数据，求解包含以下三步:</p>
+<p>将RNN的神经元画出来，如下图所示。图中有4个time_step，在每个时间步，输入一个词语的embedding+上一个时间步的隐状态。每个time_step的绿色神经元个数=输入向量的维度。这个图将向量展开为神经元，方便与之前所学的CNN、MLP网络联系起来。隐藏层-&gt;输出是全连接的，输入-&gt;隐藏层为部分全连接+相加的关系。<br><!--不过输入->隐藏层->输出都应该是全连接的，这里作者应该为了省事，只花了邻近的3个连接。--></p>
+<div align="center">
+  <img height="200" src="/2020/06/25/del/lstm/8.jpg">
+</div>
+
+<p>RNN的缺点是对于长期记忆的丢失、梯度爆炸/消失。梯度爆炸/消失的原因是sigmoid激活函数的链式求导。</p>
+<h2 id="难以并行化"><a href="#难以并行化" class="headerlink" title="难以并行化"></a>难以并行化</h2><p>111</p>
+<h1 id="LSTM"><a href="#LSTM" class="headerlink" title="LSTM"></a>LSTM</h1><p><a href="https://www.cnblogs.com/wushaogui/p/9176617.html" target="_blank" rel="noopener">LSTM神经元个数</a>，取决于隐状态维度m，为$4 \times m$。$参数个数 = 4 \times m \times (n+m+1)$，其中n是embedding维度，$n+m$是$[h_{t-1},x_t]$拼接后的维度，1为偏置维度。</p>
+<p>LSTM是一种特殊的RNN，可以学习长期依赖，将信息从较早的时间步传递给较后的时间步。相比普通RNN，在更长的序列有更好的表现。cell state相较于hidden state是更稳定的远期记忆，而hidden state是cell state乘以输出门的状态$o_t$。</p>
+<div align="center">
+  <img height="400" src="/2020/06/25/del/lstm/2.png">
+</div>
+
+<h2 id="遗忘门"><a href="#遗忘门" class="headerlink" title="遗忘门"></a>遗忘门</h2><p>输入门首先将t时刻的输入信号$x_t$与t-1时刻的输出信号$h_{t-1}$拼接，输入到以sigmoid为激活函数的神经网络层中（参数包含：$W_f$、$b_f$）。经过激活函数得到$f_t$，其中的每个元素是个0-1之间的数值。$f_t$与上一时刻的细胞状态$C_{t-1}$相乘，决定了$C_{t-1}$中哪些信息被遗忘。</p>
+<div align="center">
+  <img height="200" src="/2020/06/25/del/lstm/3.png">
+</div>
+
+<h2 id="记忆门"><a href="#记忆门" class="headerlink" title="记忆门"></a>记忆门</h2><p>记忆门包含2个神经网络层。</p>
 <ul>
-<li>通过最大间隔法，得到凸二次规划问题。</li>
-<li>引入拉格朗日乘子，转化为对偶问题。一是因为对偶问题更容易求解；二是可以引入核函数，推广到线性不可分数据的非线性问题。</li>
-<li>求解对偶问题，得到原始问题的解，进而确定分离超平面和分类决策函数。</li>
+<li>以sigmoid为激活函数的神经网络层决定了哪些信息被保留。和遗忘门类似：网络将$x_t$与$h_{t-1}$拼接，输入到网络层中（参数包含：$W_f$、$b_f$），经过激活函数得到$i_t$，每个元素是个0-1之间的数值。</li>
+<li>以tanh为激活函数的神经网络将输入的$x_t$与$h_{t-1}$整合，创造新的候选增向量$\hat{C_t}$<br>最后，$i_t$与$\sim{C_t}$相乘，决定了哪些信息被加入到当前细胞状态$C_t$中。</li>
 </ul>
-<!--为什么要采用最大间隔法？
-感知机使用误分类最小求得超平面，有无穷多解。SVM通过最大间隔法求最优超平面，求得的分离超平面唯一，对未知数据有更好的泛化能力。（与感知机的区别）-->
-<!--为什么要转化为对偶问题？
-从约束、复杂度、核函数三个方面分析。
-- 在求解原始问题时，需要对$W$、$b$进行求解，且约束条件复杂。对偶问题把目标函数和约束融进新的问题，产生拉格朗日函数。只需求解一个变量$\alpha$，且约束条件简单。
-- 可以自然地引入核函数，推广到非线性问题。
-- 原始问题的对$W$、$b$求解，复杂度取决于特征维度；而对偶问题对$\alpha$求解，复杂度取决于拉格朗日乘子的个数，即样本个数。当数据线性不可分的时候，使用核函数，将样本映射至高维，特征维度大大增加，原始问题的求解效率受到影响。
--->
-<!--SVM对缺失数据敏感-->
-<h1 id="原始问题"><a href="#原始问题" class="headerlink" title="原始问题"></a>原始问题</h1><p>$\gamma$为数据集的几何间隔，$\hat{\gamma}$为数据集的函数间隔，等于所有样本点到超平面的几何间隔/函数间隔的最小值。</p>
+<div align="center">
+  <img height="200" src="/2020/06/25/del/lstm/4.png">
+</div>
+
+
+<h2 id="细胞状态更新"><a href="#细胞状态更新" class="headerlink" title="细胞状态更新"></a>细胞状态更新</h2><p>遗忘门的输出$f_t$与上一时刻的细胞状态$C_{t-1}$相乘，对上一时刻的信息进行选择、过滤。然后，与记忆门的输出相加，将之前时刻的信息与当前时刻的信息结合。</p>
+<div align="center">
+  <img height="200" src="/2020/06/25/del/lstm/5.png">
+</div>
+
+<h2 id="输出门"><a href="#输出门" class="headerlink" title="输出门"></a>输出门</h2><p>在输出门，$x_t$与$h_{t-1}$经过一个sigmoid神经网络层，输出0-1之间的状态$o_t$。<br>经过遗忘门、记忆门筛选过的细胞状态$C_t$经过tanh函数（注意是函数，不是网络层），与$o_t$相乘得到输出信号$h_t$，传递给下一个时间步。</p>
+<div align="center">
+  <img height="200" src="/2020/06/25/del/lstm/6.png">
+</div>
+
+<h1 id="GRU"><a href="#GRU" class="headerlink" title="GRU"></a>GRU</h1><p>比lstm简单，计算量小。</p>
+<div align="center">
+  <img height="200" src="/2020/06/25/del/lstm/7.png">
+</div>
+
 <ul>
-<li>目标函数：几何间隔求极大</li>
-<li>约束条件：对于数据集中每个样本点，到超平面$(w,b)$的函数间隔（几何间隔）小于等于数据集的函数间隔（几何间隔）。<script type="math/tex; mode=display">\underset{w,b}{max} = \frac{\hat{\gamma}}{||w||}</script><script type="math/tex; mode=display">s.t.~~ y_i(wx_i+b) \geq \hat{\gamma}, ~~ i=1,...N</script>函数间隔的取值不影响超平面的解，令$\hat{\gamma}=1$，将目标函数转化为最小化，可得：<!--函数间隔减小为之前的1/2，可能是w b同时增大2倍，几何间隔不变-->
-<script type="math/tex; mode=display">\underset{w,b}{min} = \frac{1}{2}{||w||}^2</script><script type="math/tex; mode=display">s.t.~~ y_i(wx_i+b) -1 \geq 0, ~~ i=1,...N</script>这就是SVM的原始问题，是一个凸二次规划问题。原始问题对$W$、$b$进行求解，复杂度取决于特征维度。</li>
+<li>更新门</li>
+<li>重置门</li>
 </ul>
-<h1 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h1><!--拉格朗日函数是求解带约束优化问题的重要方法。-->
-<p>首先构造拉格朗日函数，对于每个不等式约束，引人拉格朗日乘子$\alpha_i \geq 0$：</p>
-<script type="math/tex; mode=display">L(w,b,\alpha) = \frac{1}{2}{||w||}^2 + \sum_{i=1}^N \alpha_i[y_i(w x_i+b)-1]</script><p>原始问题$\underset{w,b}{min} ~ \underset{\alpha}{max} ~ L(w,b,\alpha)$。</p>
-<p>根据拉格朗日对偶性，原始问题的对偶问题是极大极小问题$\underset{\alpha}{max} ~ \underset{w,b}{min} ~ L(w,b,\alpha)$。</p>
-<p>1.$L(w,b,\alpha)$对w,b求极小<br>令w,b偏导为0：</p>
-<script type="math/tex; mode=display">\nabla_{w}L(w,b,\alpha) = w - \sum_{i-1}^N \alpha_i x_i y_i = 0</script><script type="math/tex; mode=display">\nabla_{b}L(w,b,\alpha) = - \sum_{i-1}^N \alpha_i y_i = 0</script><p>代入拉格朗日函数，化简，得到：</p>
-<script type="math/tex; mode=display">\underset{w,b}{min} ~ L(w,b,\alpha) = -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i</script><script type="math/tex; mode=display">s.t. ~~ \sum_{i=1}^N \alpha_i y_i = 0</script><script type="math/tex; mode=display">~~~~~~~~~~~~~~~~~~~~~
-          \alpha_i \geq 0, i=1,...,N</script><p>2.$\underset{w,b}{min} ~ L(w,b,\alpha)$对$\alpha$求极大</p>
-<script type="math/tex; mode=display">\underset{\alpha}{max} ~~~ -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i</script><script type="math/tex; mode=display">s.t. ~~ \sum_{i=1}^N \alpha_i y_i = 0</script><script type="math/tex; mode=display">~~~~~~~~~~~~~~~~~~~~~
-          \alpha_i \geq 0, i=1,...,N</script><p>根据KKT的三个条件，可以将对偶问题的解$\alpha$转化为原始问题的解$w,b$:<br>KKT条件：</p>
-<ul>
-<li>乘子非负：$\alpha \geq 0$</li>
-<li>约束条件：$y_i(w x_i+b) - 1\geq 0$</li>
-<li>互补条件：$\alpha_i [y_i(w x_i+b) - 1] = 0$<br>已有w的表达式：<script type="math/tex; mode=display">w = \sum_{i=1}^N \alpha_i y_i x_i</script>只少有一个$\alpha_j &gt; 0$，不然有$w=0$。对此j，结合KKT的互补条件，有：<script type="math/tex; mode=display">y_j(w x_j+b) - 1 = 0</script><script type="math/tex; mode=display">y_j(w x_j+b) - {y_j}^2 = 0</script>代入w的表达式：<script type="math/tex; mode=display">b = y_j - \sum_{i=1}^N \alpha_i y_i (x_i \cdot x_j)</script></li>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
+<li><a href="https://www.zhihu.com/question/44895610/answer/616818627" target="_blank" rel="noopener">为什么相比于RNN，LSTM在梯度消失上表现更好？</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/30844905" target="_blank" rel="noopener">一文搞懂RNN（循环神经网络）基础篇</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/28054589" target="_blank" rel="noopener">完全图解RNN、RNN变体、Seq2Seq、Attention机制 </a></li>
+<li><a href="https://mp.weixin.qq.com/s/aV9Rj-CnJZRXRm0rDOK6gg" target="_blank" rel="noopener">LSTM和GRU的解析</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/83496936" target="_blank" rel="noopener">LSTM介绍及反向传播算法推导</a></li>
+<li><a href="https://zhuanlan.zhihu.com/p/104475016" target="_blank" rel="noopener">深入浅出LSTM及其Python代码实现</a></li>
+<li><a href="https://www.zhihu.com/question/41949741/answer/500921965" target="_blank" rel="noopener">LSTM神经网络输入输出究竟是怎样的？- zack的回答</a></li>
 </ul>
-<h1 id="SMO高效优化算法"><a href="#SMO高效优化算法" class="headerlink" title="SMO高效优化算法"></a>SMO高效优化算法</h1><p>对偶问题的求解复杂度取决于训练集的样本数，当处理海量数据时，开销过大。<br>SMO将原始的大优化问题，分解为多个只有两个变量的优化子问题。不断地对子问题进行求解，直到所有变量满足KKT条件为止。因为子问题有解析解，可以直接代公式求解。虽然要计算很多次，总体还是高效的。</p>
-<ul>
-<li>选取$\alpha_i$、$\alpha_j$</li>
-<li>固定$\alpha_i$和$\alpha_j$以外的参数，利用约束条件$\sum_{i=1}^N \alpha_i y_i = 0$，求解目标函数$\underset{\alpha}{max} ~~~ -\frac{1}{2} \sum_{i=1}^N \sum_{j=1}^N \alpha_i \alpha_j y_i y_j (x_i \cdot x_j) + \sum_{i=1}^N \alpha_i$</li>
-</ul>
-<p>如果所有样本点都满足KKT条件，那么最优化的解已经得到。因为KKT条件是该优化问题的充分必要条件。<br>如果$\alpha_i$、$\alpha_j$中有一个不满足KKT条件，目标函数会在迭代后增大。<br>SMO采用了启发式方法：选取间隔最大的两个样本对应的$\alpha_i$、$\alpha_j$。这比选择两个相似的变量，会给目标函数带来更大变化。</p>
-<h1 id="Python实现"><a href="#Python实现" class="headerlink" title="Python实现"></a>Python实现</h1>
+
       
     </div>
     
@@ -389,15 +415,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2020/03/16/word2vec/">
-                    word2vec
+                <a href="/2020/06/30/del/FM/">
+                    推荐系统算法
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2019/06/15/VoxelNet&&PointPillars/">
-                    VoxelNet &amp;&amp; PointPillars
+                <a href="/2020/05/27/del/FRCNN-reproduce2/">
+                    Faster R-CNN复现（二）
                 </a>
             </div>
         
@@ -409,7 +435,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#原始问题"><span class="toc-number">1.</span> <span class="toc-text">原始问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#对偶问题"><span class="toc-number">2.</span> <span class="toc-text">对偶问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#SMO高效优化算法"><span class="toc-number">3.</span> <span class="toc-text">SMO高效优化算法</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Python实现"><span class="toc-number">4.</span> <span class="toc-text">Python实现</span></a></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#RNN"><span class="toc-number">1.</span> <span class="toc-text">RNN</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#难以并行化"><span class="toc-number">1.1.</span> <span class="toc-text">难以并行化</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#LSTM"><span class="toc-number">2.</span> <span class="toc-text">LSTM</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#遗忘门"><span class="toc-number">2.1.</span> <span class="toc-text">遗忘门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#记忆门"><span class="toc-number">2.2.</span> <span class="toc-text">记忆门</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#细胞状态更新"><span class="toc-number">2.3.</span> <span class="toc-text">细胞状态更新</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#输出门"><span class="toc-number">2.4.</span> <span class="toc-text">输出门</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#GRU"><span class="toc-number">3.</span> <span class="toc-text">GRU</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -445,7 +471,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"SVM推导　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"序列模型　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -465,7 +491,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2020/03/16/word2vec/" title="上一篇: word2vec">
+            <a href="/2020/06/30/del/FM/" title="上一篇: 推荐系统算法">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -473,13 +499,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2019/06/15/VoxelNet&&PointPillars/" title="下一篇: VoxelNet &amp;&amp; PointPillars">
+            <a href="/2020/05/27/del/FRCNN-reproduce2/" title="下一篇: Faster R-CNN复现（二）">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/del/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/del/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/del/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/del/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/del/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/del/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/del/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/del/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/del/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/del/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
@@ -493,7 +519,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2018-2020 Yang Zhuoya
+                2018-2021 Yang Zhuoya
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by Yang Zhuoya <i class="fa fa-heart animated infinite pulse"></i>

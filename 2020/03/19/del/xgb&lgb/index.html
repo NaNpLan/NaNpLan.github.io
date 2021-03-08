@@ -15,16 +15,17 @@
 
 
 
-<meta name="description" content="前向传播计算softmax的损失、反向传播更新参数。作业要求。发现网上的答案都很简单，关于W的梯度没有详细推导。所以把我推的顺手搬上来">
+<meta name="description" content="XGBoost参考官网">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Assignment-1 Softmax的实现">
-<meta property="og:url" content="http://yoursite.com/2019/03/22/Softmax/index.html">
+<meta property="og:title" content="XGBoost 与 LightGBM">
+<meta property="og:url" content="http://yoursite.com/2020/03/19/del/xgb&lgb/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
-<meta property="og:description" content="前向传播计算softmax的损失、反向传播更新参数。作业要求。发现网上的答案都很简单，关于W的梯度没有详细推导。所以把我推的顺手搬上来">
-<meta property="article:published_time" content="2019-03-22T08:57:07.000Z">
-<meta property="article:modified_time" content="2020-03-14T11:56:37.996Z">
+<meta property="og:description" content="XGBoost参考官网">
+<meta property="article:published_time" content="2020-03-19T08:57:07.000Z">
+<meta property="article:modified_time" content="2020-04-20T14:14:01.209Z">
 <meta property="article:author" content="Yang Zhuoya">
-<meta property="article:tag" content="softmax">
+<meta property="article:tag" content="xgb">
+<meta property="article:tag" content="lgb">
 <meta name="twitter:card" content="summary">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
@@ -59,7 +60,7 @@
 <link href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
 
 
-<title>Assignment-1 Softmax的实现 | Blog of ZhuoyaYang</title>
+<title>XGBoost 与 LightGBM | Blog of ZhuoyaYang</title>
 
 <script src="//cdn.bootcss.com/jquery/2.2.4/jquery.min.js"></script>
 <script src="//cdn.bootcss.com/clipboard.js/1.5.10/clipboard.min.js"></script>
@@ -262,11 +263,11 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-Softmax" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-del/xgb&amp;lgb" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2019/03/22/Softmax/" class="article-date">
-      <time datetime="2019-03-22T08:57:07.000Z" itemprop="datePublished">2019-03-22</time>
+      <a href="/2020/03/19/del/xgb&lgb/" class="article-date">
+      <time datetime="2020-03-19T08:57:07.000Z" itemprop="datePublished">2020-03-19</time>
 </a>
 
 
@@ -281,7 +282,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      Assignment-1 Softmax的实现
+      XGBoost 与 LightGBM
     </h1>
   
 
@@ -291,7 +292,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-keyboard-o"></i>
         <span class="post-meta-item-text">  字数统计: </span>
-        <span class="post-count">796字</span>
+        <span class="post-count">725字</span>
       </span>
     </span>
 
@@ -300,7 +301,7 @@
       <span class="post-meta-item-icon">
         <i class="fa fa-hourglass-half"></i>
         <span class="post-meta-item-text">  阅读时长: </span>
-        <span class="post-count">6分</span>
+        <span class="post-count">4.5分</span>
       </span>
     </span>
 </div>
@@ -316,7 +317,7 @@
 
         
     <div class="article-tag tagcloud">
-        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/softmax/" rel="tag">softmax</a></li></ul>
+        <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/lgb/" rel="tag">lgb</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/xgb/" rel="tag">xgb</a></li></ul>
     </div>
 
         <div class="clearfix"></div>
@@ -326,41 +327,61 @@
     <div class="article-entry" itemprop="articleBody">
       
           
-        <p>前向传播计算softmax的损失、反向传播更新参数。<a href="http://cs231n.github.io/assignments2018/assignment1/" target="_blank" rel="noopener">作业要求</a>。<br>发现网上的答案都很简单，关于W的梯度没有详细推导。所以把我推的顺手搬上来</p>
+        <p>XGBoost参考<a href="https://xgboost.readthedocs.io/en/latest/tutorials/model.html" target="_blank" rel="noopener">官网</a></p>
 <a id="more"></a>
-<h1 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h1><h2 id="input"><a href="#input" class="headerlink" title="input"></a>input</h2><ul>
-<li>W: A numpy array of shape (D, C) containing weights.</li>
-<li>X: A numpy array of shape (N, D) containing a minibatch of data.</li>
-<li>y: A numpy array of shape (N,) containing training labels; y[i] = c means that X[i] has label c, where 0 &lt;= c &lt; C.</li>
-<li>reg: (float) regularization strength</li>
-</ul>
-<h2 id="Output"><a href="#Output" class="headerlink" title="Output"></a>Output</h2><ul>
-<li>loss, dW</li>
-</ul>
-<h1 id="前向传播计算loss-dW"><a href="#前向传播计算loss-dW" class="headerlink" title="前向传播计算loss,dW"></a>前向传播计算loss,dW</h1><ul>
-<li>softmax层的输入为<strong>X</strong>，维度为<strong>（N，D）</strong>。表示输入<strong>batchsize=N</strong>个样本，每个样本有D维特征。<ul>
-<li>$X_{i}$表示一个样本的D维特征</li>
-</ul>
+<h1 id="xgb"><a href="#xgb" class="headerlink" title="xgb"></a>xgb</h1><h2 id="加法模型"><a href="#加法模型" class="headerlink" title="加法模型"></a>加法模型</h2><p>Xgboost采用加法策略，每次学习一颗新树，已修正上次的学习内容。将第$t$步的预测值记为$\hat{y}^{(t)}_{i}$：</p>
+<script type="math/tex; mode=display">\hat{y}_{i}^{(t)} = \sum_{k=1}^{t}f_{k}(x_i)=y_{i}^{(t-1)}+f_{t}(x_i)</script><p>目标函数$obj^(t)$记为：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split}
+obj^{(t)} & = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t)}) + \sum_{i=1}^t\Omega(f_i) \\
+            & = \sum_{i=1}^n l(y_i, \hat{y}_i^{(t-1)} + f_t(x_i)) + \Omega(f_t) 
+\end{split}
+\nonumber
+\end{equation}</script><p>对于回归问题，最常用的损失函数是均方误差，以MSE为例，$obj^{(t)}$可以化简为：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split}
+obj^{(t)} & = \sum_{i=1}^n (y_i - (\hat{y}_i^{(t-1)} + f_t(x_i)))^2 + \sum_{i=1}^t\Omega(f_i) \\
+            & = \sum_{i=1}^n [2(\hat{y}_i^{(t-1)} - y_i)f_t(x_i) + f_t(x_i)^2] + \Omega(f_t) + constant
+\end{split}
+\nonumber
+\end{equation}</script><p>MSE目标函数形式是友好的，具有一阶项（残差）和二阶项。对于其他损失函数，比如交叉熵，无法转化成这样友好的形式。因此，在一般情况下，我们使用二阶泰勒展开构造二阶项，$g_i$、$h_i$分别对应一阶偏导、二阶偏导：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split}
+obj^{(t)} = \sum_{i=1}^n [l(y_i, \hat{y}_i^{(t-1)}) + g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t) + constant
+\end{split}
+\nonumber
+\end{equation}</script><script type="math/tex; mode=display">g_i = \partial_{\hat{y}_i^{(t-1)}} l(y_i, \hat{y}_i^{(t-1)})</script><script type="math/tex; mode=display">h_i = \partial_{\hat{y}_i^{(t-1)}}^2 l(y_i, \hat{y}_i^{(t-1)})</script><p>在删除常数项后，目标函数变成：</p>
+<script type="math/tex; mode=display">\sum_{i=1}^n [g_i f_t(x_i) + \frac{1}{2} h_i f_t^2(x_i)] + \Omega(f_t)</script><p>定义正则化项$\Omega(f)$为叶子节点的数量、每个叶子节点预测值的平方和：</p>
+<script type="math/tex; mode=display">\Omega(f) = \gamma T + \frac{1}{2} \lambda \sum_{j=1}^T w_j^2</script><p>在目标函数中更新正则化项，可以将目标函数进一步整合、化简：</p>
+<script type="math/tex; mode=display">
+\begin{equation}
+\begin{split}
+obj^{(t)} &\approx \sum_{i=1}^n [g_i w_{q(x_i)} + \frac{1}{2} h_i w_{q(x_i)}^2] + \gamma T + \frac{1}{2}\lambda \sum_{j=1}^T w_j^2\\
+&= \sum^T_{j=1} [(\sum_{i\in I_j} g_i) w_j + \frac{1}{2} (\sum_{i\in I_j} h_i + \lambda) w_j^2 ] + \gamma T
+\end{split}
+\nonumber
+\end{equation}</script><h1 id="xgb与lgb对比"><a href="#xgb与lgb对比" class="headerlink" title="xgb与lgb对比"></a>xgb与lgb对比</h1><ol>
+<li><p>树的生长策略<br>xgb是level-wise，lgb是leaf-wise</p>
 </li>
-<li>weights为<strong>W</strong>，维度为<strong>（D，C）</strong><ul>
-<li>$W_{j}$表示某个样本的D维特征，分别对类别$j$的贡献程度</li>
-</ul>
+<li><p>分割点查找算法</p>
 </li>
+</ol>
+<p>xgb采用直方图作差加速</p>
+<ol>
+<li><p>lgb解决了one-hot编码处理特征的不足</p>
+</li>
+<li><p>lgb加入数据并行、投票并行，改善特征维度高时特征并行效率慢的缺陷。</p>
+</li>
+</ol>
+<h1 id="为什么xgb使用二阶泰勒展开，效果更好"><a href="#为什么xgb使用二阶泰勒展开，效果更好" class="headerlink" title="为什么xgb使用二阶泰勒展开，效果更好"></a>为什么xgb使用二阶泰勒展开，效果更好</h1><ul>
+<li>类似牛顿法比梯度下降法收敛的更快更准确。</li>
+<li>复用MSE的推导流程。为了让损失函数有统一的形式（nice form），即一阶项+二阶项。采用泰勒展开可以获取这个二阶项，这样可以将MSE求导的方式复用到其他损失函数上。即统一损失函数求导的形式，以支持自定义损失函数。</li>
 </ul>
-<h2 id="with-loops"><a href="#with-loops" class="headerlink" title="with-loops"></a>with-loops</h2><p>要求使用循环，逐个样本计算损失$L_{i}$，逐个样本逐个类别计算梯度$\partial W_{j}$。</p>
-<h3 id="Loss的计算"><a href="#Loss的计算" class="headerlink" title="Loss的计算"></a>Loss的计算</h3><p>$X_{i} W$，得到$X_{i}$大小为（1,C）的得分向量，记为$S$。<br>$X_{i} W_{j}$，得到$X_{i}$对于类别$j$的得分，记为$S_{j}$<br>样本$i$的loss为:$L_{i} = -log(\frac{e^{S_{y_{i}}}}{\sum_{j=1}^C e^{S_{j}}}) = -S_{y_{i}}+log(\sum_{j=1}^C e^{S_{j}}) = -X_{i}W_{y_{i}}+log(\sum_{j=1}^C e^{X_{i}W_{j}}) $<br>加上l2正则化约束后：$Loss = \sum_{i}^N{L_i} + \frac{reg}{2}{||W||_{2}}^2$</p>
-<h3 id="frac-partial-L-i-partial-W-j-的计算"><a href="#frac-partial-L-i-partial-W-j-的计算" class="headerlink" title="$\frac{\partial L_{i}}{\partial W_{j}}$的计算"></a>$\frac{\partial L_{i}}{\partial W_{j}}$的计算</h3><p>当$j = y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = -X_{i} + \frac{X_{i}e^{X_{i}W_{j}}}{\sum_{k=1}^C e^{X_{i}W_{k}}}$<br>当$j \ne y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = \frac{X_{i}e^{X_{i}W_{j}}}{\sum_{k=1}^C e^{X_{i}W_{k}}}$<br>我们知道第$i$个样本softmax之后$j$类的概率：$Softmax_{i,j} = \frac{e^{X_{i}W_{j}}}{\sum_{k=1}^C e^{X_{i}W_{k}}}$<br>所以$\frac{\partial L_{i}}{\partial W_{j}}$可以简化为：</p>
-<ul>
-<li>当$j = y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = X_{i}Softmax_{j} - X_{i} = X_{i}(Softmax_{j}-1)$</li>
-<li>当$j \ne y_{i}$，$\frac{\partial L_{i}}{\partial W_{j}} = X_{i}Softmax_{j}$</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">N = X.shape[<span class="number">0</span>]</span><br><span class="line">C = W.shape[<span class="number">1</span>]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(N):</span><br><span class="line">score = X[i].dot(W)     <span class="comment"># (1,D) dot (D,C) = (1,C) 即公式中的S向量</span></span><br><span class="line"><span class="comment"># score -= np.max(score)</span></span><br><span class="line">exp_y = np.exp(score[y[i]])</span><br><span class="line">exp_C = np.sum(np.exp(score))</span><br><span class="line">softmax_y = exp_y/exp_C      <span class="comment"># 类别y的概率 exp_y=0 exp_C=1 log(0) nan</span></span><br><span class="line"><span class="comment"># loss += -np.log(softmax_y)     # 最大化真实标签y的概率-&gt;最大化概率对数-&gt;最小化负的概率对数</span></span><br><span class="line">loss_i = -score[y[i]]+np.log(exp_C)</span><br><span class="line">loss += loss_i</span><br><span class="line"><span class="keyword">for</span> j <span class="keyword">in</span> range(C):</span><br><span class="line">  <span class="keyword">if</span> j == y[i]:</span><br><span class="line">    dW[:,j] += X[i]*(softmax_y<span class="number">-1</span>)</span><br><span class="line">  <span class="keyword">else</span>:</span><br><span class="line">    exp_j = np.exp(score[j])</span><br><span class="line">    softmax_j = exp_j / exp_C      <span class="comment"># 类别j的概率 (1,1)</span></span><br><span class="line">    dW[:,j] += X[i]*softmax_j      <span class="comment"># (1,D)*(1,1)</span></span><br><span class="line">loss /= N</span><br><span class="line">loss += <span class="number">0.5</span>*reg*np.sum(W*W)</span><br><span class="line">dW = dW/N + reg*W</span><br></pre></td></tr></table></figure>
-<h2 id="vectorized-version"><a href="#vectorized-version" class="headerlink" title="vectorized version"></a>vectorized version</h2><p>同理<strong>with loops</strong>，只是找到规律后，可以不用循环得到结果。$Loss$很简单，不说了。</p>
-<ul>
-<li>当$j = y_{i}$ , $\frac{\partial Loss}{\partial W} =  X’\left[Softmax-1\right]$</li>
-<li>当$j \ne y_{i}$ , $\frac{\partial Loss}{\partial W} =  X’Softmax$</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">N = X.shape[<span class="number">0</span>]</span><br><span class="line">score = X.dot(W)     <span class="comment"># (N,C)维得分矩阵</span></span><br><span class="line">score_y = score[range(N),y].reshape(<span class="number">-1</span>,<span class="number">1</span>)     <span class="comment"># (N,1)维</span></span><br><span class="line">exp_C = np.sum(np.exp(score),axis=<span class="number">1</span>).reshape(<span class="number">-1</span>,<span class="number">1</span>)    <span class="comment"># (N,1)维</span></span><br><span class="line">loss = np.sum(-score_y + np.log(exp_C))</span><br><span class="line">loss = loss/N+<span class="number">0.5</span>*reg*np.sum(W*W)</span><br><span class="line"></span><br><span class="line">softmax_NC = np.exp(score) / exp_C    <span class="comment"># (N,C)维</span></span><br><span class="line">softmax_NC[range(N),y] -= <span class="number">1</span></span><br><span class="line">dW = (X.T).dot(softmax_NC)            <span class="comment"># (D,N)*(N,C)</span></span><br><span class="line">dW = dW/N+reg*W</span><br></pre></td></tr></table></figure>
+<h1 id="xgb的feature-importance如何计算"><a href="#xgb的feature-importance如何计算" class="headerlink" title="xgb的feature importance如何计算"></a>xgb的feature importance如何计算</h1><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://blog.csdn.net/sujinhehehe/article/details/84201415" target="_blank" rel="noopener">xgboost特征重要性指标: weight, gain, cover</a><br><a href="https://blog.csdn.net/Datawhale/article/details/102950250" target="_blank" rel="noopener">CSDN-lgb&amp;xgb</a></p>
+
       
     </div>
     
@@ -372,15 +393,15 @@
     <nav id="article-nav">
         
             <div id="article-nav-newer" class="article-nav-title">
-                <a href="/2019/03/30/TCP/">
-                    TCP相关
+                <a href="/2020/03/23/del/yolo/">
+                    YOLO
                 </a>
             </div>
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2018/10/15/dp1015-6/">
-                    Dynamic Programming 6
+                <a href="/2020/03/16/del/word2vec/">
+                    word2vec
                 </a>
             </div>
         
@@ -392,7 +413,7 @@
     <div id="toc" class="toc-article">
         <strong class="toc-title">文章目录</strong>
         
-            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参数"><span class="toc-number">1.</span> <span class="toc-text">参数</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#input"><span class="toc-number">1.1.</span> <span class="toc-text">input</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Output"><span class="toc-number">1.2.</span> <span class="toc-text">Output</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#前向传播计算loss-dW"><span class="toc-number">2.</span> <span class="toc-text">前向传播计算loss,dW</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#with-loops"><span class="toc-number">2.1.</span> <span class="toc-text">with-loops</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Loss的计算"><span class="toc-number">2.1.1.</span> <span class="toc-text">Loss的计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#frac-partial-L-i-partial-W-j-的计算"><span class="toc-number">2.1.2.</span> <span class="toc-text">$\frac{\partial L_{i}}{\partial W_{j}}$的计算</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#vectorized-version"><span class="toc-number">2.2.</span> <span class="toc-text">vectorized version</span></a></li></ol></li></ol>
+            <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#xgb"><span class="toc-number">1.</span> <span class="toc-text">xgb</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#加法模型"><span class="toc-number">1.1.</span> <span class="toc-text">加法模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xgb与lgb对比"><span class="toc-number">2.</span> <span class="toc-text">xgb与lgb对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#为什么xgb使用二阶泰勒展开，效果更好"><span class="toc-number">3.</span> <span class="toc-text">为什么xgb使用二阶泰勒展开，效果更好</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#xgb的feature-importance如何计算"><span class="toc-number">4.</span> <span class="toc-text">xgb的feature importance如何计算</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">5.</span> <span class="toc-text">Reference</span></a></li></ol>
         
     </div>
     <style>
@@ -428,7 +449,7 @@
         </div>
         <script>
             window._bd_share_config={
-                "common":{"bdSnsKey":{},"bdText":"Assignment-1 Softmax的实现　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
+                "common":{"bdSnsKey":{},"bdText":"XGBoost 与 LightGBM　| Blog of ZhuoyaYang　","bdMini":"2","bdMiniList":false,"bdPic":"","bdStyle":"0","bdSize":"24"},"share":{}};with(document)0[(getElementsByTagName('head')[0]||body).appendChild(createElement('script')).src='http://bdimg.share.baidu.com/static/api/js/share.js?v=89860593.js?cdnversion='+~(-new Date()/36e5)];
         </script>
     
 
@@ -448,7 +469,7 @@
 
     <div class="scroll" id="post-nav-button">
         
-            <a href="/2019/03/30/TCP/" title="上一篇: TCP相关">
+            <a href="/2020/03/23/del/yolo/" title="上一篇: YOLO">
                 <i class="fa fa-angle-left"></i>
             </a>
         
@@ -456,13 +477,13 @@
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2018/10/15/dp1015-6/" title="下一篇: Dynamic Programming 6">
+            <a href="/2020/03/16/del/word2vec/" title="下一篇: word2vec">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/del/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/del/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/del/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/del/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/del/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/del/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/del/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/del/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/del/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/del/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
@@ -476,7 +497,7 @@
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2018-2020 Yang Zhuoya
+                2018-2021 Yang Zhuoya
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by Yang Zhuoya <i class="fa fa-heart animated infinite pulse"></i>

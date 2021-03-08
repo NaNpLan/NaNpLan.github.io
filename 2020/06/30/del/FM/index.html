@@ -18,14 +18,14 @@
 <meta name="description" content="关于Poly2、FM、FFM、DeepFM、DIN、DIEN算法的学习笔记。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="推荐系统算法">
-<meta property="og:url" content="http://yoursite.com/2020/06/30/FM/index.html">
+<meta property="og:url" content="http://yoursite.com/2020/06/30/del/FM/index.html">
 <meta property="og:site_name" content="Blog of ZhuoyaYang">
 <meta property="og:description" content="关于Poly2、FM、FFM、DeepFM、DIN、DIEN算法的学习笔记。">
-<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/2.png">
-<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/3.png">
-<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/4.png">
-<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/5.png">
-<meta property="og:image" content="http://yoursite.com/2020/06/30/FM/10.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/del/FM/2.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/del/FM/3.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/del/FM/4.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/del/FM/5.png">
+<meta property="og:image" content="http://yoursite.com/2020/06/30/del/FM/10.png">
 <meta property="article:published_time" content="2020-06-30T08:57:07.000Z">
 <meta property="article:modified_time" content="2020-07-20T10:05:46.514Z">
 <meta property="article:author" content="Yang Zhuoya">
@@ -35,7 +35,7 @@
 <meta property="article:tag" content="DIN">
 <meta property="article:tag" content="DIEN">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://yoursite.com/2020/06/30/FM/2.png">
+<meta name="twitter:image" content="http://yoursite.com/2020/06/30/del/FM/2.png">
 
 <link rel="apple-touch-icon" href= "/apple-touch-icon.png">
 
@@ -272,10 +272,10 @@
     </div>
     <link class="menu-list" tags="标签" friends="友情链接" about="关于我"/>
 </nav>
-      <div class="body-wrap"><article id="post-FM" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-del/FM" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2020/06/30/FM/" class="article-date">
+      <a href="/2020/06/30/del/FM/" class="article-date">
       <time datetime="2020-06-30T08:57:07.000Z" itemprop="datePublished">2020-06-30</time>
 </a>
 
@@ -364,12 +364,12 @@
 <script type="math/tex; mode=display">P(Y=1|x) = \sigma{( w_{wide} [x,\phi{(x)}] + w_{deep} a^{lf} + b )} = \sigma{y_{wide}+y_{deep}}</script><h1 id="DeepFM"><a href="#DeepFM" class="headerlink" title="DeepFM"></a>DeepFM</h1><p>与Wide&amp;Deep的不同是，使用FM替代了原有Wide中的LR。DeepFM包含FM和DNN。<br>DeepFM最终与预估的CTR结果可以记为：</p>
 <script type="math/tex; mode=display">y = \sigma{ (y_{FM} + y_{DNN})}</script><h2 id="FM-1"><a href="#FM-1" class="headerlink" title="FM"></a>FM</h2><p>FM不讲了，主要是对一阶特征、二阶组合特征去学习一个权重。如下图：</p>
 <script type="math/tex; mode=display">y_{FM} = w_0 + \sum^n_{i=1} w_i x_i + \sum^n_{i=1} \sum^n_{j=i+1} <v_i,v_j> x_i x_j</script><div align="center">
-  <img width="500" src="/2020/06/30/FM/2.png">
+  <img width="500" src="/2020/06/30/del/FM/2.png">
 </div>
 
 <h2 id="DNN"><a href="#DNN" class="headerlink" title="DNN"></a>DNN</h2><p>输入到网络的特征通常是高维稀疏的，通常需要使用embedding层压缩至低维稠密向量。这里FM与DNN共享embedding层，注意wide&amp;deep中的wide部分，输入的是原始的离散化后的特征。<br>这里embedding层的输入向量维度可以不一致，因为不同特征的总类别数目不同，one-hot维度不同。embedding输出向量的维度一致，都是K维的。</p>
 <div align="center">
-  <img width="500" src="/2020/06/30/FM/3.png">
+  <img width="500" src="/2020/06/30/del/FM/3.png">
 </div>
 DNN第一层的输入：
 $$a^{(0)} = [e_1,e_2,...e_n] $$
@@ -390,7 +390,7 @@ DIN同时对diversity和local activation进行建模。
 其中，用户行为特征多为multi-hot形式，表示用户浏览、点击过的多个商品/店铺信息。
 
 <div align="center">
-  <img width="500" src="/2020/06/30/FM/4.png">
+  <img width="500" src="/2020/06/30/del/FM/4.png">
 </div>
 
 <h2 id="Feature-Representation"><a href="#Feature-Representation" class="headerlink" title="Feature Representation"></a>Feature Representation</h2><p>有$M$组特征，第$i$组特征可以表示为$t_i \in R^{K_i}$，这里$K_i$表示第$i$组特征的维度（类别数）。一个instance可以表示为$x = [t^T_1,t^T_2…t^T_M]$。instance的特征总维数为K，$\sum^M_{i=1} K_i = K$。</p>
@@ -407,7 +407,7 @@ DIN同时对diversity和local activation进行建模。
 <p>DIN引入<code>local activation</code>，如下图所示，对用户行为特征，进行加权求和：</p>
 <script type="math/tex; mode=display">v_{U}(A) = f(v_A,e_1,e_2,...,e_H) = \sum^{H}_{j=1} a(e_j,v_A)e_j = \sum^{H}_{j=1} w_j e_j</script><p>公式中${e_1,e_2,…,e_H}$表示用户行为的embedding数组，$v_A$表示广告$A$的embedding向量，$v_U(A)$由用户$U$和广告$A$共同决定，$a(e_j,v_A)$表示由用户的第j个行为向量$e_j$和候选广告向量$v_A$计算出的激活权重。$a()$是一个简单的MLP，称为Activation Unit。具体结构如图，网络的输入包含广告embedding、历史行为embedding、二者的叉积concat起来的向量。<br>这里与传统的attention方法不同，DIN中没有对各激活权重进行softmax，以保留用户兴趣的强度。比如如果用户历史行为90%是衣服，10%是电子产品，对于T恤和手机这两个candidate，显然T恤会激活更多的用户历史行为，得到更大的$v_U$。<br>对于用户历史行为用LSTM学习，没有得到增长。与具有严格语法限制的文本不同，用户历史行为序列可能包含多个并发的兴趣，这些兴趣的快速跳跃和突然结束导致用户行为序列看起来有许多噪声。</p>
 <div align="center">
-  <img width="500" src="/2020/06/30/FM/5.png">
+  <img width="500" src="/2020/06/30/del/FM/5.png">
 </div>
 
 
@@ -422,7 +422,7 @@ DIN同时对diversity和local activation进行建模。
 <li>帮助GRU隐状态更好的表示用户兴趣，学习用户兴趣之间的依赖关系</li>
 <li>在RNN网络的每个时间步都引入一个辅助的监督信号，可以降低优化难度</li>
 <li>给embedding层的学习引入更丰富的语义信息，可以得到更好的item embedding<br>$L_{aux}$表示如下，其中，$e^i_b \in R^{T \times n_E}$表示第i个用户的T个时刻的行为序列embedding，$\hat{e}^i_b \in R^{T \times n_E}$表示抽样得到的负样本序列。<script type="math/tex; mode=display">L_{aux} = -\frac{1}{N} (\sum^N_{i=1} \sum_{t} log \sigma{(h^i_t,e^i_b [t+1])} + log(1-\sigma{(h^i_t,\hat{e}^i_b[t+1])}) )</script><code>auxiliary_net</code>和<code>auxiliary_loss</code>的计算如下所示：<br><div align="center">
-<img width="500" src="/2020/06/30/FM/10.png">
+<img width="500" src="/2020/06/30/del/FM/10.png">
 </div><br>可以看出，是将$h^i_t$与$e^i_b [t+1]$拼接，送入全连接层，得到</li>
 </ul>
 <h2 id="兴趣演化层-Interest-Evolving-Layer"><a href="#兴趣演化层-Interest-Evolving-Layer" class="headerlink" title="兴趣演化层-Interest Evolving Layer"></a>兴趣演化层-Interest Evolving Layer</h2><h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><ul>
@@ -451,7 +451,7 @@ DIN同时对diversity和local activation进行建模。
         
         
             <div id="article-nav-older" class="article-nav-title">
-                <a href="/2020/06/25/lstm/">
+                <a href="/2020/06/25/del/lstm/">
                     序列模型
                 </a>
             </div>
@@ -528,13 +528,13 @@ DIN同时对diversity和local activation进行建模。
         <a title="文章列表"><i class="fa fa-bars"></i><i class="fa fa-times"></i></a>
 
         
-            <a href="/2020/06/25/lstm/" title="下一篇: 序列模型">
+            <a href="/2020/06/25/del/lstm/" title="下一篇: 序列模型">
                 <i class="fa fa-angle-right"></i>
             </a>
         
     </div>
 
-    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
+    <ul class="post-list"><li class="post-list-item"><a class="post-list-link" href="/2020/09/20/week207/">LeetCode 周赛 207</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/06/CE-Net/">CE-Net & UNet++</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/07/03/Optimizer/">各种优化器</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/30/del/FM/">推荐系统算法</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/06/25/del/lstm/">序列模型</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/27/del/FRCNN-reproduce2/">Faster R-CNN复现（二）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/22/anchor-free/">Anchor-Free（keypoint-CornerNet）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/05/20/del/FRCNN-reproduce1/">Faster R-CNN复现（一）</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/23/del/yolo/">YOLO</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/19/del/xgb&lgb/">XGBoost 与 LightGBM</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/03/16/del/word2vec/">word2vec</a></li><li class="post-list-item"><a class="post-list-link" href="/2020/01/15/del/SVM/">SVM推导</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/06/15/VoxelNet&&PointPillars/">VoxelNet && PointPillars</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/04/01/CNN/">CNN相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/30/TCP/">TCP相关</a></li><li class="post-list-item"><a class="post-list-link" href="/2019/03/22/del/Softmax/">Assignment-1 Softmax的实现</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/15/dp1015-6/">Dynamic Programming 6</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/12/dp1012-5/">Dynamic Programming 5</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/11/dp1011-4/">Dynamic Programming 4</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/09/dp1009-3/">Dynamic Programming 3</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/07/dp1007-2/">Dynamic Programming 2</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/10/06/dp1006-1/">Dynamic Programming 1</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/09/30/del/FasterRCNNdemo/">TensorFlow_Faster_RCNN中demo.py的运行(CPU Only)</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/26/Mosaic/">制作蒙太奇效果的马赛克拼图</a></li><li class="post-list-item"><a class="post-list-link" href="/2018/07/24/Baidu-Picture-Crawler/">在特定关键词下爬取百度图片</a></li></ul>
 
 
 
@@ -548,7 +548,7 @@ DIN同时对diversity和local activation进行建模。
         <div id="footer-info">
             <div class="footer-left">
                 <i class="fa fa-copyright"></i> 
-                2018-2020 Yang Zhuoya
+                2018-2021 Yang Zhuoya
             </div>
             <div class="footer-right">
                 <a href="http://hexo.io/" target="_blank" title="快速、简洁且高效的博客框架">Hexo</a>  Theme <a href="https://github.com/MOxFIVE/hexo-theme-yelee" target="_blank" title="简而不减 Hexo 双栏博客主题  v3.5">Yelee</a> by Yang Zhuoya <i class="fa fa-heart animated infinite pulse"></i>
